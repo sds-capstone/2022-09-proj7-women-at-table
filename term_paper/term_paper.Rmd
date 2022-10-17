@@ -1,30 +1,27 @@
 ---
-title: Full title of the paper (Capitalized)
+title: Analysis of Access to Emergency Funds in Sub-Saharan Countries-- A Human Rights-Based Approach
 author:
-  - name: Dominik Leutnant
-    affil: 1,2,\ddagger,*
-    orcid: 0000-0003-3293-2315
-  - name: John Doe
-    affil: 2, \dagger, \ddagger
+  - name: Rose Porta
+    affil: 1,\ddagger,*
+    orcid: 0000-0001-7296-6830
+  - name: Alejandra Munoz Garcia 
+    affil: 1,\ddagger
+    orcid: 0000-0002-9687-2342
+  - name: Margaret Bassney
+    affil: 1,\ddagger
+    orcid: 0000-0003-2843-6271
+  - name: Aushanae Haller 
+    affil: 1,\ddagger
+    orcid: 0000-0002-2090-1952
+    
 affiliation:
   - num: 1
     address: |
-      Muenster University of Applied Sciences - 
-      Institute for Infrastructure, Water, Resources, Environment
-      Correnstr. 25, 48149 Muenster, Germany
-    email: leutnant@fh-muenster.de
-  - num: 2
-    address: |
-      Your department
-      Street, City, Country
-    email: mail@mail.com
-# firstnote to eighthnote
+      Department of Statistical and Data Sciences, Smith College, Northampton MA
 firstnote: |
-  Current address: Updated affiliation
-secondnote: |
   These authors contributed equally to this work.
 correspondence: |
-  leutnant@fh-muenster.de; Tel.: +XX-000-00-0000.
+  rporta@smith.edu
 journal: water
 type: article
 status: submit
@@ -82,6 +79,12 @@ abbreviations:
     long: linear dichroism
 output: rticles::mdpi_article
 ---
+```{python}
+# test python chunk
+# !pip install seaborn
+import seaborn as sns
+```
+
 
 # Version
 
