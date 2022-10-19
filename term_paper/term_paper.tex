@@ -252,40 +252,41 @@ accessible to a broader undergraduate audience.
 Science is often viewed as a way to offer trustworthy research backed
 solutions and answers. A lot of that research involves statistical
 methods performed on data however, what happens when the data and
-statistical methods aren't as objective and trustworthy as is so often
+statistical methods are not as objective and trustworthy as is so often
 assumed? The conclusions drawn from the data are biased and unfair, most
-often towards minorities and protected classes of people.To contribute
+often towards minorities and protected classes of people. To contribute
 to a human rights based approach to data analysis, we evaluate fairness
-metrics on a machine learning algorithm to measure bias.We use a Global
+metrics on a machine learning algorithm to measure bias. We use a Global
 Findex data set which contains financial information about 35 Sub
-Saharan countries. Specifically we want to create models to predict
-access to emergency funds, then analyze the fairness of those models.We
-focus on group and individual fairness metrics for the protected
-attributes, sex, age, and race. In addition we investigate the data set
-itself to understand where potential biases might have been implanted.
+Saharan countries. Specifically, we create models to predict access to
+emergency funds, then analyze the fairness of those models. We focus on
+group and individual fairness metrics for the protected attribute sex.
+In addition we investigate the data set itself to understand where
+potential biases might have been implanted.
+
 Data sets and algorithms have real world impacts on real people. The
 inherent bias in data sets can carry over into machine learning
 algorithms that are used to profile and categorize people
-\citep{navarro2021risk, hellstrom2020bias}.Since data set's aren't
+\citep{navarro2021risk, hellstrom2020bias}. Since data set's are not
 collected in a vacuum and often represent the discriminatory
 environments in which they are collected
 \citep{barocas_fairness_nodate}, we must find ways to make data sets and
 statistical methods more equitable. In this study we explore fairness
-methods that can be used to evaluate machine learning models.The
+methods that can be used to evaluate machine learning models. The
 ``impossibility theorem'' is the idea that not all fairness metrics can
 be satisfied at the same time\citep{kleinberg2016inherent}. Although
 fairness is complex and there are multiple approaches to make a model
 fair \citep{kypraiou_what_2021, green2018myth}, it's important to
 continue to question how data and algorithms can be biased and how to
-mitigate that bias.While there have been previous studies implementing
-fairness techniques in different
-contexts\citep[\citet{kim2022information}]{deho2022existing}, we
+mitigate that bias.
+
+While there have been previous studies implementing fairness techniques
+in different contexts\citep{deho2022existing, kim2022information}, we
 implement them in an exploratory context meant to teach how and when to
 use these techniques thus giving us more freedom to branch beyond a
 specific question while supporting previous work about the importance of
-these fairness
-metrics\citep[\citet{barocas_fairness_nodate}]{anahideh2022fair}. We
-analyse the data, data collection methods, prediction models, and the
+these fairness metrics\citep{anahideh2022fair, barocas_fairness_nodate}.
+We analyse the data, data collection methods, prediction models, and the
 fairness metrics to assess how biased our data is and understand how we
 can de-bias when possible.
 
