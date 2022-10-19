@@ -225,24 +225,69 @@ However, the official template gets more frequently updated than the
 submission, that you're using the most recent .cls, .tex and .bst files
 (available \href{http://www.mdpi.com/authors/latex}{here}).
 
+\hypertarget{abstract}{%
+\section{Abstract}\label{abstract}}
+
+Having access to emergency funds is a valuable resource that many people
+end up needing at least once in their lives. Those who have access to
+emergency funding and other financial services have the capacity to
+remain afloat when unexpected predicaments arise, while those who are
+without this privilege have no choice but to endure crises and simply
+hope for the best. The purpose of our project is to analyze the access
+adults have to emergency funds and financial services in Sub-Saharan
+countries using a 2017 dataset from the Global Findex Database.
+Additionally, an important goal of our project is to employ a variety of
+different approaches in an attempt to minimize bias and maximize
+fairness, particularly when examining the performance for males and
+females. We also aim to determine how adults in the Sub-Saharan African
+region access financial services as well as establish the amount of bias
+we have within our models using exploratory data analysis, a baseline
+model, and a variety of fairness metrics. We hope to implement our
+findings in a Jupyter notebook where this information can be made
+accessible to a broader undergraduate audience.
+
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-The introduction should briefly place the study in a broad context and
-highlight why it is important. It should define the purpose of the work
-and its significance. The current state of the research field should be
-reviewed carefully and key publications cited. Please highlight
-controversial and diverging hypotheses when necessary. Finally, briefly
-mention the main aim of the work and highlight the principal
-conclusions. As far as possible, please keep the introduction
-comprehensible to scientists outside your particular field of research.
-Citing a journal paper
-\citep{bertrand-krajewski_distribution_1998, leutnant_stormwater_2016}.
-And now citing a book reference \citet{gujer_systems_2008}. Please use
-the command \citep{leutnant_stormwater_2016} for the following MDPI
-journals, which use author-date citation: Administrative Sciences, Arts,
-Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Laws,
-Religions, Risks, Social Sciences.
+Science is often viewed as a way to offer trustworthy research backed
+solutions and answers. A lot of that research involves statistical
+methods performed on data however, what happens when the data and
+statistical methods aren't as objective and trustworthy as is so often
+assumed? The conclusions drawn from the data are biased and unfair, most
+often towards minorities and protected classes of people.To contribute
+to a human rights based approach to data analysis, we evaluate fairness
+metrics on a machine learning algorithm to measure bias.We use a Global
+Findex data set which contains financial information about 35 Sub
+Saharan countries. Specifically we want to create models to predict
+access to emergency funds, then analyze the fairness of those models.We
+focus on group and individual fairness metrics for the protected
+attributes, sex, age, and race. In addition we investigate the data set
+itself to understand where potential biases might have been implanted.
+Data sets and algorithms have real world impacts on real people. The
+inherent bias in data sets can carry over into machine learning
+algorithms that are used to profile and categorize people
+\citep{navarro2021risk, hellstrom2020bias}.Since data set's aren't
+collected in a vacuum and often represent the discriminatory
+environments in which they are collected
+\citep{barocas_fairness_nodate}, we must find ways to make data sets and
+statistical methods more equitable. In this study we explore fairness
+methods that can be used to evaluate machine learning models.The
+``impossibility theorem'' is the idea that not all fairness metrics can
+be satisfied at the same time\citep{kleinberg2016inherent}. Although
+fairness is complex and there are multiple approaches to make a model
+fair \citep{kypraiou_what_2021, green2018myth}, it's important to
+continue to question how data and algorithms can be biased and how to
+mitigate that bias.While there have been previous studies implementing
+fairness techniques in different
+contexts\citep[\citet{kim2022information}]{deho2022existing}, we
+implement them in an exploratory context meant to teach how and when to
+use these techniques thus giving us more freedom to branch beyond a
+specific question while supporting previous work about the importance of
+these fairness
+metrics\citep[\citet{barocas_fairness_nodate}]{anahideh2022fair}. We
+analyse the data, data collection methods, prediction models, and the
+fairness metrics to assess how biased our data is and understand how we
+can de-bias when possible.
 
 \hypertarget{materials-and-methods}{%
 \section{Materials and Methods}\label{materials-and-methods}}
