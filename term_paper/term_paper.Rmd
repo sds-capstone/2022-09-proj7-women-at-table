@@ -100,6 +100,10 @@ Having access to emergency funds is a valuable resource that many people end up 
 
 # Introduction
 
+
+To contribute to a human rights based approach to data analysis, we evaluate fairness metrics on a machine learning algorithm to measure bias.We use the Global findex dataset which contains financial information about 35 sub saharan countries. Specifically we want to create a model to predict access to emergency funds. Data sets and algorithms have real world impacts on real people. The inherent bias in data sets can carry over into machine learning algorithms that are used to profile and catagorize people [@navarro2021risk]. Since dataset's aren't collected in a vacuum and often represent the discriminatory environments in which they are collected, we must find ways to make data sets and statistical methods more equitable. In this workshop will explore fairness methods that can be used to evaluate machine learning models.Although fairness is complex and there are multiple approaches to make a model fair [@kypraiou_what_2021], it's important to continue to question how data and algorithms can be biased and how to mitigate that bias. 
+
+
 The introduction should briefly place the study in a broad context and highlight why it is important. It should define the purpose of the work and its significance. The current state of the research field should be reviewed carefully and key publications cited. Please highlight controversial and diverging hypotheses when necessary. Finally, briefly mention the main aim of the work and highlight the principal conclusions. As far as possible, please keep the introduction comprehensible to scientists outside your particular field of research. Citing a journal paper [@bertrand-krajewski_distribution_1998; @leutnant_stormwater_2016]. And now citing a book reference @gujer_systems_2008. Please use the command [@leutnant_stormwater_2016] for the following MDPI journals, which use author-date citation: Administrative Sciences, Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Laws, Religions, Risks, Social Sciences.
 
 
