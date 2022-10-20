@@ -140,7 +140,7 @@ pink = '#FFC0CB'
 ```{python, include = FALSE}
 # select vars of interest
 df2 = df[['female', 'age', 'emp_in', 'account_fin', 'fin24', 'fin25', 'fin32', 'fin48', 'educ', 'economy']]
-df2 = df2.query('fin24 < 3')
+# df2 = df2.query('fin24 < 3')
 # Recode fin24 values
 df2.loc[df2['fin24'] == 1, "fin24"] = 'Yes'
 df2.loc[df2['fin24'] == 2, "fin24"] = 'No'
