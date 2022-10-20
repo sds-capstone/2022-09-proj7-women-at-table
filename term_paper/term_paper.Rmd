@@ -224,12 +224,6 @@ The bar plot above shows us that there are more women with primary education, bu
 
 The final demographic variable of interest is the *economy* variable that separates respondents by which country they live in. There are 35 different countries with exactly 1000 respondents from each.
 
-```{python, echo=FALSE}
-# Number of Observations per Country
-plt.rcParams["figure.figsize"] = (10,7)
-sns.countplot(y = 'economy', data = df2).set(title = "Distribution of Participants per Country")
-```
-
 ## Financial
 
 From the financial related variables, we were most interested in a few specific financial variables that we thought would have an impact on access to emergency funds.
@@ -321,7 +315,7 @@ The variable *has_access* directly asks participants if they have access to emer
 
 ```{python, echo=FALSE}
 # barplot of access to emergency funds
-g = sns.countplot(x = 'has_access', data = df2, palette = yes_no_pal)
+g = sns.countplot(x = 'has_access', data = df2, palette = yes_no_pal, order = ['No', 'Yes'])
 for p in g.patches:
    g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .25, p.get_height()+100))
 g.set(title = "Distribution of Access to Emergency Funds")
