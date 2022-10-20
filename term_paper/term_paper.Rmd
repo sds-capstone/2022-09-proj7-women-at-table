@@ -30,16 +30,7 @@ appendix: appendix.tex
 simplesummary: |
   A Simple summary goes here.
 abstract: |
-  A single paragraph of about 200 words maximum. For research articles, 
-  abstracts should give a pertinent overview of the work. We strongly encourage
-  authors to use the following style of structured abstracts, but without 
-  headings: 1) Background: Place the question addressed in a broad context and
-  highlight the purpose of the study; 2) Methods: Describe briefly the main
-  methods or treatments applied; 3) Results: Summarize the article's main 
-  findings; and 4) Conclusion: Indicate the main conclusions or interpretations. 
-  The abstract should be an objective representation of the article, it must not 
-  contain results which are not presented and substantiated in the main text and 
-  should not exaggerate the main conclusions.
+  Having access to emergency funds is a valuable resource that many people end up needing at least once in their lives. Those who have access to emergency funding and other financial services have the capacity to remain afloat when unexpected predicaments arise, while those who are without this privilege have no choice but to endure crises and simply hope for the best. The purpose of our project is to analyze the access adults have to emergency funds and financial services in Sub-Saharan countries using a 2017 dataset from the Global Findex Database. Additionally, an important goal of our project is to employ a variety of different approaches in an attempt to minimize bias and maximize fairness, particularly when examining the performance for males and females. We also aim to determine how adults in the Sub-Saharan African region access financial services as well as establish the amount of bias we have within our models using exploratory data analysis, a baseline model, and a variety of fairness metrics. We hope to implement our findings in a Jupyter notebook where this information can be made accessible to a broader undergraduate audience.
 keywords: |
   keyword 1; keyword 2; keyword 3 (list three to ten pertinent keywords specific 
   to the article, yet reasonably common within the subject discipline.).
@@ -93,10 +84,6 @@ However, the official template gets more frequently updated than the 'rticles'
 package. Therefore, please make sure prior to paper submission, that you're 
 using the most recent .cls, .tex and .bst files 
 (available [here](http://www.mdpi.com/authors/latex)).
-
-# Abstract
-
-Having access to emergency funds is a valuable resource that many people end up needing at least once in their lives. Those who have access to emergency funding and other financial services have the capacity to remain afloat when unexpected predicaments arise, while those who are without this privilege have no choice but to endure crises and simply hope for the best. The purpose of our project is to analyze the access adults have to emergency funds and financial services in Sub-Saharan countries using a 2017 dataset from the Global Findex Database. Additionally, an important goal of our project is to employ a variety of different approaches in an attempt to minimize bias and maximize fairness, particularly when examining the performance for males and females. We also aim to determine how adults in the Sub-Saharan African region access financial services as well as establish the amount of bias we have within our models using exploratory data analysis, a baseline model, and a variety of fairness metrics. We hope to implement our findings in a Jupyter notebook where this information can be made accessible to a broader undergraduate audience.
 
 # Introduction
 
