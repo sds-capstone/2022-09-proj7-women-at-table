@@ -395,20 +395,25 @@ df3 = df3.sort_values('m_percent_access')
 df3 = df3.rename(columns = {'m_percent_access':'Males With Acesss', 'f_percent_access': 'Females With Access'})
 ```
 
-```{python, echo=FALSE, fig.width=3, fig.height=2}
+```{python,echo=FALSE}
 # not displaying properly
 # create new figure
-fig = plt.figure()
+#fig = plt.figure()
 #add sub plot
-ax1 = fig.add_subplot(1,2,1)
+#ax1 = fig.add_subplot(1,2,1)
 # fig 1
-df_gender.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants by Country & Gender", ax = ax1).axvline(x = 50, color = "red", linestyle = "dashed")
+df_gender.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants by Country & Gender").axvline(x = 50, color = "red", linestyle = "dashed")
 #add sub plot
-ax2 = fig.add_subplot(1,2,2)
+#ax2 = fig.add_subplot(1,2,2)
 # fig 2
-fig2 = df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants with Access to Emergency Funds by Country & Gender", ax = ax2).axvline(x = 50, color = "red", linestyle = "dashed")
+
 # set fig size
-fig.set_size_inches(7, 5)
+#fig.set_size_inches(7, 5)
+
+```
+
+```{python,echo=FALSE}
+df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants with Access to Emergency Funds by Country & Gender").axvline(x = 50, color = "red", linestyle = "dashed")
 ```
 
 In the side-by-side barplots above, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
@@ -441,10 +446,10 @@ educ_perc = (df2.groupby(['Education'])['has_access']
 
 ```{python, echo=FALSE}
 # not showing up and idk why
-# educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc)
-# for p in educ_access.patches:
-#    educ_access.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.12, p.get_height()+.5))
-# educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel = 'Education Level')
+educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc)
+for p in educ_access.patches:
+  educ_access.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.12, p.get_height()+.5))
+educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel = 'Education Level')
 ```
 
 Additionally, in the barplot above we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
