@@ -140,7 +140,6 @@ pink = '#FFC0CB'
 ```{python, include = FALSE}
 # select vars of interest
 df2 = df[['female', 'age', 'emp_in', 'account_fin', 'fin24', 'fin25', 'fin32', 'fin48', 'educ', 'economy']]
-# df2 = df2.query('fin24 < 3')
 # Recode fin24 values
 df2.loc[df2['fin24'] == 1, "fin24"] = 'Yes'
 df2.loc[df2['fin24'] == 2, "fin24"] = 'No'
@@ -222,7 +221,11 @@ The bar plot above shows us that there are more women with primary education, bu
 
 ### *economy*
 
-The final demographic variable of interest is the *economy* variable that separates respondents by which country they live in. There are 35 different countries with exactly 1000 respondents from each.
+The final demographic variable of interest is the *economy* variable that separates respondents by which country they live in. There are 35 different countries from Sub-Saharan Africa with exactly 1000 respondents from each.
+
+```{python}
+df2['economy'].unique()
+```
 
 ## Financial
 
