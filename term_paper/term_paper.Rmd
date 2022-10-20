@@ -73,7 +73,18 @@ output: rticles::mdpi_article
 ```{python}
 # test python chunk
 # !pip install seaborn
+# Imports
+import pandas as pd
+import numpy as np
 import seaborn as sns
+from plotnine import *
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeRegressor
+import statsmodels.api as sm
+from sklearn.compose import make_column_transformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 ```
 
 
@@ -94,7 +105,320 @@ Data sets and algorithms have real world impacts on real people. The inherent bi
 
 While there have been previous studies implementing fairness techniques in different contexts[@deho2022existing; @kim2022information], we implement them in an exploratory context meant to teach how and when to use these techniques thus giving us more freedom to branch beyond a specific question while supporting previous work about the importance of these fairness metrics[@anahideh2022fair;@barocas_fairness_nodate]. We analyse the data, data collection methods, prediction models, and the fairness metrics to assess how biased our data is and understand how we can de-bias when possible.   
 
+# Data
 
+Our data is derived from The World Bank in The Global Findex Database, comprising the most comprehensive data sets on how adults save, borrow, make payments, and manage risk in more than 140 economies around the world. The data set was created to record various measures of financial equity and inclusion, with the intention that such information could reveal opportunities to expand access to financial services and to promote greater use of digital financial services for individuals who do not have a bank account. Conducted by Gallup, Inc for the annual Gallup World Poll, the participants responded to the questionnaire either on the phone or in-person. There were several variables of interest in this dataset when creating models to predict access to emergency funds, including demographic and financial information.
+
+```{python}
+# Read in Data
+file = '~/Documents/Smith College/SDS Capstone/2022-09-proj7-women-at-table/findex_SubSahAfrica.csv'
+df = pd.read_csv(file, index_col=0)
+print(f'There are {df.shape[0]} entries and {df.shape[1]} features')
+df.head()
+```
+
+```{python}
+# Set Gender Palette
+red = '#FF7377'
+blue = '#00B2EE'
+gender_palette = [blue, red]
+
+purple = '#BF3EFF'
+green = '#1B851B'
+yes_no_pal = [purple, green]
+
+pink = '#FFC0CB'
+```
+
+```{python}
+#@title
+%%capture --no-display
+# select vars of interest
+df2 = df[['female', 'age', 'emp_in', 'account_fin', 'fin24', 'fin25', 'fin32', 'fin48', 'educ', 'economy']]
+df2 = df2.query('fin24 < 3')
+# Recode fin24 values
+df2.loc[df2['fin24'] == 1, "fin24"] = 'Yes'
+df2.loc[df2['fin24'] == 2, "fin24"] = 'No'
+df2.loc[df2['fin24'] == 3, "fin24"] = 'Don\'t Know'
+df2.loc[df2['fin24'] == 4, "fin24"] = 'Refuse'
+# rename fin24 to has_access
+df2.rename(columns = {'fin24': 'has_access'}, inplace = True)
+# recode gender
+df2.loc[df2['female'] == 1, "female"] = 'male'
+df2.loc[df2['female'] == 2, "female"] = 'female'
+df2.rename(columns = {'female': 'gender'}, inplace = True)
+# recode account_fin
+df2.loc[df2['account_fin'] == 0, "account_fin"] = 'No'
+df2.loc[df2['account_fin'] == 1, "account_fin"] = 'Yes'
+# recode emp_in
+df2.loc[df2['emp_in'] == 0, "emp_in"] = 'No'
+df2.loc[df2['emp_in'] == 1, "emp_in"] = 'Yes'
+# Recode fin32 values: Recieved Wage Payments
+df2.loc[df2['fin32'] == 1, "fin32"] = 'Yes'
+df2.loc[df2['fin32'] == 2, "fin32"] = 'No'
+df2.loc[df2['fin32'] == 3, "fin32"] = 'Don\'t Know'
+df2.loc[df2['fin32'] == 4, "fin32"] = 'Refuse'
+# recode fin48 values: National ID
+df2.loc[df2['fin48'] == 1, "fin48"] = 'Yes'
+df2.loc[df2['fin48'] == 2, "fin48"] = 'No'
+df2.loc[df2['fin48'] == 3, "fin48"] = 'Don\'t Know'
+df2.loc[df2['fin48'] == 4, "fin48"] = 'Refuse'
+#recode educ values: Highest Level of Education
+df2.loc[df2['educ'] == 1, "educ"] = 'Primary'
+df2.loc[df2['educ'] == 2, "educ"] = 'Secondary'
+df2.loc[df2['educ'] == 3, "educ"] = 'Tertiary'
+df2.loc[df2['educ'] == 4, "educ"] = 'Don\'t Know'
+df2.loc[df2['educ'] == 5, "educ"] = 'Refuse'
+#recode fin25 values: Main Source of Emergency Funds
+df2.loc[df2['fin25'] == 1, "fin25"] = 'Savings'
+df2.loc[df2['fin25'] == 2, "fin25"] = 'Family, relatives, or friends'
+df2.loc[df2['fin25'] == 3, "fin25"] = 'Money from working'
+df2.loc[df2['fin25'] == 4, "fin25"] = 'Borrowing from a bank/employer/private lender'
+df2.loc[df2['fin25'] == 5, "fin25"] = 'Selling assets'
+df2.loc[df2['fin25'] == 6, "fin25"] = '(Some other source)'
+df2.loc[df2['fin25'] == 7, "fin25"] = 'Don\'t Know'
+df2.loc[df2['fin25'] == 8, "fin25"] = 'Refuse'
+#recode fin32 values: Recieved Wage Payments
+df2.loc[df2['fin32'] == 1, "fin32"] = 'Yes'
+df2.loc[df2['fin32'] == 2, "fin32"] = 'No'
+df2.loc[df2['fin32'] == 3, "fin32"] = 'Don\'t Know'
+df2.loc[df2['fin32'] == 4, "fin32"] = 'Refuse'
+
+df2.rename(columns = {'fin32': 'Receive Wage Payments', 'fin48': 'National ID', 'educ': 'Education', 'fin25': 'main_source_funds', 'fin32': 'Recieve Wage Payments'}, inplace = True)
+df2.head()
+```
+
+## Demographics
+
+### *gender*
+
+The variable *gender* distinguishes gender. There are 16,716 males in this dataset and 17,388 females. This is a fairly equal distribution that we can see in the graph below.
+
+```{python}
+# barplot female versus not
+g = sns.countplot(x = 'gender', data = df2, palette = gender_palette)
+for p in g.patches:
+   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
+g.set(title = "Gender Distribution")
+```
+
+### *Education*
+
+The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. Here is the distribution of education by gender:
+
+```{python}
+ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
+for p in ebg.patches:
+   ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
+ebg.set(title= "Education Count by Gender")
+```
+
+The bar plot above shows us that there are more women with primary education, but more men with secondary or tertiary education. Overall, we can see that there are more men with higher education than women. About 1,000 more men have received a secondary education and there is about double the amount of men with tertiary education compared to women showing a clear disparity.
+
+### *economy*
+
+The final demographic variable of interest is the *economy* variable that separates respondents by which country they live in. There are 35 different countries with exactly 1000 respondents from each.
+
+```{python}
+# Number of Observations per Country
+plt.rcParams["figure.figsize"] = (10,7)
+sns.countplot(y = 'economy', data = df2).set(title = "Distribution of Participants per Country")
+```
+
+## Financial
+
+From the financial related variables, we were most interested in a few specific financial variables that we thought would have an impact on access to emergency funds.
+
+### *account_fin*
+
+The first variable being *account_fin* which distinguishes those who have a financial account from those who don’t:
+
+```{python}
+# barplot of number of people who have a bank account
+g = sns.countplot(x = 'account_fin', data = df2, palette = yes_no_pal)
+for p in g.patches:
+   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
+g.set(title = "Distribution of Has a Financial Account", xlabel = 'Has a financial account?')
+```
+
+We can see that about two thirds of individuals do not have an account. This is likely connected to the lack of access to emergency funds displayed above given that if an individual does not have a financial account, we would expect they are less likely to have a source of emergency funds, as emergency funds are generally stored in an account.
+ 
+### *reason*
+
+Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account:
+
+```{python}
+# barplot of count by reason-- seaborn
+reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
+```
+
+### *emp_in*
+
+Employment status was another financial variable of interest represented by *emp_in*, which asks whether or not the participant is in the workforce. It appears that about three-fourths of individuals are in the workforce:
+
+```{python}
+# Distribution by in workforce
+g = sns.countplot(x = 'emp_in', data = df2, palette = yes_no_pal)
+for p in g.patches:
+   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
+g.set(title = "Distribution of Whether or not in Workforce", xlabel = "In workforce?")
+```
+
+### *inc_q*
+
+And lastly, we evaluated *inc_q*, which represents income quantile. Income quantile is separated into 5 quantiles with 1 being the poorest and 5 being the richest. The mean for all of the countries in the dataset is 3.241. This means that all the countries average out to be about middle class.
+
+```{python}
+df["inc_q"].mean()
+sns.countplot(df_inq, ax = ax1)
+ax1.set_xlabel("Income Quantile")
+ax1.set_xticklabels(['Poorest 20%','Second 20%','Middle 20%','Fourth 20%','Richest 20%'])
+ax1.title.set_text('Income Quantile  Distribution')
+```
+
+The majority of the data set has individuals within the richest quantile, Quantile 5.
+
+## Emergency Funds
+
+To explore access to emergency funds in our dataset, we were interested 3 variables we thought could be related:
+
+### *has_access*
+
+The variable *has_access* directly asks participants if they have access to emergency funds:
+
+```{python}
+# barplot of access to emergency funds
+g = sns.countplot(x = 'has_access', data = df2, palette = yes_no_pal)
+for p in g.patches:
+   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .25, p.get_height()+100))
+g.set(title = "Distribution of Access to Emergency Funds")
+```
+
+The barchart above displays the overall distribution of access to emergency funds. We can see that over half of individuals represented in the data do not have access. 
+
+### *main_source_funds*
+
+We proceeded to explore the source of emergency funds using the *main_source_funds* variable, which provides a list of options for where participants receive their main source of emergency funds:
+
+```{python}
+# barplot of main source of emergency funds
+chart = sns.countplot(y = 'main_source_funds', 
+                      data = df2, 
+                      order = ["Money from working","Family, relatives, or friends",
+                               "Savings", "Selling assets",
+                               "Borrowing from a bank/employer/private lender", "(Some other source)"]).set(
+                      title = "Distribution of the Main Source of Emergency Funds")
+```
+
+The barchart above displays the overall distribution of the main source of emergency funds. Most of the individuals with access to emergency funds receive their funding from work, their family and friends, or their savings.
+
+### *Recieve Wage Payments*
+
+Diving further into the "Money from Working" category, we can see that only 8196 individuals receive wage payments from the *Receive Wage Payments* variable. This analysis suggests that receiving wage payments may be a key factor in determining access to emergency funds.
+
+```{python}
+# barplot of recieved wage payments
+chart = sns.countplot(x = 'Receive Wage Payments',data = df2, order = ["No", "Yes"], palette = yes_no_pal)
+for p in chart.patches:
+   chart.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .25, p.get_height()+100))
+chart.set(title = "Distribution of Received Wage Payments")
+```
+
+### *gender*, *economy* and *Education* in relation to Emergency Funds
+
+Finally, we sought to find if there were disparities in access to emergency funds by *gender*, *economy*, and *Education*.
+
+```{python}
+#@title
+%%capture --no-display
+df_gender = df2[['gender', 'economy']].query("gender == 'female'").groupby('economy').count()
+df_gender = df_gender.assign(male = lambda df_gender: 1000 - df_gender['gender']).rename(columns = {'gender': 'female'})
+ 
+#Percent of females
+df_gender = df_gender.assign(Female = lambda df_gender: (df_gender['female'])/10)
+ 
+#Percent of males
+df_gender = df_gender.assign(Male = lambda df_gender: 100 - df_gender['Female'])
+ 
+df_gender = df_gender[['Male', 'Female']]
+df_gender['economy'] = df2.economy.unique()
+df_gender = df_gender.sort_values('Male')
+ 
+# Counting by Access to Emergency Funds by gender
+f_access = df2[['has_access', 'economy', 'gender']].query("has_access == 'Yes' & gender == 'female'").groupby('economy').count()
+m_access = df2[['has_access', 'economy', 'gender']].query("has_access == 'Yes'& gender != 'female'").groupby('economy').count()
+
+# Defining acccess vs no access by country columms
+f_count = f_access['has_access']
+m_count = m_access['has_access']
+ 
+# Merging columns
+df3 = pd.merge(f_count, m_count, how='inner', on = 'economy')
+df3 = df3.assign(total = lambda df3: df3['has_access_x']+df3['has_access_y'])
+ 
+#Percent of females with access
+df3 = df3.assign(f_percent_access = lambda df3: (df3['has_access_x']/df3["total"])*100)
+ 
+#Percent of males with access
+df3 = df3.assign(m_percent_access = 100 - df3['f_percent_access'])
+ 
+df3['economy'] = df2.economy.unique()
+df3 = df3[['m_percent_access', 'f_percent_access',   'economy']]
+df3 = df3.sort_values('m_percent_access')
+df3 = df3.rename(columns = {'m_percent_access':'Males With Acesss', 'f_percent_access': 'Females With Access'})
+```
+
+```{python}
+# create new figure
+fig = plt.figure()
+#add sub plot
+ax1 = fig.add_subplot(1,2,1)
+# fig 1
+df_gender.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants by Country & Gender", ax = ax1).axvline(x = 50, color = "red", linestyle = "dashed")
+#add sub plot
+ax2 = fig.add_subplot(1,2,2)
+# fig 2
+fig2 = df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants with Access to Emergency Funds by Country & Gender", ax = ax2).axvline(x = 50, color = "red", linestyle = "dashed")
+# set fig size
+fig.set_size_inches(29, 14)
+```
+
+In the side-by-side barplots above, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
+
+```{python}
+%capture --no-display
+# Counting by Access to Emergency Funds by country
+access = df2[['has_access', 'economy']].query("has_access == 'Yes'").groupby('economy').count()
+no_access = df2[['has_access', 'economy']].query("has_access == 'No'").groupby('economy').count()
+ 
+# Defining acccess vs no access by country columms
+a_count = access['has_access']
+no_a_count = no_access['has_access']
+ 
+# Merging columns
+df3 = pd.merge(a_count, no_a_count, how='inner', on = 'economy')#.assign(total = lambda df3: df3['has_access_x']+df3['has_access_y'])
+#df3 = df3.assign(percent_access = lambda df3: (df3['has_access_x']/df3["total"])*100)
+ 
+df3['economy'] = df2.economy.unique()
+df3 = df3.sort_values('has_access_x')
+
+
+educ_perc = (df2.groupby(['Education'])['has_access']
+                     .value_counts(normalize=True)
+                     .rename('percentage')
+                     .mul(100)
+                     .reset_index()
+                     )
+```
+
+```{python}
+educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc)
+for p in educ_access.patches:
+   educ_access.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.12, p.get_height()+.5))
+educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel = 'Education Level')
+```
+
+Additionally, in the barplot above we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
 
 # Materials and Methods
 
