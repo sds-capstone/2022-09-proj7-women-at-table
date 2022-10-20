@@ -240,22 +240,10 @@ not have a bank account. Conducted by Gallup, Inc for the annual Gallup
 World Poll, the participants responded to the questionnaire either on
 the phone or in-person. There were several variables of interest in this
 dataset when creating models to predict access to emergency funds,
-including demographic and financial information.
-
-\begin{verbatim}
-## There are 35000 entries and 105 features
-\end{verbatim}
-
-\begin{verbatim}
-##       economy economycode  ... pay_cash  pay_cash_mobintbuy
-## 12138   Benin         BEN  ...      0.0                 NaN
-## 12139   Benin         BEN  ...      0.0                 NaN
-## 12140   Benin         BEN  ...      0.0                 0.0
-## 12141   Benin         BEN  ...      0.0                 NaN
-## 12142   Benin         BEN  ...      0.0                 NaN
-## 
-## [5 rows x 105 columns]
-\end{verbatim}
+including demographic and financial information. For this analysis, we
+are using only a subset of the data including countries in the
+Sub-Saharan region (35 countries total). Our data set includes 35000
+observations and 105 variables in total.
 
 \hypertarget{demographics}{%
 \subsection{Demographics}\label{demographics}}
@@ -322,14 +310,7 @@ Those who do not have a financial account were asked why in the
 \emph{reason} variable, that provides a list of possible reasons for not
 having a financial account:
 
-\begin{verbatim}
-##     level_0            reason  value
-## 0     12138          distance    1.0
-## 2     12138  no_documentation    1.0
-## 11    12140        lack_trust    1.0
-## 15    12140           no_need    1.0
-## 18    12141  no_documentation    1.0
-\end{verbatim}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-9.pdf}
 
 \hypertarget{emp_in}{%
 \subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
@@ -339,7 +320,7 @@ by \emph{emp\_in}, which asks whether or not the participant is in the
 workforce. It appears that about three-fourths of individuals are in the
 workforce:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-9.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-11.pdf}
 
 \hypertarget{inc_q}{%
 \subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
@@ -367,9 +348,13 @@ To explore access to emergency funds in our dataset, we were interested
 \subsubsection{\texorpdfstring{\emph{has\_access}}{has\_access}}\label{has_access}}
 
 The variable \emph{has\_access} directly asks participants if they have
-access to emergency funds:
+access to emergency funds, with ``emergency funds'' defined as 1/20th of
+the GNI (gross national income) per capita for the country. GNI per
+capita is the country's total income in a year/ the country's population
+size. For context, in the United States, ``emergency funds'' would be
+defined as about \$3,000.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-11.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-13.pdf}
 
 The barchart above displays the overall distribution of access to
 emergency funds. We can see that over half of individuals represented in
@@ -381,6 +366,8 @@ the data do not have access.
 We proceeded to explore the source of emergency funds using the
 \emph{main\_source\_funds} variable, which provides a list of options
 for where participants receive their main source of emergency funds:
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-15.pdf}
 
 The barchart above displays the overall distribution of the main source
 of emergency funds. Most of the individuals with access to emergency
@@ -396,7 +383,7 @@ only 8196 individuals receive wage payments from the \emph{Receive Wage
 Payments} variable. This analysis suggests that receiving wage payments
 may be a key factor in determining access to emergency funds.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-13.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-17.pdf}
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
@@ -414,8 +401,6 @@ In the side-by-side barplots above, we can see that although only about
 50\% of the countries have a higher percentage of men represented in the
 questionnaire (left bar plot), in 75\% of the countries more men have
 access to emergency funds than women (right bar plot).
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-20-15.pdf}
 
 Additionally, in the barplot above we can see the distribution of funds
 based on an individual's highest education level. 63\% of people with
