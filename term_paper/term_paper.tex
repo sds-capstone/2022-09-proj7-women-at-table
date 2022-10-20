@@ -110,17 +110,23 @@ Northampton MA; \\
 \simplesumm{A Simple summary goes here.}
 
 % Abstract (Do not insert blank lines, i.e. \\)
-\abstract{A single paragraph of about 200 words maximum. For research
-articles, abstracts should give a pertinent overview of the work. We
-strongly encourage authors to use the following style of structured
-abstracts, but without headings: 1) Background: Place the question
-addressed in a broad context and highlight the purpose of the study; 2)
-Methods: Describe briefly the main methods or treatments applied; 3)
-Results: Summarize the article's main findings; and 4) Conclusion:
-Indicate the main conclusions or interpretations. The abstract should be
-an objective representation of the article, it must not contain results
-which are not presented and substantiated in the main text and should
-not exaggerate the main conclusions.}
+\abstract{Having access to emergency funds is a valuable resource that
+many people end up needing at least once in their lives. Those who have
+access to emergency funding and other financial services have the
+capacity to remain afloat when unexpected predicaments arise, while
+those who are without this privilege have no choice but to endure crises
+and simply hope for the best. The purpose of our project is to analyze
+the access adults have to emergency funds and financial services in
+Sub-Saharan countries using a 2017 dataset from the Global Findex
+Database. Additionally, an important goal of our project is to employ a
+variety of different approaches in an attempt to minimize bias and
+maximize fairness, particularly when examining the performance for males
+and females. We also aim to determine how adults in the Sub-Saharan
+African region access financial services as well as establish the amount
+of bias we have within our models using exploratory data analysis, a
+baseline model, and a variety of fairness metrics. We hope to implement
+our findings in a Jupyter notebook where this information can be made
+accessible to a broader undergraduate audience.}
 
 % Keywords
 \keyword{keyword 1; keyword 2; keyword 3 (list three to ten pertinent
@@ -210,9 +216,29 @@ subject discipline.).}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# test python chunk}
 \CommentTok{\# !pip install seaborn}
+\CommentTok{\# !pip install numpy}
+\CommentTok{\# !pip install pandas}
+\CommentTok{\# !pip install matplotlib}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# test python chunk}
+
+\CommentTok{\# Imports}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
 \ImportTok{import}\NormalTok{ seaborn }\ImportTok{as}\NormalTok{ sns}
+\CommentTok{\# from plotnine import *}
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\CommentTok{\# from sklearn.model\_selection import train\_test\_split}
+\CommentTok{\# from sklearn.tree import DecisionTreeRegressor}
+\CommentTok{\# import statsmodels.api as sm}
+\CommentTok{\# from sklearn.compose import make\_column\_transformer}
+\CommentTok{\# from sklearn.preprocessing import OneHotEncoder}
+\CommentTok{\# from sklearn.linear\_model import LogisticRegression, LogisticRegressionCV}
 \end{Highlighting}
 \end{Shaded}
 
@@ -224,27 +250,6 @@ However, the official template gets more frequently updated than the
 `rticles' package. Therefore, please make sure prior to paper
 submission, that you're using the most recent .cls, .tex and .bst files
 (available \href{http://www.mdpi.com/authors/latex}{here}).
-
-\hypertarget{abstract}{%
-\section{Abstract}\label{abstract}}
-
-Having access to emergency funds is a valuable resource that many people
-end up needing at least once in their lives. Those who have access to
-emergency funding and other financial services have the capacity to
-remain afloat when unexpected predicaments arise, while those who are
-without this privilege have no choice but to endure crises and simply
-hope for the best. The purpose of our project is to analyze the access
-adults have to emergency funds and financial services in Sub-Saharan
-countries using a 2017 dataset from the Global Findex Database.
-Additionally, an important goal of our project is to employ a variety of
-different approaches in an attempt to minimize bias and maximize
-fairness, particularly when examining the performance for males and
-females. We also aim to determine how adults in the Sub-Saharan African
-region access financial services as well as establish the amount of bias
-we have within our models using exploratory data analysis, a baseline
-model, and a variety of fairness metrics. We hope to implement our
-findings in a Jupyter notebook where this information can be made
-accessible to a broader undergraduate audience.
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -289,6 +294,535 @@ these fairness metrics\citep{anahideh2022fair, barocas_fairness_nodate}.
 We analyse the data, data collection methods, prediction models, and the
 fairness metrics to assess how biased our data is and understand how we
 can de-bias when possible.
+
+\hypertarget{data}{%
+\section{Data}\label{data}}
+
+Our data is derived from The World Bank in The Global Findex Database,
+comprising the most comprehensive data sets on how adults save, borrow,
+make payments, and manage risk in more than 140 economies around the
+world. The data set was created to record various measures of financial
+equity and inclusion, with the intention that such information could
+reveal opportunities to expand access to financial services and to
+promote greater use of digital financial services for individuals who do
+not have a bank account. Conducted by Gallup, Inc for the annual Gallup
+World Poll, the participants responded to the questionnaire either on
+the phone or in-person. There were several variables of interest in this
+dataset when creating models to predict access to emergency funds,
+including demographic and financial information.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read in Data}
+\BuiltInTok{file} \OperatorTok{=} \StringTok{\textquotesingle{}\textasciitilde{}/Desktop/Fall{-}2022/SDS410/women{-}at{-}table/findex\_SubSahAfrica.csv\textquotesingle{}}
+\NormalTok{df }\OperatorTok{=}\NormalTok{ pd.read\_csv(}\BuiltInTok{file}\NormalTok{, index\_col}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}There are }\SpecialCharTok{\{}\NormalTok{df}\SpecialCharTok{.}\NormalTok{shape[}\DecValTok{0}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{ entries and }\SpecialCharTok{\{}\NormalTok{df}\SpecialCharTok{.}\NormalTok{shape[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{ features\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## There are 35000 entries and 105 features
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       economy economycode  ... pay_cash  pay_cash_mobintbuy
+## 12138   Benin         BEN  ...      0.0                 NaN
+## 12139   Benin         BEN  ...      0.0                 NaN
+## 12140   Benin         BEN  ...      0.0                 0.0
+## 12141   Benin         BEN  ...      0.0                 NaN
+## 12142   Benin         BEN  ...      0.0                 NaN
+## 
+## [5 rows x 105 columns]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Set Gender Palette}
+\NormalTok{red }\OperatorTok{=} \StringTok{\textquotesingle{}\#FF7377\textquotesingle{}}
+\NormalTok{blue }\OperatorTok{=} \StringTok{\textquotesingle{}\#00B2EE\textquotesingle{}}
+\NormalTok{gender\_palette }\OperatorTok{=}\NormalTok{ [blue, red]}
+
+\NormalTok{purple }\OperatorTok{=} \StringTok{\textquotesingle{}\#BF3EFF\textquotesingle{}}
+\NormalTok{green }\OperatorTok{=} \StringTok{\textquotesingle{}\#1B851B\textquotesingle{}}
+\NormalTok{yes\_no\_pal }\OperatorTok{=}\NormalTok{ [purple, green]}
+
+\NormalTok{pink }\OperatorTok{=} \StringTok{\textquotesingle{}\#FFC0CB\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# select vars of interest}
+\NormalTok{df2 }\OperatorTok{=}\NormalTok{ df[[}\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}age\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}emp\_in\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}account\_fin\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{]]}
+\NormalTok{df2 }\OperatorTok{=}\NormalTok{ df2.query(}\StringTok{\textquotesingle{}fin24 \textless{} 3\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# Recode fin24 values}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"fin24"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fin24"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"fin24"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"fin24"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+\CommentTok{\# rename fin24 to has\_access}
+\NormalTok{df2.rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}fin24\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{\}, inplace }\OperatorTok{=} \VariableTok{True}\NormalTok{)}
+\CommentTok{\# recode gender}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"female"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}male\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"female"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}female\textquotesingle{}}
+\NormalTok{df2.rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{\}, inplace }\OperatorTok{=} \VariableTok{True}\NormalTok{)}
+\CommentTok{\# recode account\_fin}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}account\_fin\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"account\_fin"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}account\_fin\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"account\_fin"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\CommentTok{\# recode emp\_in}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}emp\_in\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"emp\_in"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}emp\_in\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"emp\_in"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\CommentTok{\# Recode fin32 values: Recieved Wage Payments}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+\CommentTok{\# recode fin48 values: National ID}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"fin48"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fin48"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"fin48"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"fin48"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+\CommentTok{\#recode educ values: Highest Level of Education}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"educ"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Primary\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"educ"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Secondary\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"educ"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Tertiary\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"educ"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{5}\NormalTok{, }\StringTok{"educ"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+\CommentTok{\#recode fin25 values: Main Source of Emergency Funds}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Savings\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Family, relatives, or friends\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Money from working\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Borrowing from a bank/employer/private lender\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{5}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Selling assets\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{6}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}(Some other source)\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{7}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{8}\NormalTok{, }\StringTok{"fin25"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+\CommentTok{\#recode fin32 values: Recieved Wage Payments}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Yes\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}No\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Don}\CharTok{\textbackslash{}\textquotesingle{}}\StringTok{t Know\textquotesingle{}}
+\NormalTok{df2.loc[df2[}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \DecValTok{4}\NormalTok{, }\StringTok{"fin32"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}Refuse\textquotesingle{}}
+
+\NormalTok{df2.rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}fin32\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}Receive Wage Payments\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin48\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}National ID\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}educ\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}Education\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}fin25\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}main\_source\_funds\textquotesingle{}}\NormalTok{\}, inplace }\OperatorTok{=} \VariableTok{True}\NormalTok{)}
+\NormalTok{df2.head()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        gender   age emp_in  ... National ID Education economy
+## 12138    male  60.0     No  ...          No   Primary   Benin
+## 12139    male  45.0    Yes  ...         Yes   Primary   Benin
+## 12140    male  27.0    Yes  ...         Yes  Tertiary   Benin
+## 12141  female  24.0    Yes  ...          No   Primary   Benin
+## 12142    male  22.0    Yes  ...          No   Primary   Benin
+## 
+## [5 rows x 10 columns]
+\end{verbatim}
+
+\hypertarget{demographics}{%
+\subsection{Demographics}\label{demographics}}
+
+\hypertarget{gender}{%
+\subsubsection{\texorpdfstring{\emph{gender}}{gender}}\label{gender}}
+
+The variable \emph{gender} distinguishes gender. There are 16,716 males
+in this dataset and 17,388 females. This is a fairly equal distribution
+that we can see in the graph below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot female versus not}
+\NormalTok{g }\OperatorTok{=}\NormalTok{ sns.countplot(x }\OperatorTok{=} \StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ df2, palette }\OperatorTok{=}\NormalTok{ gender\_palette)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ g.patches:}
+\NormalTok{   g.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+} \FloatTok{.3}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{g.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Gender Distribution"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\hypertarget{education}{%
+\subsubsection{\texorpdfstring{\emph{Education}}{Education}}\label{education}}
+
+The \emph{Education} variable corresponds to the highest level of
+education attained with `Primary', `Secondary' and `Tertiary' being the
+three options. Here is the distribution of education by gender:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ebg }\OperatorTok{=}\NormalTok{ sns.countplot(x}\OperatorTok{=}\StringTok{"Education"}\NormalTok{, hue}\OperatorTok{=} \StringTok{"gender"}\NormalTok{, palette}\OperatorTok{=}\NormalTok{ gender\_palette, order}\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}Primary\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Secondary\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Tertiary\textquotesingle{}}\NormalTok{], data}\OperatorTok{=}\NormalTok{ df2)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ ebg.patches:}
+\NormalTok{   ebg.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+}\FloatTok{.05}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{ebg.}\BuiltInTok{set}\NormalTok{(title}\OperatorTok{=} \StringTok{"Education Count by Gender"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-7-3.pdf}
+
+The bar plot above shows us that there are more women with primary
+education, but more men with secondary or tertiary education. Overall,
+we can see that there are more men with higher education than women.
+About 1,000 more men have received a secondary education and there is
+about double the amount of men with tertiary education compared to women
+showing a clear disparity.
+
+\hypertarget{economy}{%
+\subsubsection{\texorpdfstring{\emph{economy}}{economy}}\label{economy}}
+
+The final demographic variable of interest is the \emph{economy}
+variable that separates respondents by which country they live in. There
+are 35 different countries with exactly 1000 respondents from each.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Number of Observations per Country}
+\NormalTok{plt.rcParams[}\StringTok{"figure.figsize"}\NormalTok{] }\OperatorTok{=}\NormalTok{ (}\DecValTok{10}\NormalTok{,}\DecValTok{7}\NormalTok{)}
+\NormalTok{sns.countplot(y }\OperatorTok{=} \StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ df2).}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Distribution of Participants per Country"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-8-5.pdf}
+
+\hypertarget{financial}{%
+\subsection{Financial}\label{financial}}
+
+From the financial related variables, we were most interested in a few
+specific financial variables that we thought would have an impact on
+access to emergency funds.
+
+\hypertarget{account_fin}{%
+\subsubsection{\texorpdfstring{\emph{account\_fin}}{account\_fin}}\label{account_fin}}
+
+The first variable being \emph{account\_fin} which distinguishes those
+who have a financial account from those who don't:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot of number of people who have a bank account}
+\NormalTok{g }\OperatorTok{=}\NormalTok{ sns.countplot(x }\OperatorTok{=} \StringTok{\textquotesingle{}account\_fin\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ df2, palette }\OperatorTok{=}\NormalTok{ yes\_no\_pal)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ g.patches:}
+\NormalTok{   g.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+} \FloatTok{.3}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{g.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Distribution of Has a Financial Account"}\NormalTok{, xlabel }\OperatorTok{=} \StringTok{\textquotesingle{}Has a financial account?\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-9-7.pdf}
+
+We can see that about two thirds of individuals do not have an account.
+This is likely connected to the lack of access to emergency funds
+displayed above given that if an individual does not have a financial
+account, we would expect they are less likely to have a source of
+emergency funds, as emergency funds are generally stored in an account.
+
+\hypertarget{reason}{%
+\subsubsection{\texorpdfstring{\emph{reason}}{reason}}\label{reason}}
+
+Those who do not have a financial account were asked why in the
+\emph{reason} variable, that provides a list of possible reasons for not
+having a financial account:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# reasons for no financial account}
+\CommentTok{\# pivot data to long format}
+\NormalTok{df\_long }\OperatorTok{=}\NormalTok{ df[[}\StringTok{\textquotesingle{}fin11a\textquotesingle{}}\NormalTok{, }\StringTok{"fin11b"}\NormalTok{, }\StringTok{"fin11c"}\NormalTok{, }\StringTok{"fin11d"}\NormalTok{, }\StringTok{"fin11e"}\NormalTok{, }\StringTok{"fin11f"}\NormalTok{, }\StringTok{"fin11g"}\NormalTok{, }\StringTok{"fin11h"}\NormalTok{]]}\OperatorTok{\textbackslash{}}
+\NormalTok{.stack()}\OperatorTok{\textbackslash{}}
+\NormalTok{.reset\_index()}
+\NormalTok{df\_long.rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}level\_1\textquotesingle{}}\NormalTok{:}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{, }\DecValTok{0}\NormalTok{:}\StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{\}, inplace }\OperatorTok{=} \VariableTok{True}\NormalTok{)}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df\_long.query(}\StringTok{\textquotesingle{}value == 1.0\textquotesingle{}}\NormalTok{) }\CommentTok{\# filter to only "yes" answers for each reason}
+\CommentTok{\# recode reason values}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11a\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}distance\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11b\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}expense\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11c\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}no\_documentation\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11d\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}lack\_trust\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11e\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}religious\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11f\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}lack\_money\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11g\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}family\_member\_has\textquotesingle{}}
+\NormalTok{df3.loc[df3[}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{] }\OperatorTok{==} \StringTok{\textquotesingle{}fin11h\textquotesingle{}}\NormalTok{, }\StringTok{"reason"}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}no\_need\textquotesingle{}}
+\NormalTok{df3.head()}
+
+\CommentTok{\# aggregate counts by reason}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     level_0            reason  value
+## 0     12138          distance    1.0
+## 2     12138  no_documentation    1.0
+## 11    12140        lack_trust    1.0
+## 15    12140           no_need    1.0
+## 18    12141  no_documentation    1.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{reason\_counts }\OperatorTok{=}\NormalTok{ df3.groupby(}\StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{).agg(}\StringTok{\textquotesingle{}count\textquotesingle{}}\NormalTok{).reset\_index()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot of count by reason{-}{-} seaborn}
+\NormalTok{reasons\_plot }\OperatorTok{=}\NormalTok{ sns.barplot(y }\OperatorTok{=} \StringTok{\textquotesingle{}reason\textquotesingle{}}\NormalTok{, x }\OperatorTok{=} \StringTok{\textquotesingle{}value\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ reason\_counts, palette }\OperatorTok{=}\NormalTok{ [pink, pink, pink, pink, pink, pink, pink, pink], order }\OperatorTok{=}\NormalTok{ [}\StringTok{"lack\_money"}\NormalTok{,}\StringTok{"expense"}\NormalTok{,  }\StringTok{"no\_documentation"}\NormalTok{, }\StringTok{"distance"}\NormalTok{, }\StringTok{"lack\_trust"}\NormalTok{, }\StringTok{"no\_need"}\NormalTok{, }\StringTok{"family\_member\_has"}\NormalTok{, }\StringTok{"religious"}\NormalTok{]).}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Reasons for No Financial Account"}\NormalTok{, xlabel }\OperatorTok{=} \StringTok{"count"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{emp_in}{%
+\subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
+
+Employment status was another financial variable of interest represented
+by \emph{emp\_in}, which asks whether or not the participant is in the
+workforce. It appears that about three-fourths of individuals are in the
+workforce:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Distribution by in workforce}
+\NormalTok{g }\OperatorTok{=}\NormalTok{ sns.countplot(x }\OperatorTok{=} \StringTok{\textquotesingle{}emp\_in\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ df2, palette }\OperatorTok{=}\NormalTok{ yes\_no\_pal)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ g.patches:}
+\NormalTok{   g.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+} \FloatTok{.3}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{g.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Distribution of Whether or not in Workforce"}\NormalTok{, xlabel }\OperatorTok{=} \StringTok{"In workforce?"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-9.pdf}
+
+\hypertarget{inc_q}{%
+\subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
+
+And lastly, we evaluated \emph{inc\_q}, which represents income
+quantile. Income quantile is separated into 5 quantiles with 1 being the
+poorest and 5 being the richest. The mean for all of the countries in
+the dataset is 3.241. This means that all the countries average out to
+be about middle class.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_inq }\OperatorTok{=}\NormalTok{ df[}\StringTok{\textquotesingle{}inc\_q\textquotesingle{}}\NormalTok{]}
+\NormalTok{df[}\StringTok{"inc\_q"}\NormalTok{].mean()}
+\CommentTok{\# fig = plt.figure()}
+\CommentTok{\# ax1 = fig.add\_subplot(2,2,1) }
+\CommentTok{\# sns.countplot(df\_inq, ax = ax1)}
+\CommentTok{\# ax1.set\_xlabel("Income Quantile")}
+\CommentTok{\# ax1.set\_xticklabels([\textquotesingle{}Poorest 20\%\textquotesingle{},\textquotesingle{}Second 20\%\textquotesingle{},\textquotesingle{}Middle 20\%\textquotesingle{},\textquotesingle{}Fourth 20\%\textquotesingle{},\textquotesingle{}Richest 20\%\textquotesingle{}])}
+\CommentTok{\# ax1.title.set\_text(\textquotesingle{}Income Quantile  Distribution\textquotesingle{})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3.241085714285714
+\end{verbatim}
+
+The majority of the data set has individuals within the richest
+quantile, Quantile 5.
+
+\hypertarget{emergency-funds}{%
+\subsection{Emergency Funds}\label{emergency-funds}}
+
+To explore access to emergency funds in our dataset, we were interested
+3 variables we thought could be related:
+
+\hypertarget{has_access}{%
+\subsubsection{\texorpdfstring{\emph{has\_access}}{has\_access}}\label{has_access}}
+
+The variable \emph{has\_access} directly asks participants if they have
+access to emergency funds:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot of access to emergency funds}
+\NormalTok{g }\OperatorTok{=}\NormalTok{ sns.countplot(x }\OperatorTok{=} \StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{, data }\OperatorTok{=}\NormalTok{ df2, palette }\OperatorTok{=}\NormalTok{ yes\_no\_pal)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ g.patches:}
+\NormalTok{   g.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+} \FloatTok{.25}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{g.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Distribution of Access to Emergency Funds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-11.pdf}
+
+The barchart above displays the overall distribution of access to
+emergency funds. We can see that over half of individuals represented in
+the data do not have access.
+
+\hypertarget{main_source_funds}{%
+\subsubsection{\texorpdfstring{\emph{main\_source\_funds}}{main\_source\_funds}}\label{main_source_funds}}
+
+We proceeded to explore the source of emergency funds using the
+\emph{main\_source\_funds} variable, which provides a list of options
+for where participants receive their main source of emergency funds:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot of main source of emergency funds}
+\NormalTok{chart }\OperatorTok{=}\NormalTok{ sns.countplot(y }\OperatorTok{=} \StringTok{\textquotesingle{}main\_source\_funds\textquotesingle{}}\NormalTok{, }
+\NormalTok{                      data }\OperatorTok{=}\NormalTok{ df2, }
+\NormalTok{                      order }\OperatorTok{=}\NormalTok{ [}\StringTok{"Money from working"}\NormalTok{,}\StringTok{"Family, relatives, or friends"}\NormalTok{,}
+                               \StringTok{"Savings"}\NormalTok{, }\StringTok{"Selling assets"}\NormalTok{,}
+                               \StringTok{"Borrowing from a bank/employer/private lender"}\NormalTok{, }\StringTok{"(Some other source)"}\NormalTok{]).}\BuiltInTok{set}\NormalTok{(}
+\NormalTok{                      title }\OperatorTok{=} \StringTok{"Distribution of the Main Source of Emergency Funds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The barchart above displays the overall distribution of the main source
+of emergency funds. Most of the individuals with access to emergency
+funds receive their funding from work, their family and friends, or
+their savings.
+
+\hypertarget{recieve-wage-payments}{%
+\subsubsection{\texorpdfstring{\emph{Recieve Wage
+Payments}}{Recieve Wage Payments}}\label{recieve-wage-payments}}
+
+Diving further into the ``Money from Working'' category, we can see that
+only 8196 individuals receive wage payments from the \emph{Receive Wage
+Payments} variable. This analysis suggests that receiving wage payments
+may be a key factor in determining access to emergency funds.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# barplot of recieved wage payments}
+\NormalTok{chart }\OperatorTok{=}\NormalTok{ sns.countplot(x }\OperatorTok{=} \StringTok{\textquotesingle{}Receive Wage Payments\textquotesingle{}}\NormalTok{,data }\OperatorTok{=}\NormalTok{ df2, order }\OperatorTok{=}\NormalTok{ [}\StringTok{"No"}\NormalTok{, }\StringTok{"Yes"}\NormalTok{], palette }\OperatorTok{=}\NormalTok{ yes\_no\_pal)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ chart.patches:}
+\NormalTok{   chart.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+} \FloatTok{.25}\NormalTok{, p.get\_height()}\OperatorTok{+}\DecValTok{100}\NormalTok{))}
+\NormalTok{chart.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Distribution of Received Wage Payments"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-13.pdf}
+
+\hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
+\subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
+\emph{Education} in relation to Emergency
+Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gender-economy-and-education-in-relation-to-emergency-funds}}
+
+Finally, we sought to find if there were disparities in access to
+emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df2[[}\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{]].query(}\StringTok{"gender == \textquotesingle{}female\textquotesingle{}"}\NormalTok{).groupby(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).count()}
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df\_gender.assign(male }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ df\_gender: }\DecValTok{1000} \OperatorTok{{-}}\NormalTok{ df\_gender[}\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{]).rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{\})}
+ 
+\CommentTok{\#Percent of females}
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df\_gender.assign(Female }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ df\_gender: (df\_gender[}\StringTok{\textquotesingle{}female\textquotesingle{}}\NormalTok{])}\OperatorTok{/}\DecValTok{10}\NormalTok{)}
+ 
+\CommentTok{\#Percent of males}
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df\_gender.assign(Male }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ df\_gender: }\DecValTok{100} \OperatorTok{{-}}\NormalTok{ df\_gender[}\StringTok{\textquotesingle{}Female\textquotesingle{}}\NormalTok{])}
+ 
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df\_gender[[}\StringTok{\textquotesingle{}Male\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Female\textquotesingle{}}\NormalTok{]]}
+\NormalTok{df\_gender[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df2.economy.unique()}
+\NormalTok{df\_gender }\OperatorTok{=}\NormalTok{ df\_gender.sort\_values(}\StringTok{\textquotesingle{}Male\textquotesingle{}}\NormalTok{)}
+ 
+\CommentTok{\# Counting by Access to Emergency Funds by gender}
+\NormalTok{f\_access }\OperatorTok{=}\NormalTok{ df2[[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{]].query(}\StringTok{"has\_access == \textquotesingle{}Yes\textquotesingle{} \& gender == \textquotesingle{}female\textquotesingle{}"}\NormalTok{).groupby(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).count()}
+\NormalTok{m\_access }\OperatorTok{=}\NormalTok{ df2[[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}gender\textquotesingle{}}\NormalTok{]].query(}\StringTok{"has\_access == \textquotesingle{}Yes\textquotesingle{}\& gender != \textquotesingle{}female\textquotesingle{}"}\NormalTok{).groupby(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).count()}
+
+\CommentTok{\# Defining acccess vs no access by country columms}
+\NormalTok{f\_count }\OperatorTok{=}\NormalTok{ f\_access[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{]}
+\NormalTok{m\_count }\OperatorTok{=}\NormalTok{ m\_access[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{]}
+ 
+\CommentTok{\# Merging columns}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ pd.merge(f\_count, m\_count, how}\OperatorTok{=}\StringTok{\textquotesingle{}inner\textquotesingle{}}\NormalTok{, on }\OperatorTok{=} \StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{)}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.assign(total }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ df3: df3[}\StringTok{\textquotesingle{}has\_access\_x\textquotesingle{}}\NormalTok{]}\OperatorTok{+}\NormalTok{df3[}\StringTok{\textquotesingle{}has\_access\_y\textquotesingle{}}\NormalTok{])}
+ 
+\CommentTok{\#Percent of females with access}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.assign(f\_percent\_access }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ df3: (df3[}\StringTok{\textquotesingle{}has\_access\_x\textquotesingle{}}\NormalTok{]}\OperatorTok{/}\NormalTok{df3[}\StringTok{"total"}\NormalTok{])}\OperatorTok{*}\DecValTok{100}\NormalTok{)}
+ 
+\CommentTok{\#Percent of males with access}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.assign(m\_percent\_access }\OperatorTok{=} \DecValTok{100} \OperatorTok{{-}}\NormalTok{ df3[}\StringTok{\textquotesingle{}f\_percent\_access\textquotesingle{}}\NormalTok{])}
+ 
+\NormalTok{df3[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df2.economy.unique()}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3[[}\StringTok{\textquotesingle{}m\_percent\_access\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}f\_percent\_access\textquotesingle{}}\NormalTok{,   }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{]]}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.sort\_values(}\StringTok{\textquotesingle{}m\_percent\_access\textquotesingle{}}\NormalTok{)}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.rename(columns }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}m\_percent\_access\textquotesingle{}}\NormalTok{:}\StringTok{\textquotesingle{}Males With Acesss\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}f\_percent\_access\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}Females With Access\textquotesingle{}}\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# create new figure}
+\NormalTok{fig }\OperatorTok{=}\NormalTok{ plt.figure()}
+\CommentTok{\#add sub plot}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <string>:1: MatplotlibDeprecationWarning: The resize_event function was deprecated in Matplotlib 3.6 and will be removed two minor releases later. Use callbacks.process('resize_event', ResizeEvent(...)) instead.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ax1 }\OperatorTok{=}\NormalTok{ fig.add\_subplot(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\CommentTok{\# fig 1}
+\NormalTok{df\_gender.set\_index(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}barh\textquotesingle{}}\NormalTok{, stacked}\OperatorTok{=}\VariableTok{True}\NormalTok{, color}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}steelblue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}pink\textquotesingle{}}\NormalTok{], title }\OperatorTok{=} \StringTok{"Percent of Participants by Country \& Gender"}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ ax1).axvline(x }\OperatorTok{=} \DecValTok{50}\NormalTok{, color }\OperatorTok{=} \StringTok{"red"}\NormalTok{, linestyle }\OperatorTok{=} \StringTok{"dashed"}\NormalTok{)}
+\CommentTok{\#add sub plot}
+\NormalTok{ax2 }\OperatorTok{=}\NormalTok{ fig.add\_subplot(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\CommentTok{\# fig 2}
+\NormalTok{fig2 }\OperatorTok{=}\NormalTok{ df3.set\_index(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).plot(kind}\OperatorTok{=}\StringTok{\textquotesingle{}barh\textquotesingle{}}\NormalTok{, stacked}\OperatorTok{=}\VariableTok{True}\NormalTok{, color}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}steelblue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}pink\textquotesingle{}}\NormalTok{], title }\OperatorTok{=} \StringTok{"Percent of Participants with Access to Emergency Funds by Country \& Gender"}\NormalTok{, ax }\OperatorTok{=}\NormalTok{ ax2).axvline(x }\OperatorTok{=} \DecValTok{50}\NormalTok{, color }\OperatorTok{=} \StringTok{"red"}\NormalTok{, linestyle }\OperatorTok{=} \StringTok{"dashed"}\NormalTok{)}
+\CommentTok{\# set fig size}
+\NormalTok{fig.set\_size\_inches(}\DecValTok{29}\NormalTok{, }\DecValTok{14}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In the side-by-side barplots above, we can see that although only about
+50\% of the countries have a higher percentage of men represented in the
+questionnaire (left bar plot), in 75\% of the countries more men have
+access to emergency funds than women (right bar plot).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Counting by Access to Emergency Funds by country}
+\NormalTok{access }\OperatorTok{=}\NormalTok{ df2[[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{]].query(}\StringTok{"has\_access == \textquotesingle{}Yes\textquotesingle{}"}\NormalTok{).groupby(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).count()}
+\NormalTok{no\_access }\OperatorTok{=}\NormalTok{ df2[[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{]].query(}\StringTok{"has\_access == \textquotesingle{}No\textquotesingle{}"}\NormalTok{).groupby(}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{).count()}
+ 
+\CommentTok{\# Defining acccess vs no access by country columms}
+\NormalTok{a\_count }\OperatorTok{=}\NormalTok{ access[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{]}
+\NormalTok{no\_a\_count }\OperatorTok{=}\NormalTok{ no\_access[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{]}
+ 
+\CommentTok{\# Merging columns}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ pd.merge(a\_count, no\_a\_count, how}\OperatorTok{=}\StringTok{\textquotesingle{}inner\textquotesingle{}}\NormalTok{, on }\OperatorTok{=} \StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{)}\CommentTok{\#.assign(total = lambda df3: df3[\textquotesingle{}has\_access\_x\textquotesingle{}]+df3[\textquotesingle{}has\_access\_y\textquotesingle{}])}
+\CommentTok{\#df3 = df3.assign(percent\_access = lambda df3: (df3[\textquotesingle{}has\_access\_x\textquotesingle{}]/df3["total"])*100)}
+ 
+\NormalTok{df3[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{] }\OperatorTok{=}\NormalTok{ df2.economy.unique()}
+\NormalTok{df3 }\OperatorTok{=}\NormalTok{ df3.sort\_values(}\StringTok{\textquotesingle{}has\_access\_x\textquotesingle{}}\NormalTok{)}
+
+
+\NormalTok{educ\_perc }\OperatorTok{=}\NormalTok{ (df2.groupby([}\StringTok{\textquotesingle{}Education\textquotesingle{}}\NormalTok{])[}\StringTok{\textquotesingle{}has\_access\textquotesingle{}}\NormalTok{]}
+\NormalTok{                     .value\_counts(normalize}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\NormalTok{                     .rename(}\StringTok{\textquotesingle{}percentage\textquotesingle{}}\NormalTok{)}
+\NormalTok{                     .mul(}\DecValTok{100}\NormalTok{)}
+\NormalTok{                     .reset\_index()}
+\NormalTok{                     )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{educ\_access }\OperatorTok{=}\NormalTok{ sns.barplot(x }\OperatorTok{=} \StringTok{"Education"}\NormalTok{, y }\OperatorTok{=} \StringTok{"percentage"}\NormalTok{, order}\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}Primary\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Secondary\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Tertiary\textquotesingle{}}\NormalTok{], hue}\OperatorTok{=}\StringTok{"has\_access"}\NormalTok{, palette}\OperatorTok{=}\NormalTok{ yes\_no\_pal, hue\_order}\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{], data }\OperatorTok{=}\NormalTok{ educ\_perc)}
+\ControlFlowTok{for}\NormalTok{ p }\KeywordTok{in}\NormalTok{ educ\_access.patches:}
+\NormalTok{   educ\_access.annotate(}\StringTok{\textquotesingle{}}\SpecialCharTok{\{:.1f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{(p.get\_height()), (p.get\_x()}\OperatorTok{+}\FloatTok{.12}\NormalTok{, p.get\_height()}\OperatorTok{+}\FloatTok{.5}\NormalTok{))}
+\NormalTok{educ\_access.}\BuiltInTok{set}\NormalTok{(title }\OperatorTok{=} \StringTok{"Access to Emergency Funds by Education Level"}\NormalTok{, xlabel }\OperatorTok{=} \StringTok{\textquotesingle{}Education Level\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-20-15.pdf}
+
+Additionally, in the barplot above we can see the distribution of funds
+based on an individual's highest education level. 63\% of people with
+only a primary education do not have access to emergency funds compared
+to 37\% of people who do. These numbers are more evenly distributed for
+those with secondary education, with about 49\% of people not having
+access to emergency funds, while 51\% of people do have access. Finally,
+for those with a tertiary level of education we can see that about 72\%
+of people have access to emergency funds while only 28\% of that group
+does not have access. Overall, we can make the assumption that people
+with a higher level of education are more likely to have access to
+emergency funds.
 
 \hypertarget{materials-and-methods}{%
 \section{Materials and Methods}\label{materials-and-methods}}

@@ -71,20 +71,27 @@ abbreviations:
 output: rticles::mdpi_article
 ---
 ```{python}
-# test python chunk
 # !pip install seaborn
+# !pip install numpy
+# !pip install pandas
+# !pip install matplotlib
+```
+
+```{python}
+# test python chunk
+
 # Imports
 import pandas as pd
 import numpy as np
 import seaborn as sns
-from plotnine import *
+# from plotnine import *
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeRegressor
-import statsmodels.api as sm
-from sklearn.compose import make_column_transformer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
+# from sklearn.model_selection import train_test_split
+# from sklearn.tree import DecisionTreeRegressor
+# import statsmodels.api as sm
+# from sklearn.compose import make_column_transformer
+# from sklearn.preprocessing import OneHotEncoder
+# from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 ```
 
 
@@ -111,7 +118,7 @@ Our data is derived from The World Bank in The Global Findex Database, comprisin
 
 ```{python}
 # Read in Data
-file = '~/Documents/Smith College/SDS Capstone/2022-09-proj7-women-at-table/findex_SubSahAfrica.csv'
+file = '~/Desktop/Fall-2022/SDS410/women-at-table/findex_SubSahAfrica.csv'
 df = pd.read_csv(file, index_col=0)
 print(f'There are {df.shape[0]} entries and {df.shape[1]} features')
 df.head()
@@ -131,8 +138,6 @@ pink = '#FFC0CB'
 ```
 
 ```{python}
-#@title
-%%capture --no-display
 # select vars of interest
 df2 = df[['female', 'age', 'emp_in', 'account_fin', 'fin24', 'fin25', 'fin32', 'fin48', 'educ', 'economy']]
 df2 = df2.query('fin24 < 3')
@@ -184,7 +189,7 @@ df2.loc[df2['fin32'] == 2, "fin32"] = 'No'
 df2.loc[df2['fin32'] == 3, "fin32"] = 'Don\'t Know'
 df2.loc[df2['fin32'] == 4, "fin32"] = 'Refuse'
 
-df2.rename(columns = {'fin32': 'Receive Wage Payments', 'fin48': 'National ID', 'educ': 'Education', 'fin25': 'main_source_funds', 'fin32': 'Recieve Wage Payments'}, inplace = True)
+df2.rename(columns = {'fin32': 'Receive Wage Payments', 'fin48': 'National ID', 'educ': 'Education', 'fin25': 'main_source_funds'}, inplace = True)
 df2.head()
 ```
 
@@ -248,6 +253,30 @@ We can see that about two thirds of individuals do not have an account. This is 
 Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account:
 
 ```{python}
+# reasons for no financial account
+# pivot data to long format
+df_long = df[['fin11a', "fin11b", "fin11c", "fin11d", "fin11e", "fin11f", "fin11g", "fin11h"]]\
+.stack()\
+.reset_index()
+df_long.rename(columns = {'level_1':'reason', 0:'value'}, inplace = True)
+df3 = df_long.query('value == 1.0') # filter to only "yes" answers for each reason
+# recode reason values
+df3.loc[df3['reason'] == 'fin11a', "reason"] = 'distance'
+df3.loc[df3['reason'] == 'fin11b', "reason"] = 'expense'
+df3.loc[df3['reason'] == 'fin11c', "reason"] = 'no_documentation'
+df3.loc[df3['reason'] == 'fin11d', "reason"] = 'lack_trust'
+df3.loc[df3['reason'] == 'fin11e', "reason"] = 'religious'
+df3.loc[df3['reason'] == 'fin11f', "reason"] = 'lack_money'
+df3.loc[df3['reason'] == 'fin11g', "reason"] = 'family_member_has'
+df3.loc[df3['reason'] == 'fin11h', "reason"] = 'no_need'
+df3.head()
+
+# aggregate counts by reason
+reason_counts = df3.groupby('reason').agg('count').reset_index()
+```
+
+
+```{python}
 # barplot of count by reason-- seaborn
 reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
 ```
@@ -269,11 +298,14 @@ g.set(title = "Distribution of Whether or not in Workforce", xlabel = "In workfo
 And lastly, we evaluated *inc_q*, which represents income quantile. Income quantile is separated into 5 quantiles with 1 being the poorest and 5 being the richest. The mean for all of the countries in the dataset is 3.241. This means that all the countries average out to be about middle class.
 
 ```{python}
+df_inq = df['inc_q']
 df["inc_q"].mean()
-sns.countplot(df_inq, ax = ax1)
-ax1.set_xlabel("Income Quantile")
-ax1.set_xticklabels(['Poorest 20%','Second 20%','Middle 20%','Fourth 20%','Richest 20%'])
-ax1.title.set_text('Income Quantile  Distribution')
+# fig = plt.figure()
+# ax1 = fig.add_subplot(2,2,1) 
+# sns.countplot(df_inq, ax = ax1)
+# ax1.set_xlabel("Income Quantile")
+# ax1.set_xticklabels(['Poorest 20%','Second 20%','Middle 20%','Fourth 20%','Richest 20%'])
+# ax1.title.set_text('Income Quantile  Distribution')
 ```
 
 The majority of the data set has individuals within the richest quantile, Quantile 5.
@@ -329,8 +361,6 @@ chart.set(title = "Distribution of Received Wage Payments")
 Finally, we sought to find if there were disparities in access to emergency funds by *gender*, *economy*, and *Education*.
 
 ```{python}
-#@title
-%%capture --no-display
 df_gender = df2[['gender', 'economy']].query("gender == 'female'").groupby('economy').count()
 df_gender = df_gender.assign(male = lambda df_gender: 1000 - df_gender['gender']).rename(columns = {'gender': 'female'})
  
@@ -386,7 +416,6 @@ fig.set_size_inches(29, 14)
 In the side-by-side barplots above, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
 
 ```{python}
-%capture --no-display
 # Counting by Access to Emergency Funds by country
 access = df2[['has_access', 'economy']].query("has_access == 'Yes'").groupby('economy').count()
 no_access = df2[['has_access', 'economy']].query("has_access == 'No'").groupby('economy').count()
