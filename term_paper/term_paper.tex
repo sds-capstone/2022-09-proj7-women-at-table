@@ -160,6 +160,47 @@ subject discipline.).}
 %\setcounter{secnumdepth}{4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % tightlist command for lists without linebreak
 \providecommand{\tightlist}{%
@@ -278,7 +319,25 @@ showing a clear disparity.
 
 The final demographic variable of interest is the \emph{economy}
 variable that separates respondents by which country they live in. There
-are 35 different countries with exactly 1000 respondents from each.
+are 35 different countries from Sub-Saharan Africa with exactly 1000
+respondents from each.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{].unique()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array(['Benin', 'Botswana', 'Burkina Faso', 'Cameroon',
+##        'Central African Republic', 'Chad', 'Congo, Dem. Rep.',
+##        'Congo, Rep.', "Cote d'Ivoire", 'Ethiopia', 'Gabon', 'Ghana',
+##        'Guinea', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi',
+##        'Mali', 'Mauritania', 'Mauritius', 'Mozambique', 'Namibia',
+##        'Niger', 'Nigeria', 'Rwanda', 'Senegal', 'Sierra Leone',
+##        'South Africa', 'South Sudan', 'Tanzania', 'Togo', 'Uganda',
+##        'Zambia', 'Zimbabwe'], dtype=object)
+\end{verbatim}
 
 \hypertarget{financial}{%
 \subsection{Financial}\label{financial}}
@@ -293,7 +352,7 @@ access to emergency funds.
 The first variable being \emph{account\_fin} which distinguishes those
 who have a financial account from those who don't:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-8-5.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-9-5.pdf}
 
 We can see that about two thirds of individuals do not have an account.
 This is likely connected to the lack of access to emergency funds
@@ -308,7 +367,7 @@ Those who do not have a financial account were asked why in the
 \emph{reason} variable, that provides a list of possible reasons for not
 having a financial account:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-10-7.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-7.pdf}
 
 \hypertarget{emp_in}{%
 \subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
@@ -318,7 +377,7 @@ by \emph{emp\_in}, which asks whether or not the participant is in the
 workforce. It appears that about three-fourths of individuals are in the
 workforce:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-9.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-9.pdf}
 
 \hypertarget{inc_q}{%
 \subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
@@ -352,7 +411,7 @@ capita is the country's total income in a year/ the country's population
 size. For context, in the United States, ``emergency funds'' would be
 defined as about \$3,000.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-13-11.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-11.pdf}
 
 The barchart above displays the overall distribution of access to
 emergency funds. We can see that over half of individuals represented in
@@ -365,7 +424,7 @@ We proceeded to explore the source of emergency funds using the
 \emph{main\_source\_funds} variable, which provides a list of options
 for where participants receive their main source of emergency funds:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-13.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-13.pdf}
 
 The barchart above displays the overall distribution of the main source
 of emergency funds. Most of the individuals with access to emergency
@@ -381,7 +440,7 @@ only 8196 individuals receive wage payments from the \emph{Receive Wage
 Payments} variable. This analysis suggests that receiving wage payments
 may be a key factor in determining access to emergency funds.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-15.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-15.pdf}
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
@@ -391,16 +450,16 @@ Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gend
 Finally, we sought to find if there were disparities in access to
 emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-17-17.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-18-17.pdf}
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-18-19.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-19-19.pdf}
 
 In the side-by-side barplots above, we can see that although only about
 50\% of the countries have a higher percentage of men represented in the
 questionnaire (left bar plot), in 75\% of the countries more men have
 access to emergency funds than women (right bar plot).
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-20-21.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-21-21.pdf}
 
 Additionally, in the barplot above we can see the distribution of funds
 based on an individual's highest education level. 63\% of people with
@@ -414,29 +473,107 @@ does not have access. Overall, we can make the assumption that people
 with a higher level of education are more likely to have access to
 emergency funds.
 
-\hypertarget{materials-and-methods}{%
-\section{Materials and Methods}\label{materials-and-methods}}
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
 
-Materials and Methods \citep{knight_automated_2020} should be described
-with sufficient details to allow others to replicate and build on
-published results. Please note that publication of your manuscript
-implicates that you must make all materials, data, computer code, and
-protocols associated with the publication available to readers. Please
-disclose at the submission stage any restrictions on the availability of
-materials or information. New methods and protocols should be described
-in detail while well-established methods can be briefly described and
-appropriately cited.\citep{kypraiou_what_2021}
+\hypertarget{software}{%
+\subsection{Software}\label{software}}
 
-Research manuscripts reporting large datasets that are deposited in a
-publicly available database should specify where the data have been
-deposited and provide the relevant accession numbers. If the accession
-numbers have not yet been obtained at the time of submission, please
-state that they will be provided during review. They must be provided
-prior to publication.\citep{gebru_datasheets_2021}
+We conducted our analysis in a Google Colab Notebook primarily employing
+the python libraries \href{https://pandas.pydata.org/}{pandas} and
+\href{https://numpy.org/}{numpy} for data cleaning and exploratory
+analysis, as well as \href{https://scikit-learn.org/stable/}{sklearn}
+and \href{https://aif360.readthedocs.io/en/latest/}{aif360} for
+implementing machine learning methods, fairness metrics, and de-biasing
+techniques. The notebook detailing our
+\href{https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/final_project.ipynb}{full
+analysis} is available via our public
+\href{https://github.com/sds-capstone/2022-09-proj7-women-at-table}{GitHub
+repository}.
 
-Interventionary studies involving animals or humans, and other studies
-require ethical approval must list the authority that provided approval
-and the corresponding ethical approval code.
+\hypertarget{data-cleaning}{%
+\subsection{Data Cleaning}\label{data-cleaning}}
+
+Before fitting the model, we performed several pre-processing steps on
+the data in order to remove unnecessary or redundant information,
+address missing values, and ensure that the variables were coded such
+that they would be processed appropriately by the model. Some of these
+steps were performed after fitting the initial model, and some choices
+were made based on the impacts of those choices on the performance of
+the model.
+
+First, we removed the arbitrary variables \emph{economycode} (country
+code) and \emph{regionwb} (region); \emph{economycode} is essentially a
+duplicate of \emph{economy} (country name), and \emph{regionwb} is the
+same for all rows (value is Sub-Saharan) since this is the variable that
+we initially filtered by. Next, we checked for variables with a high
+percentage of missing values. Several variables have many missing values
+because they are follow-up questions to a previous question that are
+only asked if the respondent gives a specific for a previous question.
+We chose to drop all variables with more than 30\% missing values (58
+variables total) because we observed by running the model multiple times
+that variables with NA percentages above this threshold had no impact on
+the model accuracy or fairness. Thus, it made sense to remove them if
+their presence is negligible when included in the model. Next, we
+checked for variables with high levels of redundancy (i.e.~little
+variation), defining a high level of redundancy as 95\% or more of the
+values being the same. The only variable with a high level of redundancy
+was \emph{pay\_online} (a binary variable indicating whether or not an
+individual has paid online for something), and we chose to remove it
+because removing it had no impact on the model accuracy and fairness.
+
+Many of the questions in the survey were structured such that the
+potential responses were ``yes'', ``no'', ``don't know'', and
+``refuse''. Based on our exploratory data analysis, it seems that for
+most questions, the numbers of ``don't know'' and ``refuse'' responses
+are very low. Furthermore, these responses would not give us much useful
+information when implementing a predictive model. Thus, we chose to
+replace all ``don't know'' and ``refuse'' values with \emph{NA} values.
+We then replaced all remaining missing values (including missing values
+not removed previously and ``don't know'' and ``refuse'' values) with
+the column mean rounded to the nearest whole number (i.e.~the most
+frequent value if the variable is categorical).
+
+Next, we re-coded the country variable into a variable with five
+categories based on the percentage of sampled individuals in the country
+who have access to emergency funds (1 = \textless{} 20\% have access, 2
+= between 20\% and 40\% have access, etc.). All other variables in our
+data set were coded such that the model could appropriately interpret
+them, so we did not have to do any additional re-coding. The majority of
+the variables are binary with 0 = no, 1 = yes, and the rest are either
+categorical variables with hierarchical categories such as income
+quantile and education level or continuous numerical variables such as
+age.
+
+Finally, we created a cartesian product to combine two variables -- one
+indicating whether or not an individual has a financial account and the
+other indicating whether or not the individual has saved money in the
+past 12 months-- in order to increase the accuracy of the model after
+fitting the initial model.
+
+After this pre-processing, we have 42 predictor variables and 35,000
+observations.
+
+\hypertarget{model-selection}{%
+\subsection{Model Selection}\label{model-selection}}
+
+Given that we are aiming to predict a binary outcome (possible or not
+possible to come up with emergency funds), our model needs to be a
+classification model. We tried two of the most common model types used
+for classification-- logistic regression and decision tree classifier.
+We ultimately chose the decision tree classifier model over the logistic
+regression model because the baseline accuracy was higher (61\% versus
+55\%). Furthermore, the decision tree model makes more intuitive sense
+given our data since most of our predictors are binary variables, and
+binary predictors fit well into the tree structure. We were able to
+further improve the accuracy of the decision tree model to 68\% by using
+cross-validation to specify the max depth as 6. The decision tree model
+uses machine learning to predict outcomes by organizing the variables
+into a tree that branches off at each decision point based on the value
+of the variable at that point. The most influential variables are at the
+top, and the outcome variable is at the end of each branch. We split our
+data into 70\% training, 30\% testing because this is the standard
+train-test split used for machine learning algorithms.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
