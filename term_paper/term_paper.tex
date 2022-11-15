@@ -476,6 +476,106 @@ emergency funds.
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
+\hypertarget{software}{%
+\subsection{Software}\label{software}}
+
+We conducted our analysis in a Google Colab Notebook primarily employing
+the python libraries \href{https://pandas.pydata.org/}{pandas} and
+\href{https://numpy.org/}{numpy} for data cleaning and exploratory
+analysis, as well as \href{https://scikit-learn.org/stable/}{sklearn}
+and \href{https://aif360.readthedocs.io/en/latest/}{aif360} for
+implementing machine learning methods, fairness metrics, and de-biasing
+techniques. The notebook detailing our
+\href{https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/final_project.ipynb}{full
+analysis} is available via our public
+\href{https://github.com/sds-capstone/2022-09-proj7-women-at-table}{GitHub
+repository}.
+
+\hypertarget{data-cleaning}{%
+\subsection{Data Cleaning}\label{data-cleaning}}
+
+Before fitting the model, we performed several pre-processing steps on
+the data in order to remove unnecessary or redundant information,
+address missing values, and ensure that the variables were coded such
+that they would be processed appropriately by the model. Some of these
+steps were performed after fitting the initial model, and some choices
+were made based on the impacts of those choices on the performance of
+the model.
+
+First, we removed the arbitrary variables \emph{economycode} (country
+code) and \emph{regionwb} (region); \emph{economycode} is essentially a
+duplicate of \emph{economy} (country name), and \emph{regionwb} is the
+same for all rows (value is Sub-Saharan) since this is the variable that
+we initially filtered by. Next, we checked for variables with a high
+percentage of missing values. Several variables have many missing values
+because they are follow-up questions to a previous question that are
+only asked if the respondent gives a specific response for a previous
+question. We chose to drop all variables with more than 30\% missing
+values (58 variables total) because we observed by running the model
+multiple times that variables with NA percentages above this threshold
+had no impact on the model accuracy or fairness. Thus, it made sense to
+remove them if their presence is negligible when included in the model.
+Next, we checked for variables with high levels of redundancy
+(i.e.~little variation), defining a high level of redundancy as 95\% or
+more of the values being the same. The only variable with a high level
+of redundancy was \emph{pay\_online} (a binary variable indicating
+whether or not an individual has paid online for something), and we
+chose to remove it because removing it had no impact on the model
+accuracy and fairness.
+
+Many of the questions in the survey were structured such that the
+potential responses were ``yes'', ``no'', ``don't know'', and
+``refuse''. Based on our exploratory data analysis, it seems that for
+most questions, the numbers of ``don't know'' and ``refuse'' responses
+are very low. Furthermore, these responses would not give us much useful
+information when implementing a predictive model. Thus, we chose to
+replace all ``don't know'' and ``refuse'' values with \emph{NA} values.
+We then replaced all remaining missing values (including missing values
+not removed previously and ``don't know'' and ``refuse'' values) with
+the column mean rounded to the nearest whole number (i.e.~the most
+frequent value if the variable is categorical).
+
+Next, we re-coded the country variable into a variable with five
+categories based on the percentage of sampled individuals in the country
+who have access to emergency funds (1 = \textless{} 20\% have access, 2
+= between 20\% and 40\% have access, etc.). All other variables in our
+data set were coded such that the model could appropriately interpret
+them, so we did not have to do any additional re-coding. The majority of
+the variables are binary with 0 = no, 1 = yes, and the rest are either
+categorical variables with hierarchical categories such as income
+quantile and education level or continuous numerical variables such as
+age.
+
+Finally, we created a cartesian product to combine two variables -- one
+indicating whether or not an individual has a financial account and the
+other indicating whether or not the individual has saved money in the
+past 12 months-- in order to increase the accuracy of the model after
+fitting the initial model.
+
+After this pre-processing, we have 42 predictor variables and 35,000
+observations.
+
+\hypertarget{model-selection}{%
+\subsection{Model Selection}\label{model-selection}}
+
+Given that we are aiming to predict a binary outcome (possible or not
+possible to come up with emergency funds), our model needs to be a
+classification model. We tried two of the most common model types used
+for classification-- logistic regression and decision tree classifier.
+We ultimately chose the decision tree classifier model over the logistic
+regression model because the baseline accuracy was higher (61\% versus
+55\%). Furthermore, the decision tree model makes more intuitive sense
+given our data since most of our predictors are binary variables, and
+binary predictors fit well into the tree structure. We were able to
+further improve the accuracy of the decision tree model to 68\% by using
+cross-validation to specify the max depth as 6. The decision tree model
+uses machine learning to predict outcomes by organizing the variables
+into a tree that branches off at each decision point based on the value
+of the variable at that point. The most influential variables are at the
+top, and the outcome variable is at the end of each branch. We split our
+data into 70\% training, 30\% testing because this is the standard
+train-test split used for machine learning algorithms.
+
 \hypertarget{subsection-heading-here}{%
 \subsection{Subsection Heading Here}\label{subsection-heading-here}}
 
