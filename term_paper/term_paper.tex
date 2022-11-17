@@ -160,6 +160,47 @@ subject discipline.).}
 %\setcounter{secnumdepth}{4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % tightlist command for lists without linebreak
 \providecommand{\tightlist}{%
@@ -264,7 +305,7 @@ The \emph{Education} variable corresponds to the highest level of
 education attained with `Primary', `Secondary' and `Tertiary' being the
 three options. Here is the distribution of education by gender:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-7-3.pdf}
+\begin{center}\includegraphics{term_paper_files/figure-latex/unnamed-chunk-7-3} \end{center}
 
 The bar plot above shows us that there are more women with primary
 education, but more men with secondary or tertiary education. Overall,
@@ -278,7 +319,25 @@ showing a clear disparity.
 
 The final demographic variable of interest is the \emph{economy}
 variable that separates respondents by which country they live in. There
-are 35 different countries with exactly 1000 respondents from each.
+are 35 different countries from Sub-Saharan Africa with exactly 1000
+respondents from each.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df2[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{].unique()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## array(['Benin', 'Botswana', 'Burkina Faso', 'Cameroon',
+##        'Central African Republic', 'Chad', 'Congo, Dem. Rep.',
+##        'Congo, Rep.', "Cote d'Ivoire", 'Ethiopia', 'Gabon', 'Ghana',
+##        'Guinea', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi',
+##        'Mali', 'Mauritania', 'Mauritius', 'Mozambique', 'Namibia',
+##        'Niger', 'Nigeria', 'Rwanda', 'Senegal', 'Sierra Leone',
+##        'South Africa', 'South Sudan', 'Tanzania', 'Togo', 'Uganda',
+##        'Zambia', 'Zimbabwe'], dtype=object)
+\end{verbatim}
 
 \hypertarget{financial}{%
 \subsection{Financial}\label{financial}}
@@ -293,7 +352,7 @@ access to emergency funds.
 The first variable being \emph{account\_fin} which distinguishes those
 who have a financial account from those who don't:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-8-5.pdf}
+\begin{center}\includegraphics{term_paper_files/figure-latex/unnamed-chunk-9-5} \end{center}
 
 We can see that about two thirds of individuals do not have an account.
 This is likely connected to the lack of access to emergency funds
@@ -308,7 +367,7 @@ Those who do not have a financial account were asked why in the
 \emph{reason} variable, that provides a list of possible reasons for not
 having a financial account:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-10-7.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-7.pdf}
 
 \hypertarget{emp_in}{%
 \subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
@@ -318,7 +377,7 @@ by \emph{emp\_in}, which asks whether or not the participant is in the
 workforce. It appears that about three-fourths of individuals are in the
 workforce:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-9.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-9.pdf}
 
 \hypertarget{inc_q}{%
 \subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
@@ -352,7 +411,7 @@ capita is the country's total income in a year/ the country's population
 size. For context, in the United States, ``emergency funds'' would be
 defined as about \$3,000.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-13-11.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-11.pdf}
 
 The barchart above displays the overall distribution of access to
 emergency funds. We can see that over half of individuals represented in
@@ -365,7 +424,7 @@ We proceeded to explore the source of emergency funds using the
 \emph{main\_source\_funds} variable, which provides a list of options
 for where participants receive their main source of emergency funds:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-13.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-13.pdf}
 
 The barchart above displays the overall distribution of the main source
 of emergency funds. Most of the individuals with access to emergency
@@ -381,7 +440,7 @@ only 8196 individuals receive wage payments from the \emph{Receive Wage
 Payments} variable. This analysis suggests that receiving wage payments
 may be a key factor in determining access to emergency funds.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-15.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-15.pdf}
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
@@ -391,16 +450,20 @@ Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gend
 Finally, we sought to find if there were disparities in access to
 emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-17-17.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-18-17.pdf}
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-18-19.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-19-19.pdf}
 
 In the side-by-side barplots above, we can see that although only about
 50\% of the countries have a higher percentage of men represented in the
 questionnaire (left bar plot), in 75\% of the countries more men have
 access to emergency funds than women (right bar plot).
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-20-21.pdf}
+\begin{verbatim}
+## <string>:1: MatplotlibDeprecationWarning: The resize_event function was deprecated in Matplotlib 3.6 and will be removed two minor releases later. Use callbacks.process('resize_event', ResizeEvent(...)) instead.
+\end{verbatim}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-21-21.pdf}
 
 Additionally, in the barplot above we can see the distribution of funds
 based on an individual's highest education level. 63\% of people with
@@ -417,26 +480,323 @@ emergency funds.
 \hypertarget{materials-and-methods}{%
 \section{Materials and Methods}\label{materials-and-methods}}
 
-Materials and Methods \citep{knight_automated_2020} should be described
-with sufficient details to allow others to replicate and build on
-published results. Please note that publication of your manuscript
-implicates that you must make all materials, data, computer code, and
-protocols associated with the publication available to readers. Please
-disclose at the submission stage any restrictions on the availability of
-materials or information. New methods and protocols should be described
-in detail while well-established methods can be briefly described and
-appropriately cited.\citep{kypraiou_what_2021}
+\hypertarget{metrics}{%
+\subsection{Metrics}\label{metrics}}
 
-Research manuscripts reporting large datasets that are deposited in a
-publicly available database should specify where the data have been
-deposited and provide the relevant accession numbers. If the accession
-numbers have not yet been obtained at the time of submission, please
-state that they will be provided during review. They must be provided
-prior to publication.\citep{gebru_datasheets_2021}
+Fairness metrics are a way to assess machine learning algorithms for
+unwanted bias. Algorithms can classify people unfairly using data
+collected in a biased environment. When classifying people, it's
+important to understand how these classifications can contribute to and
+reinforce discriminatory social systems. Accuracy shouldn't always be
+prioritized. It is useful to sacrifice accuracy in favor of fairness
+when using machine learning algorithms to make decisions impacting
+people.To assess fairness and accuracy in our model we explore 13
+different metrics, 10 of which are fairness metrics. Fairness metrics
+can be split into group and individual metrics.
 
-Interventionary studies involving animals or humans, and other studies
-require ethical approval must list the authority that provided approval
-and the corresponding ethical approval code.
+Group fairness metrics ensure parity between privileged and unprivileged
+groups of a protected class. For example, for the protected class sex,
+the privileged group is men and the unprivileged group is women. The
+model should work similarly for both of these groups and not favor the
+privileged group. Group fairness metrics measures how discriminatory the
+model classifies the unprivileged
+group\citep{binns2020apparent, mehrabi2021survey, caton2020fairness}.
+The group metrics we explore include statistical parity difference,
+equal opportunity difference, disparate impact,precision score
+difference, general entropy difference,and conditional demographic
+parity.Not all group fairness metrics can be satisfied at the same time.
+For example equal opportunity difference and statistical parity
+difference cannot be simultaneously accounted
+for\citep{kypraiou_what_2021}.
+
+Individual fairness metrics measure how similarly the model predicts for
+similar observations. Will two very similar people receive the same
+classification? Individual fairness metrics contradict group fairness
+metrics. When accounting for imbalanced predictions between groups, the
+within group fairness can suffer\citep{kypraiou_what_2021}. In the
+process of satisfying group metrics, two similar subjects only differing
+by sex, may be classified differently
+\citep{binns2020apparent, mehrabi2021survey, caton2020fairness, zhou2022bias}.
+The individual metrics we explore are general entropy error and
+consistency score. We can measure both individual and group fairness
+with the between group general entropy error metric.
+
+What happens when we remove the sensitive attributes in our data and
+then run the model? Will the model still be biased against protected
+groups? In most cases, no. There are often variables that remain in the
+data that act as pseudo substitutes for the protected attribute
+\citep{zhou2022bias}. For example, if race was excluded from the model
+but the variable zip code remained. Zip code can act as a stand in for
+race in regions where people are segregated by race.
+
+In our case we are focusing on the protected attribute gender. The other
+variables in this data set are education, age, and all the financial
+variables. If any of these variables are segregated by gender, by
+inherit gender bias in society, then simply removing the gender variable
+wont solve anything.
+
+\textbf{Accuracy} Accuracy is a measure of how many classifications our
+model predicts correctly compared to all the predictions. The ratio of
+correctly predicted classifications to all the predictions. Accuracy
+cannot tell us if the predictions are equally correct across positives
+and negatives \citep{juba2019precision, gupta2021recall}. 55\% of the
+people in our data set don't have access to emergency funds. As long as
+our model predicts negatives more than half the time, we can get a good
+accuracy. However, our model will lose the ability to accurately predict
+positives. It is important to consider accuracy along with precision and
+recall so we can more fully understand how our model is classifying
+people.
+
+\(Accuracy = (True Positives + True Negatives) / (True Positives + True Negatives + False Positives + False Negatives)\)
+
+\textbf{Precision} Precision is a measure of how accurately a model
+predicts positive outcomes.The ratio of correctly predicted positives to
+all predicted positives. With high precision rates, we have low false
+positive rates \citep{juba2019precision, gupta2021recall}.
+
+\(Precision = true positives / (true positives + false positives)\)
+
+\textbf{Recall} Recall is a measure of how accurately a model predicts
+negative outcomes.The ratio of correctly predicted negatives to all
+predicted negatives\citep{gupta2021recall}
+
+\(Recall = true negatives / all negatives)\)
+
+\textbf{Statistical Parity Difference} This metric computes the
+difference in percentages between the ``privileged'' and
+``non-privileged'' group of individuals who were predicted to have the
+desired outcome. In this case, it is essentially
+
+(\% of females who were predicted to have access to emergency funds) -
+(\% of males who were predicted to have access to emergency funds)
+
+The ``ideal'' value is 0 because if we define fairness as statistical
+parity, the goal would be for the percentages to be equal for both
+groups. If the value is negative, that means that the percentage of
+individuals with the positive outcome is higher for the privileged group
+(males), implying that the model is biased in favor of the privileged
+group. Conversely, if the value is positive, the model is biased in
+favor of the unprivileged group. The acceptable range in which the model
+is considered fair is between -0.1 to 0.1 (with percentages expressed as
+decimals, e.g.~0.1 = 10\%). It is important to note that this metric is
+solely focused on making the percentage of \emph{predicted} favorable
+outcomes equal across groups and does not take into account the accuracy
+of the predictions at all.\citep{caton2020fairness, kypraiou_what_2021}
+
+Relating to our data, this metric will tell us if our model predicts
+that men have more access to emergency funds than women. In our data,
+men in fact do have more access to emergency funds than women. 51\% of
+men have access to emergency funds while only 38.2\% of women have
+access to emergency funds. When using this metric to asses our model the
+interpretation depends on the context. If this model is being used to
+decide how to allocate emergency funds, we might not want to prioritize
+satisfying this metric. We are using this model in an educational and
+exploratory manner, so we will use techniques to account for this
+metric.
+
+\textbf{Equal Opportunity Difference} This metric is similar to
+statistical parity in that it is also a group fairness metric, but it is
+different in that it takes into account accuracy of the model in
+addition to equalizing outcomes across groups. Instead of measuring the
+simple differences in percentages between groups of individuals with the
+(predicted)positive outcome, it measures the difference in percentages
+of \emph{accurately identified} individuals with positive outcomes
+(i.e.~true positives). Essentially, the calculation is the same as for
+statistical parity, but only taking into account true positives for each
+group. Again, the ``ideal'' value is 0 with negative values indicating
+bias in favor of the privileged group, and the fairness range is -0.1 to
+-0.1 \citep{caton2020fairness}.
+
+This metric helps us answer if our model predicts positives with more
+accuracy for men than women. Are men more accurately predicted to have
+access to emergency funds than women?
+
+\textbf{Disparate Impact} The disparate impact metric measures the
+proportion of positive outcomes between an unprivileged group and a
+privileged group. It is usually assessed when predicting an outcome that
+disproportionately affects a sub population. For example, hiring more
+men than women as construction workers on the basis of height and
+strength.For this case we want to know the proportion of females that
+are categorized as having access to emergency funds VS males who are
+categorized as having access to emergency funds.The standard for
+satisfying this metric is that the unprivileged group must receive a
+positive outcome at a ratio of 4:5 to the privileged group. As long as
+females are classified as having access to emergency funds no less than
+around 80\% of the time males are categorized as having access to
+emergency funds, then our model satisfies this
+metric.\citep{caton2020fairness} This metric is similar to statistical
+parity except it measures a ratio which can be useful for legal
+purposes.
+\(P(\hat{Y}=unprivilegedPositivePredicted) /P(\hat{Y}=privilegedPositivePredicted)\)
+
+A similar problem arises when assessing this metric as statistical
+parity.In reality women have less access to emergency funds than men. If
+we manipulate our model to satisfy this metric, we will falsely predict
+that women have access to emergency funds when they don't. This could be
+more harmful than not satisfying this metric.
+
+\textbf{Conditional Demographic Disparity}
+
+Statistical parity difference and equal opportunity difference both
+measure positive outcomes. The conditional demographic disparity
+measures negative outcomes. Demographic Disparity is a metric that
+examines how disadvantaged groups compare to advantaged groups for
+negative outcomes from the model.This metric checks if a subpopulation
+is classified with a negative outcome more than a positive outcome. Are
+females classified as not having access to emergency funds more often
+than men? Looking at the entire data set, women have less access than
+men to emergency funds. Predicting more negative outcomes for women than
+men is not necessarily a bad thing. We want to know if someone doesn't
+have access to emergency funds so that they can potentially be helped.
+
+Sometimes when we split data into categories we can find patterns that
+don't exist when the data is combined. This is called Simpsons paradox
+\citep{mehrabi2021survey}. We can see this in our confusion matrices.
+When our data is split by gender there are different prediction rates
+than the entire model. The true negative rates are heavily weighted by
+females, and the true positive rates are weighted towards males. Is this
+the Simpsons paradox or does gender split the data into different
+distributions? The Conditional Demographic Disparity metric accounts for
+the Simpsons paradox to confirm true differences or no differences in
+negative outcomes in the model.
+
+In general a positive value means that the model is more unfair towards
+the unprivileged group. A value of zero is ideal. In our case, if our
+model were to predict an equal proportion of negative and positive
+outcomes for men and women, our model would realistically be unfair to
+women. Women do have less access to emergency funds and predicting that
+men and women equally don't have access to emergency funds might put
+women at a greater disadvantage if a relief program were to be put in
+place. However, if assessing financial stability between men and women
+we would be more concerned with satisfying this metric.
+
+\textbf{General Entropy Error} This metric is an individual metric
+rather than a group metric, and it computes fairness by computing the
+level of unfair benefit being assigned by the model. The metric defines
+``benefit'' as follows: for any individual in the testing data set, that
+individual has received a benefit if the model predicted the favorable
+outcome when the truth was that the individual did not have the
+favorable outcome (i.e.~a false positive). Each individual in the data
+receives either a 2 (benefit, false positive), a 1 (no benefit, correct
+prediction), or 0 (no benefit, false negative). The metric then compares
+the benefit of each individual to the average accuracy and false
+positive level of the model. The ``ideal'' value is 0, and a higher
+number indicates a higher level of inequity in benefit among
+individuals. In other words, if many individuals have a benefit score
+that is far off from the average, that indicates that the model is
+unfairly benefiting some individuals and not others. This metric does
+not consider privileged versus unprivileged groups, and thus is not able
+to indicate whether or not the inequality in benefit is systematic in
+any particular way (i.e., it cannot tell whether males receive more
+benefit than females; it can only tell that some individuals receive
+higher benefits than
+others)\citep{caton2020fairness, kypraiou_what_2021}.
+
+This metric is important to our data because a false positive
+outcome(higher benefit) would mean that someone is predicted to having
+access to emergency funds when they don't. If there is a high general
+entropy error, there are many individuals who's need for emergency funds
+are being overlooked.
+
+\textbf{General Entropy Error Difference} The general entropy error
+cannot tell whether males receive more benefit than females so we
+calculate the general entropy error difference between males and
+females. Do men ``benefit'' from our model more i.e does our model
+predict more accurate and false positives for men than women? Again the
+interpretation of this metric will depend on the context. A higher score
+is given for false positives, but this means that someone is being
+predicted to have emergency funds when they don't. It is not necessarily
+a good thing for any group to ``benefit'' from our model.
+
+\textbf{Between Group Generalized Entropy Error} We explored generalized
+entropy error and how it differs for males and females. Using the
+between group generalized error metric we will be able to see if the
+between group unfairness or the individual unfairness dominates. Is
+there truly a difference in generalized entropy error between men and
+women or is the general entropy error not because of gender inequality.
+Is our model unfairly benefiting individuals based on sub populations or
+is the inequity equal between groups and differs at the individual
+level?
+
+We don't want generalized entropy error in our model, but it would be
+better to have it at the individual level than the group level. We don't
+want either men or women to have more generalized entropy error than the
+other. If the error is equally within the groups, then both men and
+women are at a similar ``benefit'' to each other.
+
+\textbf{Consistency Score} Are similar people treated similarly. Is our
+model consistent in the way it classifies people as having access to
+emergency funds? This metric alone wont tell us if our model is fair but
+we can see how different groups of people are generally treated. We
+split the consistency score by gender and we can see if our model is
+more consistent for men or women. Are individuals within each group
+being treated similarly? With the other metrics in mind we can determine
+if they are being treated similarly unfairly or similarly fair.
+
+\hypertarget{in-and-post-processors}{%
+\subsection{In and Post Processors}\label{in-and-post-processors}}
+
+To account for any unfairness we find in the model we can use in and
+post processing techniques.These techniques restructure the data and
+reclassify observations in order to satisfy these metrics.
+
+\textbf{Reweighing} Reweighting is a pre-processing technique which
+assigns weights such that the protected attribute (gender) becomes
+statistically independent from the outcome variable (access to emergency
+funds). This means that after reweighting, knowing the gender of an
+individual does not provide any information about whether or not the
+individual has access. In mathematical terms, P(gender = male and access
+= yes) = P(gender = male)*P(access = yes), and this equality holds true
+for all gender-access combinations.
+
+\textbf{Exponentiated Gradient Reduction}
+
+The exponentiation gradient reduction is an in-processing optimization
+approach. This processor aims to optimize both accuracy and fairness
+focusing on demographic parity and equalized odds. The algorithm this
+processor uses considers randomized classifiers and cost restraints to
+find the optimal classifier that satisfies fairness restraints without
+losing too much accuracy \citep{agarwal2018reductions}.
+
+\textbf{Grid search Reduction}
+
+Grid search reduction uses the cost restraint lamda to find a balance
+between fairness and accuracy. This processor searches over a grid of
+lamda values until the best value is found. This value is used in the
+classifier to satisfy fairness and maximize accuracy. The grid search
+reduction is useful for binary sensitive attributes and fairness metrics
+with minimal constraints like demographic parity and equalized odds
+\citep{agarwal2018reductions, agarwal2019fair}
+
+\textbf{Calibrated Equalized Odds}
+
+Calibrated equalized odds uses a post-processing technique that re
+classifies values to satisfy the equalized odds metric while keeping the
+classifier calibrated. A classifier is calibrated if the proportions of
+positive and negative outcomes in the data match the probabilities
+produced by the model. We want the calibration to hold across groups
+such as male and female. This processor aims to satisfy an equalized
+cost constraint while maintaining calibration
+\citep{pleiss2017fairness}.
+
+\textbf{Reject Option Classifier}
+
+The reject option classifier is a post-processor that aims to reduce
+discriminatory classifications based on the sensitive attribute. In our
+case we aim to find a balance for predictions between males and females.
+This classifier will relabel observations in a way that reduces
+discrimination. More males will be relabeled with the unfavorable
+outcome and more females will be relabeled with the favorable outcome
+\citep{kamiran2012decision}.
+
+\textbf{Meta Fair Classifier} The meta fair classifier creates a new
+estimator but includes a reweighing pre-processing step
+\citep{celis2019classification}. This classifier should be used as part
+of a pipeline of steps. We must create a binary label data set. This
+means that the data includes either a 1 representing access to emergency
+funds or 0 for no access to emergency funds. This classifier aims to
+transform the data in a way that will satisfy as many fairness metrics
+as possible \citep{agarwal2018reductions}.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}

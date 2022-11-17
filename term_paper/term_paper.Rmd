@@ -210,7 +210,7 @@ g.set(title = "Gender Distribution")
 
 The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. Here is the distribution of education by gender:
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2,fig.align='center'}
 ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
 for p in ebg.patches:
    ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
@@ -235,7 +235,7 @@ From the financial related variables, we were most interested in a few specific 
 
 The first variable being *account_fin* which distinguishes those who have a financial account from those who don’t:
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2,fig.align='center'}
 # barplot of number of people who have a bank account
 g = sns.countplot(x = 'account_fin', data = df2, palette = yes_no_pal)
 for p in g.patches:
@@ -273,7 +273,7 @@ reason_counts = df3.groupby('reason').agg('count').reset_index()
 ```
 
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2}
 # barplot of count by reason-- seaborn
 reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
 reasons_plot
@@ -283,7 +283,7 @@ reasons_plot
 
 Employment status was another financial variable of interest represented by *emp_in*, which asks whether or not the participant is in the workforce. It appears that about three-fourths of individuals are in the workforce:
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height =2}
 # Distribution by in workforce
 g = sns.countplot(x = 'emp_in', data = df2, palette = yes_no_pal)
 for p in g.patches:
@@ -316,7 +316,7 @@ To explore access to emergency funds in our dataset, we were interested 3 variab
 
 The variable *has_access* directly asks participants if they have access to emergency funds, with “emergency funds” defined as 1/20th of the GNI (gross national income) per capita for the country. GNI per capita is the country’s total income in a year/ the country’s population size. For context, in the United States, “emergency funds” would be defined as about $3,000. 
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2}
 # barplot of access to emergency funds
 g = sns.countplot(x = 'has_access', data = df2, palette = yes_no_pal, order = ['No', 'Yes'])
 for p in g.patches:
@@ -330,7 +330,7 @@ The barchart above displays the overall distribution of access to emergency fund
 
 We proceeded to explore the source of emergency funds using the *main_source_funds* variable, which provides a list of options for where participants receive their main source of emergency funds:
 
-```{python, echo=FALSE}
+```{python, echo=FALSE,fid.width = 2, fig.height = 2}
 # barplot of main source of emergency funds
 chart = sns.countplot(y = 'main_source_funds', 
                       data = df2, 
@@ -348,7 +348,7 @@ The barchart above displays the overall distribution of the main source of emerg
 
 Diving further into the "Money from Working" category, we can see that only 8196 individuals receive wage payments from the *Receive Wage Payments* variable. This analysis suggests that receiving wage payments may be a key factor in determining access to emergency funds.
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2}
 # barplot of recieved wage payments
 chart = sns.countplot(x = 'Receive Wage Payments',data = df2, order = ["No", "Yes"], palette = yes_no_pal)
 for p in chart.patches:
@@ -421,7 +421,7 @@ df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pi
 
 In the side-by-side barplots above, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, fid.width = 2, fig.height = 2}
 # Counting by Access to Emergency Funds by country
 access = df2[['has_access', 'economy']].query("has_access == 'Yes'").groupby('economy').count()
 no_access = df2[['has_access', 'economy']].query("has_access == 'No'").groupby('economy').count()
@@ -447,23 +447,133 @@ educ_perc = (df2.groupby(['Education'])['has_access']
 
 ```
 
-```{python, echo=FALSE}
+```{python ,echo=FALSE}
 # not showing up and idk why
-educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc)
+
+fig, ax = plt.subplots()
+educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc,ax =ax)
 for p in educ_access.patches:
   educ_access.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.12, p.get_height()+.5))
 educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel = 'Education Level')
+
+
+
 ```
 
 Additionally, in the barplot above we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
 
 # Materials and Methods
 
-Materials and Methods [@knight_automated_2020] should be described with sufficient details to allow others to replicate and build on published results. Please note that publication of your manuscript implicates that you must make all materials, data, computer code, and protocols associated with the publication available to readers. Please disclose at the submission stage any restrictions on the availability of materials or information. New methods and protocols should be described in detail while well-established methods can be briefly described and appropriately cited.[@kypraiou_what_2021]
 
-Research manuscripts reporting large datasets that are deposited in a publicly available database should specify where the data have been deposited and provide the relevant accession numbers. If the accession numbers have not yet been obtained at the time of submission, please state that they will be provided during review. They must be provided prior to publication.[@gebru_datasheets_2021]
+## Metrics
+Fairness metrics are a way to assess machine learning algorithms for unwanted bias. Algorithms can classify people unfairly using data collected in a biased environment. When classifying people, it's important to understand how these classifications can contribute to and reinforce discriminatory social systems. Accuracy shouldn't always be prioritized. It is useful to sacrifice accuracy in favor of fairness when using machine learning algorithms to make decisions impacting people.To assess fairness and accuracy in our model we explore 13 different metrics, 10 of which are fairness metrics. Fairness metrics can be split into group and individual metrics.
 
-Interventionary studies involving animals or humans, and other studies require ethical approval must list the authority that provided approval and the corresponding ethical approval code.
+Group fairness metrics ensure parity between privileged and unprivileged groups of a protected class. For example, for the protected class sex, the privileged group is men and the unprivileged group is women. The model should work similarly for both of these groups and not favor the privileged group. Group fairness metrics measures how discriminatory the model classifies the unprivileged group[@binns2020apparent; @mehrabi2021survey; @caton2020fairness]. The group metrics we explore include statistical parity difference, equal opportunity difference, disparate impact,precision score difference, general entropy difference,and conditional demographic parity.Not all group fairness metrics can be satisfied at the same time. For example equal opportunity difference and statistical parity difference cannot be simultaneously accounted for[@kypraiou_what_2021].
+
+Individual fairness metrics measure how similarly the model predicts for similar observations. Will two very similar people receive the same classification? Individual fairness metrics contradict group fairness metrics. When accounting for imbalanced predictions between groups, the within group fairness can suffer[@kypraiou_what_2021]. In the process of satisfying group metrics, two similar subjects only differing by sex, may be classified differently [@binns2020apparent; @mehrabi2021survey; @caton2020fairness; @zhou2022bias]. The individual metrics we explore are general entropy error and consistency score. We can measure both individual and group fairness with the between group general entropy error metric. 
+
+What happens when we remove the sensitive attributes in our data and then run the model? Will the model still be biased against protected groups? In most cases, no. There are often variables that remain in the data that act as pseudo substitutes for the protected attribute [@zhou2022bias]. For example, if race was excluded from the model but the variable zip code remained. Zip code can act as a stand in for race in regions where people are segregated by race. 
+
+In our case we are focusing on the protected attribute gender. The other variables in this data set are education, age, and all the financial variables. If any of these variables are segregated by gender, by inherit gender bias in society, then simply removing the gender variable wont solve anything.
+
+
+**Accuracy**
+Accuracy is a measure of how many classifications our model predicts correctly compared to all the predictions. The ratio of correctly predicted classifications to all the predictions. Accuracy cannot tell us if the predictions are equally correct across positives and negatives [@juba2019precision; @gupta2021recall]. 55% of the people in our data set don't have access to emergency funds. As long as our model predicts negatives more than half the time, we can get a good accuracy. However, our model will lose the ability to accurately predict positives. It is important to consider accuracy along with precision and recall so we can more fully understand how our model is classifying people.
+
+$Accuracy = (True Positives + True Negatives) / (True Positives + True Negatives + False Positives + False Negatives)$
+
+
+**Precision**
+Precision is a measure of how accurately a model predicts positive outcomes.The ratio of correctly predicted positives to all predicted positives. With high precision rates, we have low false positive rates [@juba2019precision; @gupta2021recall]. 
+
+$Precision = true positives / (true positives + false positives)$
+
+**Recall**
+Recall is a measure of how accurately a model predicts negative outcomes.The ratio of correctly predicted negatives to all predicted negatives[@gupta2021recall]
+
+$Recall = true negatives / all negatives)$
+ 
+
+**Statistical Parity Difference**
+This metric computes the difference in percentages between the "privileged" and "non-privileged" group of individuals who were predicted to have the desired outcome. In this case, it is essentially 
+
+(% of females who were predicted to have access to emergency funds) - (% of males who were predicted to have access to emergency funds)
+
+The "ideal" value is 0 because if we define fairness as statistical parity, the goal would be for the percentages to be equal for both groups. If the value is negative, that means that the percentage of individuals with the positive outcome is higher for the privileged group (males), implying that the model is biased in favor of the privileged group. Conversely, if the value is positive, the model is biased in favor of the unprivileged group. The acceptable range in which the model is considered fair is between -0.1 to 0.1 (with percentages expressed as decimals, e.g. 0.1 = 10%). It is important to note that this metric is solely focused on making the percentage of *predicted* favorable outcomes equal across groups and does not take into account the accuracy of the predictions at all.[@caton2020fairness;@kypraiou_what_2021]
+
+Relating to our data, this metric will tell us if our model predicts that men have more access to emergency funds than women. In our data, men in fact do have more access to emergency funds than women. 51% of men have access to emergency funds while only 38.2% of women have access to emergency funds. When using this metric to asses our model the interpretation depends on the context. If this model is being used to decide how to allocate emergency funds, we might not want to prioritize satisfying this metric. We are using this model in an educational and exploratory manner, so we will use techniques to account for this metric. 
+
+
+
+
+**Equal Opportunity Difference**
+This metric is similar to statistical parity in that it is also a group fairness metric, but it is different in that it takes into account accuracy of the model in addition to equalizing outcomes across groups. Instead of measuring the simple differences in percentages between groups of individuals with the (predicted)positive outcome, it measures the difference in percentages of *accurately identified* individuals with positive outcomes (i.e. true positives). Essentially, the calculation is the same as for statistical parity, but only taking into account true positives for each group. Again, the "ideal" value is 0 with negative values indicating bias in favor of the privileged group, and the fairness range is -0.1 to -0.1 [@caton2020fairness].
+
+This metric helps us answer if our model predicts positives with more accuracy for men than women. Are men more accurately predicted to have access to emergency funds than women? 
+
+
+**Disparate Impact**
+The disparate impact metric measures the proportion of positive outcomes between an unprivileged group and a privileged group. It is usually assessed when predicting an outcome that disproportionately affects a sub population. For example, hiring more men than women as construction workers on the basis of height and strength.For this case we want to know the proportion of females that are categorized as having access to emergency funds VS males who are categorized as having access to emergency funds.The standard for satisfying this metric is that the unprivileged group must receive a positive outcome at a ratio of 4:5 to the privileged group. As long as females are classified as having access to emergency funds no less than around 80% of the time males are categorized as having access to emergency funds, then our model satisfies this metric.[@caton2020fairness] This metric is similar to statistical parity except it measures a ratio which can be useful for legal purposes. 
+$P(\hat{Y}=unprivilegedPositivePredicted) /P(\hat{Y}=privilegedPositivePredicted)$
+
+A similar problem arises when assessing this metric as statistical parity.In reality women have less access to emergency funds than men. If we manipulate our model to satisfy this metric, we will falsely predict that women have access to emergency funds when they don't. This could be more harmful than not satisfying this metric.
+
+
+**Conditional Demographic Disparity**
+
+Statistical parity difference and equal opportunity difference both measure positive outcomes. The conditional demographic disparity measures negative outcomes. Demographic Disparity is a metric that examines how disadvantaged groups compare to advantaged groups for negative outcomes from the model.This metric checks if a subpopulation is classified with a negative outcome more than a positive outcome. Are females classified as not having access to emergency funds more often than men? Looking at the entire data set, women have less access than men to emergency funds. Predicting more negative outcomes for women than men is not necessarily a bad thing. We want to know if someone doesn't have access to emergency funds so that they can potentially be helped. 
+
+Sometimes when we split data into categories we can find patterns that don't exist when the data is combined. This is called Simpsons paradox [@mehrabi2021survey]. We can see this in our confusion matrices. When our data is split by gender there are different prediction rates than the entire model. The true negative rates are heavily weighted by females, and the true positive rates are weighted towards males. Is this the Simpsons paradox or does gender split the data into different distributions? The Conditional Demographic Disparity metric accounts for the Simpsons paradox to confirm true differences or no differences in negative outcomes in the model.
+
+In general a positive value means that the model is more unfair towards the unprivileged group. A value of zero is ideal. In our case, if our model were to predict an equal proportion of negative and positive outcomes for men and women, our model would realistically be unfair to women. Women do have less access to emergency funds and predicting that men and women equally don't have access to emergency funds might put women at a greater disadvantage if a relief program were to be put in place. However, if assessing financial stability between men and women we would be more concerned with satisfying this metric. 
+
+
+**General Entropy Error**
+This metric is an individual metric rather than a group metric, and it computes fairness by computing the level of unfair benefit being assigned by the model. The metric defines "benefit" as follows: for any individual in the testing data set, that individual has received a benefit if the model predicted the favorable outcome when the truth was that the individual did not have the favorable outcome (i.e. a false positive). Each individual in the data receives either a 2 (benefit, false positive), a 1 (no benefit, correct prediction), or 0 (no benefit, false negative). The metric then compares the benefit of each individual to the average accuracy and false positive level of the model. The "ideal" value is 0, and a higher number indicates a higher level of inequity in benefit among individuals. In other words, if many individuals have a benefit score that is far off from the average, that indicates that the model is unfairly benefiting some individuals and not others. This metric does not consider privileged versus unprivileged groups, and thus is not able to indicate whether or not the inequality in benefit is systematic in any particular way (i.e., it cannot tell whether males receive more benefit than females; it can only tell that some individuals receive higher benefits than others)[@caton2020fairness;@kypraiou_what_2021].
+
+This metric is important to our data because a false positive outcome(higher benefit) would mean that someone is predicted to having access to emergency funds when they don't. If there is a high general entropy error, there are many individuals who's need for emergency funds are being overlooked.
+
+**General Entropy Error Difference**
+The general entropy error cannot tell whether males receive more benefit than females so we calculate the general entropy error difference between males and females. Do men "benefit" from our model more i.e does our model predict more accurate and false positives for men than women? Again the interpretation of this metric will depend on the context. A higher score is given for false positives, but this means that someone is being predicted to have emergency funds when they don't. It is not necessarily a good thing for any group to "benefit" from our model. 
+
+
+**Between Group Generalized Entropy Error**
+We explored generalized entropy error and how it differs for males and females. Using the between group generalized error metric we will be able to see if the between group unfairness or the individual unfairness dominates. Is there truly a difference in generalized entropy error between men and women or is the general entropy error not because of gender inequality. Is our model unfairly benefiting individuals based on sub populations or is the inequity equal between groups and differs at the individual level?
+
+We don't want generalized entropy error in our model, but it would be better to have it at the individual level than the group level. We don't want either men or women to have more generalized entropy error than the other. If the error is equally within the groups, then both men and women are at a similar "benefit" to each other. 
+
+**Consistency Score** 
+Are similar people treated similarly. Is our model consistent in the way it classifies people as having access to emergency funds? This metric alone wont tell us if our model is fair but we can see how different groups of people are generally treated. We split the consistency score by gender and we can see if our model is more consistent for men or women. Are individuals within each group being treated similarly? With the other metrics in mind we can determine if they are being treated similarly unfairly or similarly fair. 
+
+## In and Post Processors
+To account for any unfairness we find in the model we can use in and post processing techniques.These techniques restructure the data and reclassify observations in order to satisfy these metrics.
+
+**Reweighing**
+Reweighting is a pre-processing technique which assigns weights such that the protected attribute (gender) becomes statistically independent from the outcome variable (access to emergency funds). This means that after reweighting, knowing the gender of an individual does not provide any information about whether or not the individual has access. In mathematical terms, P(gender = male and access = yes) = P(gender = male)*P(access = yes), and this equality holds true for all gender-access combinations.
+
+
+**Exponentiated Gradient Reduction**
+
+The exponentiation gradient reduction is an in-processing optimization approach. This processor aims to optimize both accuracy and fairness focusing on demographic parity and equalized odds. The algorithm this processor uses considers randomized classifiers and cost restraints to find the optimal classifier that satisfies fairness restraints without losing too much accuracy [@agarwal2018reductions]. 
+
+
+**Grid search Reduction**
+
+Grid search reduction uses the cost restraint lamda to find a balance between fairness and accuracy. This processor searches over a grid of lamda values until the best value is found. This value is used in the classifier to satisfy fairness and maximize accuracy. The grid search reduction is useful for binary sensitive attributes and fairness metrics with minimal constraints like demographic parity and equalized odds [@agarwal2018reductions; @agarwal2019fair]
+
+
+**Calibrated Equalized Odds**
+
+Calibrated equalized odds uses a post-processing technique that re classifies values to satisfy the equalized odds metric while keeping the classifier calibrated. A classifier is calibrated if the proportions of positive and negative outcomes in the data match the probabilities produced by the model. We want the calibration to hold across groups such as male and female. This processor aims to satisfy an equalized cost constraint while maintaining calibration [@pleiss2017fairness].
+
+
+**Reject Option Classifier**
+
+The reject option classifier is a post-processor that aims to reduce discriminatory classifications based on the sensitive attribute. In our case we aim to find a balance for predictions between males and females. This classifier will relabel observations in a way that reduces discrimination. More males will be relabeled with the unfavorable outcome and more females will be relabeled with the favorable outcome [@kamiran2012decision].
+
+
+**Meta Fair Classifier**
+The meta fair classifier creates a new estimator but includes a reweighing pre-processing step [@celis2019classification]. This classifier should be used as part of a pipeline of steps. We must create a binary label data set. This means that the data includes either a 1 representing access to emergency funds or 0 for no access to emergency funds. This classifier aims to transform the data in a way that will satisfy as many fairness metrics as possible [@agarwal2018reductions].
 
 # Results
 
