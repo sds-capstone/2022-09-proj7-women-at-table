@@ -490,7 +490,7 @@ important to understand how these classifications can contribute to and
 reinforce discriminatory social systems. Accuracy shouldn't always be
 prioritized. It is useful to sacrifice accuracy in favor of fairness
 when using machine learning algorithms to make decisions impacting
-people.To assess fairness and accuracy in our model we explore 13
+people.To assess fairness and accuracy in our model we explore 12
 different metrics, 10 of which are fairness metrics. Fairness metrics
 can be split into group and individual metrics.
 
@@ -660,15 +660,16 @@ distributions? The Conditional Demographic Disparity metric accounts for
 the Simpsons paradox to confirm true differences or no differences in
 negative outcomes in the model.
 
-In general a positive value means that the model is more unfair towards
-the unprivileged group. A value of zero is ideal. In our case, if our
-model were to predict an equal proportion of negative and positive
-outcomes for men and women, our model would realistically be unfair to
-women. Women do have less access to emergency funds and predicting that
-men and women equally don't have access to emergency funds might put
-women at a greater disadvantage if a relief program were to be put in
-place. However, if assessing financial stability between men and women
-we would be more concerned with satisfying this metric.
+The range of scores for this metric is from -1 to 1. In general a
+positive value means that the model is more unfair towards the
+unprivileged group. A value of zero is ideal. In our case, if our model
+were to predict an equal proportion of negative and positive outcomes
+for men and women, our model would realistically be unfair to women.
+Women do have less access to emergency funds and predicting that men and
+women equally don't have access to emergency funds might put women at a
+greater disadvantage if a relief program were to be put in place.
+However, if assessing financial stability between men and women we would
+be more concerned with satisfying this metric.
 
 \textbf{General Entropy Error} This metric is an individual metric
 rather than a group metric, and it computes fairness by computing the
@@ -704,19 +705,19 @@ calculate the general entropy error difference between males and
 females. Do men ``benefit'' from our model more i.e does our model
 predict more accurate and false positives for men than women? Again the
 interpretation of this metric will depend on the context. A higher score
-is given for false positives, but this means that someone is being
+is given for false positives, but this means a group of people are being
 predicted to have emergency funds when they don't. It is not necessarily
-a good thing for any group to ``benefit'' from our model.
+a good thing for any group to ``benefit'' from our model. A value of 0
+represents no difference.
 
 \textbf{Between Group Generalized Entropy Error} We explored generalized
 entropy error and how it differs for males and females. Using the
 between group generalized error metric we will be able to see if the
 between group unfairness or the individual unfairness dominates. Is
 there truly a difference in generalized entropy error between men and
-women or is the general entropy error not because of gender inequality.
-Is our model unfairly benefiting individuals based on sub populations or
-is the inequity equal between groups and differs at the individual
-level?
+women or is the general entropy error not due to gender inequality. Is
+our model unfairly benefiting individuals based on sub populations or is
+the inequity equal between groups and differs at the individual level?
 
 We don't want generalized entropy error in our model, but it would be
 better to have it at the individual level than the group level. We don't
@@ -731,7 +732,9 @@ we can see how different groups of people are generally treated. We
 split the consistency score by gender and we can see if our model is
 more consistent for men or women. Are individuals within each group
 being treated similarly? With the other metrics in mind we can determine
-if they are being treated similarly unfairly or similarly fair.
+if they are being treated similarly unfairly or similarly fair. This
+metric is calculated on a scale from 0 to 1 where a value of 1 means
+completely consistent.
 
 \hypertarget{in-and-post-processors}{%
 \subsection{In and Post Processors}\label{in-and-post-processors}}
