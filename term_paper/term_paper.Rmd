@@ -657,7 +657,53 @@ The text continues here.
 
 # Discussion
 
-Authors should discuss the results and how they can be interpreted in perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted.
+## Results 
+
+### Decision Tree Model
+
+The decision tree model organizes the variables into a tree branching off at each decision point based on the value of the variables at that point. The most influential variables are at the top, and the outcome variable is at the end of each branch. In our decision tree, the most influential variable was sent_remittances. Sent_remittances is a binary variable that asks participants, “In the PAST 12 MONTHS, have you, personally, GIVEN or SENT money to a relative or friend living in a different city or area INSIDE (country where survey takes place)? This can be money you brought yourself or sent in some other way.” It makes sense that this is the most influential variable in relation to access to emergency funds, because if you have the privilege to send spare money to loved ones, you most likely have extra money saved for yourself as well.
+
+Depending on the response to sent_remittances the tree branches into two, considering participants’ responses to the next two influential variables: access_cat and account_saved. Access_cat is a variable that categorizes the 35 sub-saharan countries by the percent of access to emergency funds according to its participants ranging between 1-5, with 1 being 0%-20% of participants in that country having access to emergency funds, and 5 being 80%-100% of participants having access to emergency funds. Depending on the country the participant lives in, they’ll be assigned to a number between 1-5 for access_cat. On the other hand, account_saved is a variable that categorizes participants based on their personal finances ranging from 1-4, with 1 representing having no financial account and no money saved, and 4 representing having a financial account and money saved. Being assigned 2 or 3 in account_saved, means you either only have a financial account, or only have money saved, but not both.
+
+The decision tree then splits according to participants’ responses all the way down the tree, until finally it can predict whether or not based on the responses the participant has access to emergency funds.
+
+### Confusion Matrices by Gender
+
+When we create two separate confusion matrices separated by gender, we can see that the model is fairly good at predicting true negatives for both groups, but is significantly better at predicting true positives for males as compared to females. The false positive and false negative error rates are also slightly higher for females as compared to males, yet the rates are pretty similar for both models.
+
+This may be an example of the model reinforcing biases that are present in the data because we saw from our exploratory data analysis that many fewer females than males have access to emergency funds, so if there are not many females that have true positive values recorded in the data, the model is likely to be less accurate in predicting positive outcomes for females. This could have discriminatory impacts in the case that this model is (hypothetically) used to determine whether or not to provide an individual with a loan based on whether or not they have access to emergency funds (i.e., if they do have access, they are likely to pay back the loan, so they will get the loan, and if they do not have access, they will not get the loan). If very few females in the training data have access, and the model is thus less likely to predict a positive outcome for females as we see here, this will result in fewer females receiving loans. This will result in a self-reinforcing cycle of continued discrimination because if the model continues to predict that females should not get loans, fewer females will get loans, which means fewer females would have the opportunity to pay back loans, and so on.
+
+On the flip side, if the results of the model are (hypothetically) being used to offer support to individuals who are in financial hardship and do not have access to emergency funds, the accuracy in predicting negative values would be more important, and the fact that the model is less accurate in predicting true positives would be less of a concern. This is because in this case, it would be a better outcome for an individual to receive support when they do not need it (false negative) as compared to the outcome that an individual does not receive support when they do need it (false positive). However, we would still want the model to be as accurate as possible on both ends in order to ensure that we are allocating resources most directly to those who need it the most.
+
+This comparison of confusion matrices also demonstrates the importance of considering the balance of true negatives to true positives in addition to just the error rates. When looking at just the error rates, they seem almost equal between the two groups, yet when we consider the balance of true negatives to true positives, we can see that the model is much worse at predicting true positives for females. This furthermore highlights the importance of trying out various methods and metrics for assessing fairness because two different metrics can tell two completely different stories about the degree of fairness present in the model.
+
+### Fairness Metrics Summary Table
+
+Based off the summary metrics table, by looking at the baseline model and processing techniques, we can see that we would have to sacrifice the accuracy of our model in order to maximize fairness between our two groups (male and female respondents). 
+
+Our Fairness Metrics Table compiles our Fairness Metrics and (Pre, In, & Post) Processing Methods that we have applied to our model. Our metrics are seen in the columns of our table while our Processing Techniques are in the rows. Our objective row demonstrates the ideal ratios we would like to achieve with our Processing Techniques, while the baseline row shows the ratios for our baseline model without any processing techniques applied.
+
+#### Baseline 
+Our baseline model provided us with the second best model accuracy and precision at .684 and .682. It also provided us with the closest general entropy error difference ratio to 0, at .0007, meaning that there is almost no difference in our Baseline model between the benefits men and women have when it comes to having access to emergency funds.
+
+
+#### Reweighting
+Our reweighting technique provided us with the highest model accuracy, at .689, meaning that our model predicts our classifications the most correctly when the reweighting technique is applied. Additionally, the reweighting technique also provides us with the best ratio for precision, at .683, indicating that applying this technique provides us with the best model for predicting positive outcomes accurately. 
+
+#### Meta Fair Classifier
+The meta fair classifier provides us with an acceptable statistical parity difference and equal opportunity difference ratio of .004 for both, meaning that there is nearly no difference between the percentage of females who have access to emergency funds compared to the percentage of males who have access to emergency funds or . However, because the ratio is positive, it indicates that the model is slightly biased in favor of women.
+
+Both the statistical parity difference and equal opportunity difference ratios for the meta fair classifier were at .004, which is within the acceptable range. The statistical parity ratio indicates there is nearly no difference between the percentage of females who have access to emergency funds compared to the percentage of males who have access to emergency funds. The equal opportunity difference ratio indicates that there is nearly no difference between the accuracy in the model for women compared to the accuracy within the model for males. However, because these ratios are positive, they indicate that the models are slightly biased in favor of women.
+
+#### Exponential Gradient Reduction & Grid Search Reduction
+The exponential gradient reduction and grid search reduction techniques output the same ratios for our fairness metrics. For the disparate impact metric, we had a ratio of .847, which is above the acceptable range of .80. This means that women are classified to have access to emergency funds about 84.7% of the time that men are categorized ro have access to emergency funds. 
+For our between group generalized entropy error metric, we have ratios of .001, indicating that we have near equal levels of inequity for our groups, meaning that we do not have high levels of inequity between women and men at the group level.
+
+#### Calibrated Equalized Odds
+Our calibrated equalized odds technique provided us a general entropy error difference ratio of .254. A value of zero indicates that no group benefits from our model. However, our ratio indicates that women benefit from our model and therefore are predicted to have more false positives, which means that women are projected to have access to emergency funds when they in reality do not.  
+
+#### Reject Option Classifier
+The reject option classifier provides us with a ratio of -.001 for the conditional demographic disparity metric, meaning that there is close to an equal number of negatives and positives between our groups. However, in our particular instance, this indicates an unfairness towards women, since we are aware that women have less access to emergency funds compared to men. This ratio indicates equity between our groups, which we know is false.
 
 # Conclusion
 
