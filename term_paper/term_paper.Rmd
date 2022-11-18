@@ -659,7 +659,9 @@ The text continues here.
 
 ## Results 
 
-### Decision Tree Model
+### Decision Tree Model (Figure2)
+
+![Decision Tree Classifier Model](images/DecisionTreeDraft2.png){width=50%, height=50%}
 
 The decision tree model organizes the variables into a tree branching off at each decision point based on the value of the variables at that point. The most influential variables are at the top, and the outcome variable is at the end of each branch. In our decision tree, the most influential variable was sent_remittances. Sent_remittances is a binary variable that asks participants, “In the PAST 12 MONTHS, have you, personally, GIVEN or SENT money to a relative or friend living in a different city or area INSIDE (country where survey takes place)? This can be money you brought yourself or sent in some other way.” It makes sense that this is the most influential variable in relation to access to emergency funds, because if you have the privilege to send spare money to loved ones, you most likely have extra money saved for yourself as well.
 
@@ -667,7 +669,9 @@ Depending on the response to sent_remittances the tree branches into two, consid
 
 The decision tree then splits according to participants’ responses all the way down the tree, until finally it can predict whether or not based on the responses the participant has access to emergency funds.
 
-### Confusion Matrices by Gender
+### Confusion Matrices by Gender (Figure3)
+
+![Confusion Matrices by Gender](images/confusionMatrices.png){width=50%, height=50%}
 
 When we create two separate confusion matrices separated by gender, we can see that the model is fairly good at predicting true negatives for both groups, but is significantly better at predicting true positives for males as compared to females. The false positive and false negative error rates are also slightly higher for females as compared to males, yet the rates are pretty similar for both models.
 
@@ -677,7 +681,9 @@ On the flip side, if the results of the model are (hypothetically) being used to
 
 This comparison of confusion matrices also demonstrates the importance of considering the balance of true negatives to true positives in addition to just the error rates. When looking at just the error rates, they seem almost equal between the two groups, yet when we consider the balance of true negatives to true positives, we can see that the model is much worse at predicting true positives for females. This furthermore highlights the importance of trying out various methods and metrics for assessing fairness because two different metrics can tell two completely different stories about the degree of fairness present in the model.
 
-### Fairness Metrics Summary Table
+### Fairness Metrics Summary Table (Figure4)
+
+![Fairness Metrics Summary](images/FairnessMetricsSummary.png){height=25%}
 
 Based off the summary metrics table, by looking at the baseline model and processing techniques, we can see that we would have to sacrifice the accuracy of our model in order to maximize fairness between our two groups (male and female respondents). 
 
