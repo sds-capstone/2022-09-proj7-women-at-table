@@ -115,23 +115,27 @@ many people end up needing at least once in their lives. Those who have
 access to emergency funding and other financial services have the
 capacity to remain afloat when unexpected predicaments arise, while
 those who are without this privilege have no choice but to endure crises
-and simply hope for the best. The purpose of our project is to analyze
-the access adults have to emergency funds and financial services in
-Sub-Saharan countries using a 2017 dataset from the Global Findex
-Database. Additionally, an important goal of our project is to employ a
-variety of different approaches in an attempt to minimize bias and
-maximize fairness, particularly when examining the performance for males
-and females. We also aim to determine how adults in the Sub-Saharan
-African region access financial services as well as establish the amount
-of bias we have within our models using exploratory data analysis, a
-baseline model, and a variety of fairness metrics. We hope to implement
-our findings in a Jupyter notebook where this information can be made
-accessible to a broader undergraduate audience.}
+and simply hope for the best. The purpose of our project is to predict
+access to emergency funds for adults in Sub-Saharan countries using a
+human rights-based approach to machine learning which centers equity,
+fairness, and impacts on humans over accuracy. Our analysis is based on
+the 2017 Global Findex Database which includes demographic as well as
+financial information for a sample of individuals within each country.
+We used a Decision Tree Classifier machine learning model implemented
+using Python to predict access to emergency funds with 68\% accuracy. We
+assessed the fairness of our model with respect to gender using a
+variety of group and individual fairness metrics and evaluated the
+implications of each fairness metric with regard to our data and the
+goals of the analysis. We then implemented a variety of pre-proccessing,
+in-processing, and post-processing techniques in an attempt to minimize
+bias and maximize fairness. We have documented our analysis in a Jupyter
+notebook where this information can be made accessible to a broader
+undergraduate audience.}
 
 % Keywords
-\keyword{keyword 1; keyword 2; keyword 3 (list three to ten pertinent
-keywords specific to the article, yet reasonably common within the
-subject discipline.).}
+\keyword{Fairness; machine learning; access; emergency funds; financial;
+ethics; processing techniques; gender; economy; debiasing; decision
+tree; Sub-Saharan Africa; fairness metrics}
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -213,15 +217,6 @@ subject discipline.).}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\hypertarget{version}{%
-\section{Version}\label{version}}
-
-This Rmd-skeleton uses the mdpi Latex template published 2019/02.
-However, the official template gets more frequently updated than the
-`rticles' package. Therefore, please make sure prior to paper
-submission, that you're using the most recent .cls, .tex and .bst files
-(available \href{http://www.mdpi.com/authors/latex}{here}).
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -1152,11 +1147,25 @@ we know is false.
 This section is not mandatory, but can be added to the manuscript if the
 discussion is unusually long or complex.
 
-\hypertarget{patents}{%
-\section{Patents}\label{patents}}
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
 
-This section is not mandatory, but may be added if there are patents
-resulting from the work reported in this manuscript.
+We would like to thank our sponsor organization
+\href{https://www.womenatthetable.net/}{Women at the Table}, and
+especially our supervisors/mentors Sofia Kypraiou and Caitlin
+Kraft-Buchman for creating the opportunity for us to do this project as
+well as for offering us guidance and feedback throughout the entire
+process. We would also like to thank our technical advisor, Dr.~Shiya
+Cao, for providing extremely helpful Python resources and helping us
+work through challenges that we were having with our code. We would like
+to thank our Capstone professor, Dr.~Albert Y. Kim, for providing
+conceptual and logistical guidance, especially in relation to machine
+learning knowledge, as well as for providing thorough feedback on our
+progress at various stages in the process. Lastly, we want to
+acknowledge Megan Lyster, Assistant Director of the Smith College
+Wurtele Center, for offering guidance on effective team collaboration
+and helping us to continually reflect on and adapt our process as a
+group throughout the course of the project.
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% optional
