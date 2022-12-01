@@ -2,6 +2,7 @@
 Sponsored by [Women at the Table](https://www.womenatthetable.net/)
 
 Full paper found [here](https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/term_paper/term_paper.pdf).
+
 Full analysis including explanations and source code [here](https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/Final_Notebook.ipynb).
 
 ## Abstract
