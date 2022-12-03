@@ -443,6 +443,7 @@ educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 
 for p in educ_access.patches:
   educ_access.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.12, p.get_height()+.5))
 educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel = 'Education Level')
+educ_access.axhline(y = 44, color = "red", linestyle = "dashed")
 ```
 
 Additionally, in the barplot above we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
