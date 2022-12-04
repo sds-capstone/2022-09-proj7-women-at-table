@@ -587,7 +587,7 @@ The meta fair classifier creates a new estimator but includes a reweighing pre-p
 
 ### Decision Tree Model (Figure2)
 
-![Decision Tree Classifier Model](images/DecisionTreeDraft2.png){width=50%, height=50%}
+![Decision Tree Classifier Model](images/decision_tree_annotated.png){width=75%, height=50%}
 
 The decision tree model organizes the variables into a tree branching off at each decision point based on the value of the variables at that point. The most influential variables are at the top, and the outcome variable is at the end of each branch. In our decision tree, the most influential variable was sent_remittances. Sent_remittances is a binary variable that asks participants, “In the PAST 12 MONTHS, have you, personally, GIVEN or SENT money to a relative or friend living in a different city or area INSIDE (country where survey takes place)? This can be money you brought yourself or sent in some other way.” It makes sense that this is the most influential variable in relation to access to emergency funds, because if you have the privilege to send spare money to loved ones, you most likely have extra money saved for yourself as well.
 
