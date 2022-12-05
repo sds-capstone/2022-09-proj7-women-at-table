@@ -11,7 +11,7 @@ Having access to emergency funds is a valuable resource that many people end up 
 ## Data Source
 [Global Financial Inclusion (Global Findex) Database 2017](https://microdata.worldbank.org/index.php/catalog/3324)
 
-## Contributers:
+## Contributors:
 * [Rose Porta](https://github.com/rporta23)
 * [Margaret Bassney](https://github.com/MargaretBassney)
 * [Alejandra Munoz Garcia](https://github.com/alejanmg)
@@ -21,3 +21,4 @@ Having access to emergency funds is a valuable resource that many people end up 
 * [Dr. Albert Y. Kim](https://github.com/rudeboybert)
 * [Dr. Shiya Cao](https://github.com/scao53)
 * [Sofia Kypraiou](https://github.com/s-kypr)
+* Caitlin Kraft-Buchman
