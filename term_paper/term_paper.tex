@@ -847,19 +847,6 @@ want either men or women to have more generalized entropy error than the
 other. If the error is equally within the groups, then both men and
 women are at a similar ``benefit'' to each other.
 
-\hypertarget{consistency-score.}{%
-\subsubsection{Consistency Score.}\label{consistency-score.}}
-
-Are similar people treated similarly. Is our model consistent in the way
-it classifies people as having access to emergency funds? This metric
-alone wont tell us if our model is fair but we can see how different
-groups of people are generally treated. We split the consistency score
-by gender and we can see if our model is more consistent for men or
-women. Are individuals within each group being treated similarly? With
-the other metrics in mind we can determine if they are being treated
-similarly unfairly or similarly fair. This metric is calculated on a
-scale from 0 to 1 where a value of 1 means completely consistent.
-
 \hypertarget{in-and-post-processors}{%
 \subsection{In and Post Processors}\label{in-and-post-processors}}
 
@@ -941,9 +928,9 @@ satisfy as many fairness metrics as possible
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
 
-\hypertarget{decision-tree-model-figure2}{%
-\subsubsection{Decision Tree Model
-(Figure2)}\label{decision-tree-model-figure2}}
+\hypertarget{decision-tree-model-figure-1}{%
+\subsubsection{Decision Tree Model (Figure
+1)}\label{decision-tree-model-figure-1}}
 
 \begin{figure}
 \centering
@@ -985,9 +972,9 @@ The decision tree then splits according to participants' responses all
 the way down the tree, until finally it can predict whether or not based
 on the responses the participant has access to emergency funds.
 
-\hypertarget{confusion-matrices-by-gender-figure3}{%
-\subsubsection{Confusion Matrices by Gender
-(Figure3)}\label{confusion-matrices-by-gender-figure3}}
+\hypertarget{confusion-matrices-by-gender-figure-2}{%
+\subsubsection{Confusion Matrices by Gender (Figure
+2)}\label{confusion-matrices-by-gender-figure-2}}
 
 \begin{figure}
 \centering
@@ -1042,13 +1029,13 @@ highlights the importance of trying out various methods and metrics for
 assessing fairness because two different metrics can tell two completely
 different stories about the degree of fairness present in the model.
 
-\hypertarget{fairness-metrics-summary-table-figure4}{%
-\subsubsection{Fairness Metrics Summary Table
-(Figure4)}\label{fairness-metrics-summary-table-figure4}}
+\hypertarget{fairness-metrics-summary-table-figure-3}{%
+\subsubsection{Fairness Metrics Summary Table (Figure
+3)}\label{fairness-metrics-summary-table-figure-3}}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth,height=0.25\textheight]{images/FairnessMetricsSummary.png}
+\includegraphics[width=\textwidth,height=0.4\textheight]{images/FairnessMetricsSummary.png}
 \caption{Fairness Metrics Summary}
 \end{figure}
 
@@ -1141,11 +1128,120 @@ since we are aware that women have less access to emergency funds
 compared to men. This ratio indicates equity between our groups, which
 we know is false.
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
-This section is not mandatory, but can be added to the manuscript if the
-discussion is unusually long or complex.
+In this study we examine a decision tree classifier for access to
+emergency funds in Sub-Saharan Africa, assess the fairness of this
+classifier, use processing techniques to increase the fairness of our
+model, and assess the fairness again after the processing techniques
+have been applied. Our initial decision tree model is unfair towards
+women in that it cannot predict true positives for women as well as it
+does for men. We apply six different processing techniques and analyze
+the results. We find that the processing techniques maintain most of the
+accuracy and improve fairness. In our case we specifically care that the
+model does not discriminate based on gender. This means we care most
+about the group fairness metrics and the processors that decrease gender
+discrimination in our model.
+
+Most of the metrics increased fairness for most of the fairness metrics.
+The Calibrated equalized odds however, decreased fairness for all the
+metrics except the generalized entropy error. This would be a good
+processor to use if individual fairness was a major concern in the
+model. For group fairness, in our model, this processor is not ideal.
+
+All processors besides calibrated equalized odds decreased the
+statistical parity difference resulting in our model predicting more
+women as having access to emergency funds. We must be careful when
+interpreting this result. At first glance it may seem that these
+techniques are increasing fairness, but we must consider how the other
+metrics change and what this means in a real-life context. Our processed
+model will classify more women as having access to emergency funds, but
+this could be dangerous if these women are realistically in need of
+financial support. To make sure our model is realistically being fair to
+women, we must look at the processors that increase precision and equal
+opportunity. Satisfying these fairness metrics would allow our model to
+predict more positives for women in an accurate way.
+
+The reweighting technique both increases precision and decreases equal
+opportunity difference however, this processor only increases precision
+by .1\%. None of the other processors increase precision at all. The
+meta fair classifier improves the equal opportunity difference the most
+out of all the processors. In fact, the ratio becomes positive meaning
+that the model results in more accurately predicted women with access to
+emergency funds than accurately predicted men. Only looking at equal
+opportunity difference this processor seems promising, but once we
+consider precision, we see a different picture. This processor decreased
+our precision from 68\% to 37\%. Since precision measures the proportion
+of true positives to all positives, this means we have increased our
+false positives. This makes sense because if our model increases the
+number of positives for women, there will be more true positives which
+will satisfy our equal opportunity difference fairness metric, but there
+will also be more false positives decreasing our precision. This is a
+good example of how fairness can be complicated. We cannot just look at
+the processor that increases fairness across the board, but rather we
+must find a processor that prioritizes whatever the situation deems as
+fair. In our case fairness means something different than it would for
+an algorithm used in hiring practices. In a hiring scenario it would be
+a good idea to predict more women as being qualified for a job even if
+the false positive rate increases, because the model would be fighting
+existing prejudices and give women more opportunities. In our case
+fairness means something different. We want a model that classifies
+women just as accurately as it does men. The processors that account for
+the fairness we care about are the reweighting, exponential gradient
+reduction, grid search reduction, and the reject option classifier.
+These these processors maintain precision while increasing positive
+classifications for women.
+
+Although these processors increase accurate positive outcomes for women,
+we lose some other kinds of fairness. The generalized entropy error,
+generalized entropy error difference, and between group generalized
+entropy error increase when the exponential gradient reduction, grid
+search reduction, and the reject option classifier processors are used.
+This means that individual fairness decreases overall. The generalized
+entropy error difference becomes negative meaning that men have more
+generalized entropy error than women. The between group generalized
+entropy error increased slightly meaning that there is more within group
+unfairness than within. These results are to be expected because group
+fairness and individual fairness metrics are contradictory. As we
+account for group fairness, we lose individual fairness. For access to
+emergency funds, we care more if our model is systematically being
+unfair to women, so it is okay that we lose some individual fairness.
+
+Our study builds from numerous other studies that developed fairness
+metrics\citep{speicher2018unified, wachter2021fairness}, developed
+processing
+techniques{[}\citet{agarwal2018reductions};\citet{kamiran2012data};
+\citet{agarwal2019fair}; @ pleiss2017fairness{]}, and analyzed the
+trade-offs for different fairness metrics\citep{speicher2018unified}.
+Where our study differs is that we intend this this study to serve as an
+example of how these fairness metrics should be implemented. There must
+be considerations about the data, the model, and the metrics to decide
+how to process the model in the ``fairest'' way. Just knowing how the
+different fairness metrics are calculated is not enough. To ensure
+fairness one must understand how adjusting for different fairness
+metrics will impact the people that the model will be used on. If the
+wrong fairness metric is accounted for, the model might reinforce social
+injustices.
+
+In our study, we only looked at a decision tree classifier. For future
+studies, implementing fairness metrics and processors in a specific
+context on multiple different machine learning algorithms could be
+helpful in seeing how these processors act for different types of
+models. There are other processors and fairness metrics that were not as
+applicable to our context that could be implemented in a future study.
+For example, a study implementing fairness metrics in a context where
+individual fairness needs to be prioritized. In our case, the model we
+built was not necessarily going to be used for anything other than
+educational purposes. Knowing the purpose of a model will aid in
+selecting the most relevant fairness metrics and processors.
+
+Overall, the reweighting technique is the most helpful processor for our
+decision tree classifier for emergency funds in Sub-Saharan Africa. For
+other models and other contexts, this may not be true. All of these
+processors account for fairness however, it is important to find the
+processors that account for the specific type of fairness most relevant
+to the context and use of the model.
 
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
