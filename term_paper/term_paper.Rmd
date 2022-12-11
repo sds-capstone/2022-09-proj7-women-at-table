@@ -196,28 +196,11 @@ df2.head()
 
 ### *gender*
 
-The variable *gender* distinguishes gender. There are 16,716 males in this dataset and 17,388 females. This is a fairly equal distribution that we can see in the graph below.
-
-```{python, echo=FALSE, fig.width=3, fig.height=2}
-# barplot female versus not
-g = sns.countplot(x = 'gender', data = df2, palette = gender_palette)
-for p in g.patches:
-   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
-g.set(title = "Gender Distribution")
-```
+The variable *gender* distinguishes gender. There are 17,130 males in this dataset and 17,870 females.
 
 ### *Education*
 
-The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. Here is the distribution of education by gender:
-
-```{python, echo=FALSE}
-ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
-for p in ebg.patches:
-   ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
-ebg.set(title= "Education Count by Gender")
-```
-
-The bar plot above shows us that there are more women with primary education, but more men with secondary or tertiary education. Overall, we can see that there are more men with higher education than women. About 1,000 more men have received a secondary education and there is about double the amount of men with tertiary education compared to women showing a clear disparity.
+The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. The distribution of education by gender plot (seen in Appendix Education Count By Gender) shows us that there are more women with primary education, but more men with secondary or tertiary education. Overall, we can see that there are more men with higher education than women. About 1,000 more men have received a secondary education and there is about double the amount of men with tertiary education compared to women showing a clear disparity.
 
 ### *economy*
 
@@ -233,63 +216,16 @@ From the financial related variables, we were most interested in a few specific 
 
 ### *account_fin*
 
-The first variable being *account_fin* which distinguishes those who have a financial account from those who don’t:
+The first variable being *account_fin* which distinguishes those who have a financial account from those who don’t. We found 11,970 respondents have a financial account while 23,030 respondents do not. This means about two thirds of individuals do not have an account. This is likely connected to the lack of access to emergency funds displayed above given that if an individual does not have a financial account, we would expect they are less likely to have a source of emergency funds, as emergency funds are generally stored in an account.
 
-```{python, echo=FALSE}
-# barplot of number of people who have a bank account
-g = sns.countplot(x = 'account_fin', data = df2, palette = yes_no_pal)
-for p in g.patches:
-   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
-g.set(title = "Distribution of Has a Financial Account", xlabel = 'Has a financial account?')
-```
-
-We can see that about two thirds of individuals do not have an account. This is likely connected to the lack of access to emergency funds displayed above given that if an individual does not have a financial account, we would expect they are less likely to have a source of emergency funds, as emergency funds are generally stored in an account.
  
 ### *reason*
 
-Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account:
-
-```{python, include=FALSE}
-# reasons for no financial account
-# pivot data to long format
-df_long = df[['fin11a', "fin11b", "fin11c", "fin11d", "fin11e", "fin11f", "fin11g", "fin11h"]]\
-.stack()\
-.reset_index()
-df_long.rename(columns = {'level_1':'reason', 0:'value'}, inplace = True)
-df3 = df_long.query('value == 1.0') # filter to only "yes" answers for each reason
-# recode reason values
-df3.loc[df3['reason'] == 'fin11a', "reason"] = 'distance'
-df3.loc[df3['reason'] == 'fin11b', "reason"] = 'expense'
-df3.loc[df3['reason'] == 'fin11c', "reason"] = 'no_documentation'
-df3.loc[df3['reason'] == 'fin11d', "reason"] = 'lack_trust'
-df3.loc[df3['reason'] == 'fin11e', "reason"] = 'religious'
-df3.loc[df3['reason'] == 'fin11f', "reason"] = 'lack_money'
-df3.loc[df3['reason'] == 'fin11g', "reason"] = 'family_member_has'
-df3.loc[df3['reason'] == 'fin11h', "reason"] = 'no_need'
-df3.head()
-
-# aggregate counts by reason
-reason_counts = df3.groupby('reason').agg('count').reset_index()
-```
-
-
-```{python, echo=FALSE}
-# barplot of count by reason-- seaborn
-reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
-reasons_plot
-```
+Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account (seen in Appendix Reasons for No Financial Account).
 
 ### *emp_in*
 
-Employment status was another financial variable of interest represented by *emp_in*, which asks whether or not the participant is in the workforce. It appears that about three-fourths of individuals are in the workforce:
-
-```{python, echo=FALSE}
-# Distribution by in workforce
-g = sns.countplot(x = 'emp_in', data = df2, palette = yes_no_pal)
-for p in g.patches:
-   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .3, p.get_height()+100))
-g.set(title = "Distribution of Whether or not in Workforce", xlabel = "In workforce?")
-```
+Employment status was another financial variable of interest represented by *emp_in*, which asks whether or not the participant is in the workforce. It appears that 10,715 individuals were not in the workforce while 24.285 were, meaning about three-fourths of individuals are in the workforce.
 
 ### *inc_q*
 
@@ -316,15 +252,7 @@ To explore access to emergency funds in our dataset, we were interested 3 variab
 
 The variable *has_access* directly asks participants if they have access to emergency funds, with “emergency funds” defined as 1/20th of the GNI (gross national income) per capita for the country. GNI per capita is the country’s total income in a year/ the country’s population size. For context, in the United States, “emergency funds” would be defined as about $3,000. 
 
-```{python, echo=FALSE}
-# barplot of access to emergency funds
-g = sns.countplot(x = 'has_access', data = df2, palette = yes_no_pal, order = ['No', 'Yes'])
-for p in g.patches:
-   g.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .25, p.get_height()+100))
-g.set(title = "Distribution of Access to Emergency Funds")
-```
-
-The barchart above displays the overall distribution of access to emergency funds. We can see that over half of individuals represented in the data do not have access. 
+The overall distribution of access to emergency funds showed 15,237 individuals had access to emergency funds while 18,867 did not. This indicates that over half of individuals represented in the data do not have access.
 
 ### *main_source_funds*
 
@@ -346,15 +274,7 @@ The barchart above displays the overall distribution of the main source of emerg
 
 ### *Recieve Wage Payments*
 
-Diving further into the "Money from Working" category, we can see that only 8196 individuals receive wage payments from the *Receive Wage Payments* variable. This analysis suggests that receiving wage payments may be a key factor in determining access to emergency funds.
-
-```{python, echo=FALSE}
-# barplot of recieved wage payments
-chart = sns.countplot(x = 'Receive Wage Payments',data = df2, order = ["No", "Yes"], palette = yes_no_pal)
-for p in chart.patches:
-   chart.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+ .25, p.get_height()+100))
-chart.set(title = "Distribution of Received Wage Payments")
-```
+Diving further into the "Money from Working" category, we can see that only 8,348 individuals receive wage payments from the *Receive Wage Payments* variable while 26,241 do not. This analysis suggests that receiving wage payments may be a key factor in determining access to emergency funds.
 
 ### *gender*, *economy* and *Education* in relation to Emergency Funds
 
