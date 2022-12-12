@@ -27,46 +27,15 @@ type: article
 status: submit
 bibliography: mybibfile.bib
 appendix: appendix.tex
-simplesummary: |
-  A Simple summary goes here.
 abstract: |
   Having access to emergency funds is a valuable resource that many people end up needing at least once in their lives. Those who have access to emergency funding and other financial services have the capacity to remain afloat when unexpected predicaments arise, while those who are without this privilege have no choice but to endure crises and simply hope for the best. The purpose of our project is to predict access to emergency funds for adults in Sub-Saharan countries using a human rights-based approach to machine learning which centers equity, fairness, and impacts on humans over accuracy. Our analysis is based on the 2017 Global Findex Database which includes demographic as well as financial information for a sample of individuals within each country. We used a Decision Tree Classifier machine learning model implemented using Python to predict access to emergency funds with 68% accuracy. We assessed the fairness of our model with respect to gender using a variety of group and individual fairness metrics and evaluated the implications of each fairness metric with regard to our data and the goals of the analysis. We then implemented a variety of pre-proccessing, in-processing, and post-processing techniques in an attempt to minimize bias and maximize fairness. We have documented our analysis in a Jupyter notebook where this information can be made accessible to a broader undergraduate audience.
 keywords: |
   Fairness; machine learning; access; emergency funds; financial; ethics; processing techniques; gender; economy; debiasing; decision tree; Sub-Saharan Africa; fairness metrics
 acknowledgement: |
-  All sources of funding of the study should be disclosed. Please clearly 
-  indicate grants that you have received in support of your research work. 
-  Clearly state if you received funds for covering the costs to publish in open 
-  access.
-authorcontributions: |
-  For research articles with several authors, a short paragraph specifying their 
-  individual contributions must be provided. The following statements should be 
-  used ``X.X. and Y.Y. conceive and designed the experiments; X.X. performed the 
-  experiments; X.X. and Y.Y. analyzed the data; W.W. contributed 
-  reagents/materials/analysis tools; Y.Y. wrote the paper.'' Authorship must be
-  limited to those who have contributed substantially to the work reported.
+  Project Sponsored by Women at the Table.
 conflictsofinterest: |
-  Declare conflicts of interest or state 'The authors declare no conflict of 
-  interest.' Authors must identify and declare any personal circumstances or
-  interest that may be perceived as inappropriately influencing the
-  representation or interpretation of reported research results. Any role of the
-  funding sponsors in the design of the study; in the collection, analyses or 
-  interpretation of data in the writing of the manuscript, or in the decision to 
-  publish the results must be declared in this section. If there is no role, 
-  please state 'The founding sponsors had no role in the design of the study; 
-  in the collection, analyses, or interpretation of data; in the writing of the 
-  manuscript, an in the decision to publish the results'.
-sampleavailability: |
-  Samples of the compounds ...... are available from the authors.
-abbreviations:
-  - short: MDPI
-    long: Multidisciplinary Digital Publishing Institute
-  - short: DOAJ
-    long: Directory of open access journals
-  - short: TLA
-    long: Three letter acronym
-  - short: LD 
-    long: linear dichroism
+ The authors declare no conflict of interest.
+
 output: rticles::mdpi_article
 ---
 ```{python, include=FALSE}

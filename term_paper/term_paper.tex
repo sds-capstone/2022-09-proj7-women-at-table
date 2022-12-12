@@ -107,7 +107,6 @@ Northampton MA; \\
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
 % Simple summary
-\simplesumm{A Simple summary goes here.}
 
 % Abstract (Do not insert blank lines, i.e. \\)
 \abstract{Having access to emergency funds is a valuable resource that
@@ -267,19 +266,55 @@ can de-bias when possible.
 
 Our data is derived from The World Bank in The Global Findex Database,
 comprising the most comprehensive data sets on how adults save, borrow,
-make payments, and manage risk in more than 140 economies around the
-world. The data set was created to record various measures of financial
-equity and inclusion, with the intention that such information could
-reveal opportunities to expand access to financial services and to
-promote greater use of digital financial services for individuals who do
-not have a bank account. Conducted by Gallup, Inc for the annual Gallup
-World Poll, the participants responded to the questionnaire either on
-the phone or in-person. There were several variables of interest in this
-dataset when creating models to predict access to emergency funds,
-including demographic and financial information. For this analysis, we
-are using only a subset of the data including countries in the
-Sub-Saharan region (35 countries total). Our data set includes 35000
-observations and 105 variables in total.
+make payments, and manage risk in different economies around the world.
+The data set was created to record various measures of financial equity
+and inclusion, with the intention that such information could reveal
+opportunities to expand access to financial services and to promote
+greater use of digital financial services for individuals who do not
+have a bank account.
+
+The survey was carried out over the 2017 calendar year by Gallup, Inc.,
+as part of its Gallup World Poll, which since 2005 has annually
+conducted surveys of approximately 1,000 people in each of more than 160
+economies and in over 150 languages, using randomly selected, nationally
+representative samples. The target population was the entire civilian,
+noninstitutionalized population age 15 and above. Interview procedure
+Surveys were conducted face to face in economies where telephone
+coverage represents less than 80 percent of the population or where this
+was the customary methodology.
+
+In economies where face-to-face surveys were conducted, the first stage
+of sampling was the identification of primary sampling units. These
+units were stratified by population size, geography, or both, and
+clustering was achieved through one or more stages of sampling. Where
+population information was available, sample selection was based on
+probabilities proportional to population size; otherwise, simple random
+sampling was used. Random route procedures were used to select sampled
+households. Unless an outright refusal occurs, interviewers make up to
+three attempts to survey the sampled household. If an interview cannot
+be obtained at the initial sampled household, a simple substitution
+method was used.
+
+Respondents were randomly selected within the selected households. Each
+eligible household member was listed and the handheld survey device
+randomly selects the household member to be interviewed. For paper
+surveys, the Kish grid method was used to select the respondent. In
+economies where cultural restrictions dictate gender matching,
+respondents were randomly selected from among all eligible adults of the
+interviewer's gender.
+
+In economies where telephone interviewing was employed, random digit
+dialing or a nationally representative list of phone numbers was used.
+In most economies where cell phone penetration was high, a dual sampling
+frame was used. Random selection of respondents was achieved by using
+either the latest birthday or household enumeration method.
+
+There were several variables of interest in this dataset when creating
+models to predict access to emergency funds, including demographic and
+financial information. For this analysis, we are using only a subset of
+the data including countries in the Sub-Saharan region (35 countries
+total). Our data set includes 35000 observations and 105 variables in
+total.
 
 \hypertarget{demographics}{%
 \subsection{Demographics}\label{demographics}}
@@ -287,27 +322,21 @@ observations and 105 variables in total.
 \hypertarget{gender}{%
 \subsubsection{\texorpdfstring{\emph{gender}}{gender}}\label{gender}}
 
-The variable \emph{gender} distinguishes gender. There are 16,716 males
-in this dataset and 17,388 females. This is a fairly equal distribution
-that we can see in the graph below.
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-6-1.pdf}
+The variable \emph{gender} distinguishes gender. There are 17,130 males
+in this dataset and 17,870 females.
 
 \hypertarget{education}{%
 \subsubsection{\texorpdfstring{\emph{Education}}{Education}}\label{education}}
 
 The \emph{Education} variable corresponds to the highest level of
 education attained with `Primary', `Secondary' and `Tertiary' being the
-three options. Here is the distribution of education by gender:
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-7-3.pdf}
-
-The bar plot above shows us that there are more women with primary
-education, but more men with secondary or tertiary education. Overall,
-we can see that there are more men with higher education than women.
-About 1,000 more men have received a secondary education and there is
-about double the amount of men with tertiary education compared to women
-showing a clear disparity.
+three options. The distribution of education by gender plot (seen in
+Appendix Education Count By Gender) shows us that there are more women
+with primary education, but more men with secondary or tertiary
+education. Overall, we can see that there are more men with higher
+education than women. About 1,000 more men have received a secondary
+education and there is about double the amount of men with tertiary
+education compared to women showing a clear disparity.
 
 \hypertarget{economy}{%
 \subsubsection{\texorpdfstring{\emph{economy}}{economy}}\label{economy}}
@@ -345,34 +374,30 @@ access to emergency funds.
 \subsubsection{\texorpdfstring{\emph{account\_fin}}{account\_fin}}\label{account_fin}}
 
 The first variable being \emph{account\_fin} which distinguishes those
-who have a financial account from those who don't:
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-9-5.pdf}
-
-We can see that about two thirds of individuals do not have an account.
-This is likely connected to the lack of access to emergency funds
-displayed above given that if an individual does not have a financial
-account, we would expect they are less likely to have a source of
-emergency funds, as emergency funds are generally stored in an account.
+who have a financial account from those who don't. We found 11,970
+respondents have a financial account while 23,030 respondents do not.
+This means about two thirds of individuals do not have an account. This
+is likely connected to the lack of access to emergency funds displayed
+above given that if an individual does not have a financial account, we
+would expect they are less likely to have a source of emergency funds,
+as emergency funds are generally stored in an account.
 
 \hypertarget{reason}{%
 \subsubsection{\texorpdfstring{\emph{reason}}{reason}}\label{reason}}
 
 Those who do not have a financial account were asked why in the
 \emph{reason} variable, that provides a list of possible reasons for not
-having a financial account:
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-7.pdf}
+having a financial account (seen in Appendix Reasons for No Financial
+Account).
 
 \hypertarget{emp_in}{%
 \subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
 
 Employment status was another financial variable of interest represented
 by \emph{emp\_in}, which asks whether or not the participant is in the
-workforce. It appears that about three-fourths of individuals are in the
-workforce:
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-12-9.pdf}
+workforce. It appears that 10,715 individuals were not in the workforce
+while 24.285 were, meaning about three-fourths of individuals are in the
+workforce.
 
 \hypertarget{inc_q}{%
 \subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
@@ -406,11 +431,10 @@ capita is the country's total income in a year/ the country's population
 size. For context, in the United States, ``emergency funds'' would be
 defined as about \$3,000.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-14-11.pdf}
-
-The barchart above displays the overall distribution of access to
-emergency funds. We can see that over half of individuals represented in
-the data do not have access.
+The overall distribution of access to emergency funds showed 15,237
+individuals had access to emergency funds while 18,867 did not. This
+indicates that over half of individuals represented in the data do not
+have access.
 
 \hypertarget{main_source_funds}{%
 \subsubsection{\texorpdfstring{\emph{main\_source\_funds}}{main\_source\_funds}}\label{main_source_funds}}
@@ -419,7 +443,7 @@ We proceeded to explore the source of emergency funds using the
 \emph{main\_source\_funds} variable, which provides a list of options
 for where participants receive their main source of emergency funds:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-15-13.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-8-1.pdf}
 
 The barchart above displays the overall distribution of the main source
 of emergency funds. Most of the individuals with access to emergency
@@ -431,11 +455,10 @@ their savings.
 Payments}}{Recieve Wage Payments}}\label{recieve-wage-payments}}
 
 Diving further into the ``Money from Working'' category, we can see that
-only 8196 individuals receive wage payments from the \emph{Receive Wage
-Payments} variable. This analysis suggests that receiving wage payments
-may be a key factor in determining access to emergency funds.
-
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-15.pdf}
+only 8,348 individuals receive wage payments from the \emph{Receive Wage
+Payments} variable while 26,241 do not. This analysis suggests that
+receiving wage payments may be a key factor in determining access to
+emergency funds.
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
@@ -445,16 +468,16 @@ Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gend
 Finally, we sought to find if there were disparities in access to
 emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-18-17.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-10-3.pdf}
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-19-19.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-5.pdf}
 
 In the side-by-side barplots above, we can see that although only about
 50\% of the countries have a higher percentage of men represented in the
 questionnaire (left bar plot), in 75\% of the countries more men have
 access to emergency funds than women (right bar plot).
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-21-21.pdf}
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-13-7.pdf}
 
 Additionally, in the barplot above we can see the distribution of funds
 based on an individual's highest education level. 63\% of people with
@@ -1274,44 +1297,15 @@ group throughout the course of the project.
 \vspace{6pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\acknowledgments{All sources of funding of the study should be
-disclosed. Please clearly indicate grants that you have received in
-support of your research work. Clearly state if you received funds for
-covering the costs to publish in open access.}
+\acknowledgments{Project Sponsored by Women at the Table.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontributions{For research articles with several authors, a short
-paragraph specifying their individual contributions must be provided.
-The following statements should be used ``X.X. and Y.Y. conceive and
-designed the experiments; X.X. performed the experiments; X.X. and Y.Y.
-analyzed the data; W.W. contributed reagents/materials/analysis tools;
-Y.Y. wrote the paper.'\,' Authorship must be limited to those who have
-contributed substantially to the work reported.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\conflictsofinterest{Declare conflicts of interest or state `The authors
-declare no conflict of interest.' Authors must identify and declare any
-personal circumstances or interest that may be perceived as
-inappropriately influencing the representation or interpretation of
-reported research results. Any role of the funding sponsors in the
-design of the study; in the collection, analyses or interpretation of
-data in the writing of the manuscript, or in the decision to publish the
-results must be declared in this section. If there is no role, please
-state `The founding sponsors had no role in the design of the study; in
-the collection, analyses, or interpretation of data; in the writing of
-the manuscript, an in the decision to publish the results'.}
+\conflictsofinterest{The authors declare no conflict of interest.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% optional
-\abbreviations{The following abbreviations are used in this manuscript:\\
-
-\noindent
-\begin{tabular}{@{}ll}
-MDPI & Multidisciplinary Digital Publishing Institute \\
-DOAJ & Directory of open access journals \\
-TLA & Three letter acronym \\
-LD & linear dichroism \\
-\end{tabular}}
 
 \input{"appendix.tex"}
 
@@ -1344,8 +1338,6 @@ LD & linear dichroism \\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% optional
-\sampleavailability{Samples of the compounds \ldots\ldots{} are
-available from the authors.}
 
 %% for journal Sci
 %\reviewreports{\\
