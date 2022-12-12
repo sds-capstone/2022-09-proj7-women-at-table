@@ -227,7 +227,7 @@ The overall distribution of access to emergency funds showed 15,237 individuals 
 
 We proceeded to explore the source of emergency funds using the *main_source_funds* variable, which provides a list of options for where participants receive their main source of emergency funds:
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, include = FALSE}
 # barplot of main source of emergency funds
 chart = sns.countplot(y = 'main_source_funds', 
                       data = df2, 
@@ -239,7 +239,9 @@ chart = sns.countplot(y = 'main_source_funds',
 chart
 ```
 
-The barchart above displays the overall distribution of the main source of emergency funds. Most of the individuals with access to emergency funds receive their funding from work, their family and friends, or their savings.
+![](images/MainSourceFunds.png){width=75%, height=50%}
+
+Figure 1 (above) displays the overall distribution of the main source of emergency funds. Most of the individuals with access to emergency funds receive their funding from work, their family and friends, or their savings.
 
 ### *Recieve Wage Payments*
 
@@ -287,7 +289,7 @@ df3 = df3.sort_values('m_percent_access')
 df3 = df3.rename(columns = {'m_percent_access':'Males With Acesss', 'f_percent_access': 'Females With Access'})
 ```
 
-```{python,echo=FALSE}
+```{python,echo=FALSE, include = FALSE}
 # not displaying properly
 # create new figure
 #fig = plt.figure()
@@ -304,13 +306,16 @@ df_gender.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue
 
 ```
 
-```{python,echo=FALSE}
+```{python,echo=FALSE, include = FALSE}
 df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pink'], title = "Percent of Participants with Access to Emergency Funds by Country & Gender").axvline(x = 50, color = "red", linestyle = "dashed")
 ```
 
-In the side-by-side barplots above, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
+![](images/percent_participants_by_country_gender.png){width=75%, height=50%}
+![](images/percent_access_funds_by_country_gender.png){width=75%, height=50%}
 
-```{python, echo=FALSE}
+In the side-by-side barplots above (figures 2 and 3), we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
+
+```{python, echo=FALSE, include = FALSE}
 # Counting by Access to Emergency Funds by country
 access = df2[['has_access', 'economy']].query("has_access == 'Yes'").groupby('economy').count()
 no_access = df2[['has_access', 'economy']].query("has_access == 'No'").groupby('economy').count()
@@ -336,7 +341,7 @@ educ_perc = (df2.groupby(['Education'])['has_access']
 
 ```
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, include = FALSE}
 # not showing up and idk why
 educ_access = sns.barplot(x = "Education", y = "percentage", order= ['Primary', 'Secondary', 'Tertiary'], hue="has_access", palette= yes_no_pal, hue_order= ['No', 'Yes'], data = educ_perc)
 for p in educ_access.patches:
@@ -345,7 +350,9 @@ educ_access.set(title = "Access to Emergency Funds by Education Level", xlabel =
 educ_access.axhline(y = 44, color = "red", linestyle = "dashed")
 ```
 
-Additionally, in the barplot above we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
+![](images/access_by_educ_level.png){width=75%, height=50%}
+
+Additionally, in the barplot above (figure 4) we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
 
 # Methods
 
@@ -494,7 +501,7 @@ Depending on the response to sent_remittances the tree branches into two, consid
 
 The decision tree then splits according to participants’ responses all the way down the tree, until finally it can predict whether or not based on the responses the participant has access to emergency funds.
 
-### Confusion Matrices by Gender (Figure 2)
+### Confusion Matrices by Gender (Figure 5)
 
 ![Confusion Matrices by Gender](images/confusionMatrices.png){width=50%, height=50%}
 
@@ -506,7 +513,7 @@ On the flip side, if the results of the model are (hypothetically) being used to
 
 This comparison of confusion matrices also demonstrates the importance of considering the balance of true negatives to true positives in addition to just the error rates. When looking at just the error rates, they seem almost equal between the two groups, yet when we consider the balance of true negatives to true positives, we can see that the model is much worse at predicting true positives for females. This furthermore highlights the importance of trying out various methods and metrics for assessing fairness because two different metrics can tell two completely different stories about the degree of fairness present in the model.
 
-### Fairness Metrics Summary Table (Figure 3)
+### Fairness Metrics Summary Table (Figure 6)
 
 ![Fairness Metrics Summary](images/FairnessMetricsSummary.png){height=40%}
 
@@ -559,14 +566,14 @@ We would like to thank our sponsor organization [Women at the Table](https://www
 
 # Appendix
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, include = FALSE}
 ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
 for p in ebg.patches:
    ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
 
 ebg.set(title= "Education Count by Gender") 
 ```
-
+![](images/educ_count_gender.png){width=75%, height=50%}
 
 ```{python, include=FALSE}
 # reasons for no financial account
@@ -597,3 +604,4 @@ reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, pale
 reasons_plot 
 ```
 
+![](images/reasons_no_fin_acc.png){width=75%, height=50%}

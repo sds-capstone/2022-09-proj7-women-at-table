@@ -109,27 +109,24 @@ Northampton MA; \\
 % Simple summary
 
 % Abstract (Do not insert blank lines, i.e. \\)
-\abstract{Having access to emergency funds is a valuable resource that
-many people end up needing at least once in their lives. Those who have
-access to emergency funding and other financial services have the
-capacity to remain afloat when unexpected predicaments arise, while
-those who are without this privilege have no choice but to endure crises
-and simply hope for the best. The purpose of our project is to predict
-access to emergency funds for adults in Sub-Saharan countries using a
-human rights-based approach to machine learning which centers equity,
-fairness, and impacts on humans over accuracy. Our analysis is based on
-the 2017 Global Findex Database which includes demographic as well as
-financial information for a sample of individuals within each country.
-We used a Decision Tree Classifier machine learning model implemented
-using Python to predict access to emergency funds with 68\% accuracy. We
-assessed the fairness of our model with respect to gender using a
-variety of group and individual fairness metrics and evaluated the
-implications of each fairness metric with regard to our data and the
-goals of the analysis. We then implemented a variety of pre-proccessing,
-in-processing, and post-processing techniques in an attempt to minimize
-bias and maximize fairness. We have documented our analysis in a Jupyter
-notebook where this information can be made accessible to a broader
-undergraduate audience.}
+\abstract{Most people require access to emergency funds at least once in
+their life. These funds act as an important safety net in emergency
+cases. The purpose of our project is to predict access to emergency
+funds for adults in Sub-Saharan countries using a human rights-based
+approach to machine learning which centers equity, fairness, and impacts
+on humans over accuracy. Our analysis is based on the 2017 Global Findex
+Database which includes demographic as well as financial information for
+a sample of individuals within each country. We used a Decision Tree
+Classifier machine learning model implemented using Python to predict
+access to emergency funds with 68\% accuracy. We assessed the fairness
+of our model with respect to gender using a variety of group and
+individual fairness metrics and evaluated the implications of each
+fairness metric with regard to our data and the goals of the analysis.
+We then implemented a variety of pre-proccessing, in-processing, and
+post-processing techniques in an attempt to minimize bias and maximize
+fairness. We have documented our analysis in a Jupyter notebook where
+this information can be made accessible to a broader undergraduate
+audience.}
 
 % Keywords
 \keyword{Fairness; machine learning; access; emergency funds; financial;
@@ -223,17 +220,18 @@ tree; Sub-Saharan Africa; fairness metrics}
 Science is often viewed as a way to offer trustworthy research backed
 solutions and answers. A lot of that research involves statistical
 methods performed on data however, what happens when the data and
-statistical methods are not as objective and trustworthy as is so often
+statistical methods are not objective and trustworthy as is so often
 assumed? The conclusions drawn from the data are biased and unfair, most
 often towards minorities and protected classes of people. To contribute
 to a human rights based approach to data analysis, we evaluate fairness
-metrics on a machine learning algorithm to measure bias. We use a Global
-Findex data set which contains financial information about 35 Sub
-Saharan countries. Specifically, we create models to predict access to
-emergency funds, then analyze the fairness of those models. We focus on
-group and individual fairness metrics for the protected attribute sex.
-In addition we investigate the data set itself to understand where
-potential biases might have been implanted.
+metrics on a machine learning algorithm to measure bias. We use a World
+Bank Global Findex data set which contains financial information about
+35 Sub Saharan countries. Specifically, we create models to predict
+access to emergency funds, defined as 1/20th of the GNI (gross national
+income) per capita for the country, then analyze the fairness of those
+models. We focus on group and individual fairness metrics for the
+protected attribute sex. In addition we investigate the data set itself
+to understand where potential biases might have been implanted.
 
 Data sets and algorithms have real world impacts on real people. The
 inherent bias in data sets can carry over into machine learning
@@ -322,8 +320,8 @@ total.
 \hypertarget{gender}{%
 \subsubsection{\texorpdfstring{\emph{gender}}{gender}}\label{gender}}
 
-The variable \emph{gender} distinguishes gender. There are 17,130 males
-in this dataset and 17,870 females.
+The variable \emph{gender} distinguishes gender. There are 17,870
+females and 17,130 males in the dataset.
 
 \hypertarget{education}{%
 \subsubsection{\texorpdfstring{\emph{Education}}{Education}}\label{education}}
@@ -366,9 +364,9 @@ respondents from each.
 \hypertarget{financial}{%
 \subsection{Financial}\label{financial}}
 
-From the financial related variables, we were most interested in a few
-specific financial variables that we thought would have an impact on
-access to emergency funds.
+In the following, we will take a closer look at financial related
+variables that seem likely to have an impact to the access to emergency
+funds.
 
 \hypertarget{account_fin}{%
 \subsubsection{\texorpdfstring{\emph{account\_fin}}{account\_fin}}\label{account_fin}}
@@ -378,9 +376,9 @@ who have a financial account from those who don't. We found 11,970
 respondents have a financial account while 23,030 respondents do not.
 This means about two thirds of individuals do not have an account. This
 is likely connected to the lack of access to emergency funds displayed
-above given that if an individual does not have a financial account, we
-would expect they are less likely to have a source of emergency funds,
-as emergency funds are generally stored in an account.
+above. If an individual does not have a financial account, we would
+expect they are less likely to have a source of emergency funds, as
+emergency funds are generally stored in an account.
 
 \hypertarget{reason}{%
 \subsubsection{\texorpdfstring{\emph{reason}}{reason}}\label{reason}}
@@ -443,22 +441,24 @@ We proceeded to explore the source of emergency funds using the
 \emph{main\_source\_funds} variable, which provides a list of options
 for where participants receive their main source of emergency funds:
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-8-1.pdf}
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/MainSourceFunds.png}
 
-The barchart above displays the overall distribution of the main source
-of emergency funds. Most of the individuals with access to emergency
-funds receive their funding from work, their family and friends, or
-their savings.
+Figure 1 (above) displays the overall distribution of the main source of
+emergency funds. Most of the individuals with access to emergency funds
+receive their funding from work, their family and friends, or their
+savings.
 
 \hypertarget{recieve-wage-payments}{%
 \subsubsection{\texorpdfstring{\emph{Recieve Wage
 Payments}}{Recieve Wage Payments}}\label{recieve-wage-payments}}
 
-Diving further into the ``Money from Working'' category, we can see that
-only 8,348 individuals receive wage payments from the \emph{Receive Wage
-Payments} variable while 26,241 do not. This analysis suggests that
-receiving wage payments may be a key factor in determining access to
-emergency funds.
+If respondents answered that their main source of emergency funds was
+from `Money From Working', they were asked to further clarify the form
+in which that money was received. From that ``Money from Working''
+category, we can see that only 8,348 individuals receive wage payments
+from the \emph{Receive Wage Payments} variable while 26,241 do not. This
+analysis suggests that receiving wage payments may be a key factor in
+determining access to emergency funds.
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
@@ -468,28 +468,28 @@ Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gend
 Finally, we sought to find if there were disparities in access to
 emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-10-3.pdf}
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_participants_by_country_gender.png}
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_access_funds_by_country_gender.png}
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-11-5.pdf}
+In the side-by-side barplots above (figures 2 and 3), we can see that
+although only about 50\% of the countries have a higher percentage of
+men represented in the questionnaire (left bar plot), in 75\% of the
+countries more men have access to emergency funds than women (right bar
+plot).
 
-In the side-by-side barplots above, we can see that although only about
-50\% of the countries have a higher percentage of men represented in the
-questionnaire (left bar plot), in 75\% of the countries more men have
-access to emergency funds than women (right bar plot).
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/access_by_educ_level.png}
 
-\includegraphics{term_paper_files/figure-latex/unnamed-chunk-13-7.pdf}
-
-Additionally, in the barplot above we can see the distribution of funds
-based on an individual's highest education level. 63\% of people with
-only a primary education do not have access to emergency funds compared
-to 37\% of people who do. These numbers are more evenly distributed for
-those with secondary education, with about 49\% of people not having
-access to emergency funds, while 51\% of people do have access. Finally,
-for those with a tertiary level of education we can see that about 72\%
-of people have access to emergency funds while only 28\% of that group
-does not have access. Overall, we can make the assumption that people
-with a higher level of education are more likely to have access to
-emergency funds.
+Additionally, in the barplot above (figure 4) we can see the
+distribution of funds based on an individual's highest education level.
+63\% of people with only a primary education do not have access to
+emergency funds compared to 37\% of people who do. These numbers are
+more evenly distributed for those with secondary education, with about
+49\% of people not having access to emergency funds, while 51\% of
+people do have access. Finally, for those with a tertiary level of
+education we can see that about 72\% of people have access to emergency
+funds while only 28\% of that group does not have access. Overall, we
+can make the assumption that people with a higher level of education are
+more likely to have access to emergency funds.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -541,17 +541,17 @@ whether or not an individual has paid online for something), and we
 chose to remove it because removing it had no impact on the model
 accuracy and fairness.
 
-Many of the questions in the survey were structured such that the
-potential responses were ``yes'', ``no'', ``don't know'', and
-``refuse''. Based on our exploratory data analysis, it seems that for
-most questions, the numbers of ``don't know'' and ``refuse'' responses
-are very low. Furthermore, these responses would not give us much useful
-information when implementing a predictive model. Thus, we chose to
-replace all ``don't know'' and ``refuse'' values with \emph{NA} values.
-We then replaced all remaining missing values (including missing values
-not removed previously and ``don't know'' and ``refuse'' values) with
-the column mean rounded to the nearest whole number (i.e.~the most
-frequent value if the variable is categorical).
+The most common answer format of the survey was multiple choice with
+answer options ``yes'', ``no'', ``don't know'', and ``refuse''. Based on
+our exploratory data analysis, it seems that for most questions, the
+numbers of ``don't know'' and ``refuse'' responses are very low.
+Furthermore, these responses would not give us much useful information
+when implementing a predictive model. Thus, we chose to replace all
+``don't know'' and ``refuse'' values with \emph{NA} values. We then
+replaced all remaining missing values (including missing values not
+removed previously and ``don't know'' and ``refuse'' values) with the
+column mean rounded to the nearest whole number (i.e.~the most frequent
+value if the variable is categorical).
 
 Next, we re-coded the country variable into a variable with five
 categories based on the percentage of sampled individuals in the country
@@ -597,63 +597,15 @@ train-test split used for machine learning algorithms.
 \hypertarget{metrics}{%
 \subsection{Metrics}\label{metrics}}
 
-Fairness metrics are a way to assess machine learning algorithms for
-unwanted bias. Algorithms can classify people unfairly using data
-collected in a biased environment. When classifying people, it's
-important to understand how these classifications can contribute to and
-reinforce discriminatory social systems. Accuracy shouldn't always be
-prioritized. It is useful to sacrifice accuracy in favor of fairness
-when using machine learning algorithms to make decisions impacting
-people.To assess fairness and accuracy in our model we explore 12
-different metrics, 10 of which are fairness metrics. Fairness metrics
-can be split into group and individual metrics.
+To assess fairness and accuracy in our model we explore 12 different
+metrics, 10 of which are fairness metrics. Fairness metrics can be split
+into group and individual metrics.
 
-Group fairness metrics ensure parity between privileged and unprivileged
-groups of a protected class. For example, for the protected class sex,
-the privileged group is men and the unprivileged group is women. The
-model should work similarly for both of these groups and not favor the
-privileged group. Group fairness metrics measures how discriminatory the
-model classifies the unprivileged
-group\citep{binns2020apparent, mehrabi2021survey, caton2020fairness}.
-The group metrics we explore include statistical parity difference,
-equal opportunity difference, disparate impact,precision score
-difference, general entropy difference,and conditional demographic
-parity.Not all group fairness metrics can be satisfied at the same time.
-For example equal opportunity difference and statistical parity
-difference cannot be simultaneously accounted
-for\citep{kypraiou_what_2021}.
-
-Individual fairness metrics measure how similarly the model predicts for
-similar observations. Will two very similar people receive the same
-classification? Individual fairness metrics contradict group fairness
-metrics. When accounting for imbalanced predictions between groups, the
-within group fairness can suffer\citep{kypraiou_what_2021}. In the
-process of satisfying group metrics, two similar subjects only differing
-by sex, may be classified differently
-\citep{binns2020apparent, mehrabi2021survey, caton2020fairness, zhou2022bias}.
-The individual metrics we explore are general entropy error and
-consistency score. We can measure both individual and group fairness
-with the between group general entropy error metric.
-
-One approach to fairness in machine learning is ``fairness by
-unawareness'' meaning a model is blind to the sensitive attributs.
-Although it may seem an intuitive approach to simply remove the
-protected attribute from the data in order to make the algorithm
-unbiased, this is often not an effective approach to reduce bias. There
-are often variables that remain in the data that act as pseudo
-substitutes for the protected attribute \citep{zhou2022bias}. For
-example, if race was excluded from the model but the variable zip code
-remained. Zip code can act as a stand in for race in regions where
-people are segregated by race.
-
-In our case we are focusing on the protected attribute gender. The other
-variables in this data set are education, age, and all the financial
-variables. If any of these variables are segregated by gender, by
-inherit gender bias in society, then simply removing the gender variable
-will not solve anything.
+\hypertarget{basic-metrics}{%
+\subsubsection{Basic Metrics}\label{basic-metrics}}
 
 \hypertarget{accuracy.}{%
-\subsubsection{Accuracy.}\label{accuracy.}}
+\paragraph{Accuracy.}\label{accuracy.}}
 
 Accuracy is a measure of how many classifications our model predicts
 correctly compared to all the predictions. The ratio of correctly
@@ -670,7 +622,7 @@ people.
 \(Accuracy = (True Positives + True Negatives) / (True Positives + True Negatives + False Positives + False Negatives)\)
 
 \hypertarget{precision.}{%
-\subsubsection{Precision.}\label{precision.}}
+\paragraph{Precision.}\label{precision.}}
 
 Precision is a measure of how accurately a model predicts positive
 outcomes.The ratio of correctly predicted positives to all predicted
@@ -680,7 +632,7 @@ positives. With high precision rates, we have low false positive rates
 \(Precision = true positives / (true positives + false positives)\)
 
 \hypertarget{recall.}{%
-\subsubsection{Recall.}\label{recall.}}
+\paragraph{Recall.}\label{recall.}}
 
 Recall is a measure of how accurately a model predicts negative
 outcomes.The ratio of correctly predicted negatives to all predicted
@@ -688,8 +640,117 @@ negatives\citep{gupta2021recall}
 
 \(Recall = true negatives / all negatives)\)
 
+\hypertarget{fairness-metrics}{%
+\subsubsection{Fairness Metrics}\label{fairness-metrics}}
+
+Fairness metrics are a way to assess machine learning algorithms for
+unwanted bias. Algorithms can classify people unfairly using data
+collected in a biased environment. When classifying people, it is
+important to take into account how these classifications can contribute
+to and reinforce discriminatory social systems. Thus, it is sometimes
+necessary to sacrifice accuracy in favor of fairness when using machine
+learning algorithms to make decisions impacting people
+\citep[\citet{kamiran2012data},
+\citet{menon2018cost}]{zliobaite2015relation}. It is often not possible
+to maximize fairness and accuracy at the same time because due to
+discriminatory systems built into society, protected attributes such as
+gender are often associated with the outcome variable. With regard to
+our dataset, the proportion females with access to emergency funds is
+substantially lower that that for men in the sample. Because of this,
+the model will be less likely to predict positive values for females. If
+the model were to hypothetically be used to determine which individuals
+to offer loans to, it would reinforce existing patriarchal systems to
+offer fewer loans to females. Thus, it would be beneficial to prioritize
+equitable access to loans by gender over accuracy. In other words,
+reality is often not fair, so if we only prioritize accuracy, we will
+continue to replicate the discriminatory systems that exist.
+
+One approach to fairness in machine learning is ``fairness by
+unawareness'' meaning a model is blind to the sensitive attributs.
+Although it may seem an intuitive approach to simply remove the
+protected attribute from the data in order to make the algorithm
+unbiased, this is often not an effective approach to reduce bias. There
+are often variables that remain in the data that act as pseudo
+substitutes for the protected attribute \citep{zhou2022bias}. For
+example, if race was excluded from the model but the variable zip code
+remained. Zip code can act as a stand in for race in regions where
+people are segregated by race. Another concrete example of this is the
+amazon recruiter tool removed gender from their algorithm but it was
+still biased against women \citep{goodman_2022}.
+
+In our case we are focusing on the protected attribute gender. If we
+were to remove the gender variable from our data, it is possible that
+our model could still have gender bias given that there are other
+variables in the dataset that have a strong association with gender
+including education and several of the finanical variables (as shown in
+our exploratory data analysis).
+
+\hypertarget{individual-fairness-metrics}{%
+\paragraph{Individual Fairness
+Metrics}\label{individual-fairness-metrics}}
+
+Individual fairness metrics measure how similarly the model predicts for
+similar observations. Will two very similar people receive the same
+classification? Individual fairness metrics contradict group fairness
+metrics. When accounting for imbalanced predictions between groups, the
+within group fairness can suffer\citep{kypraiou_what_2021}. In the
+process of satisfying group metrics, two similar subjects only differing
+by sex, may be classified differently
+\citep{binns2020apparent, mehrabi2021survey, caton2020fairness, zhou2022bias}.
+The individual metrics we explore are general entropy error and
+consistency score. We can measure both individual and group fairness
+with the between group general entropy error metric.
+
+\hypertarget{general-entropy-error.}{%
+\subparagraph{General Entropy Error.}\label{general-entropy-error.}}
+
+This metric is an individual metric, and it computes fairness by
+computing the level of unfair benefit being assigned by the model. The
+metric defines ``benefit'' as follows: for any individual in the testing
+data set, that individual has received a benefit if the model predicted
+the favorable outcome when the truth was that the individual did not
+have the favorable outcome (i.e.~a false positive). Each individual in
+the data receives either a 2 (benefit, false positive), a 1 (no benefit,
+correct prediction), or 0 (no benefit, false negative). The metric then
+compares the benefit of each individual to the average accuracy and
+false positive level of the model. The ``ideal'' value is 0, and a
+higher number indicates a higher level of inequity in benefit among
+individuals. In other words, if many individuals have a benefit score
+that is far off from the average, that indicates that the model is
+unfairly benefiting some individuals and not others. This metric does
+not consider privileged versus unprivileged groups, and thus is not able
+to indicate whether or not the inequality in benefit is systematic in
+any particular way (i.e., it cannot tell whether males receive more
+benefit than females; it can only tell that some individuals receive
+higher benefits than others)
+\citep{caton2020fairness, kypraiou_what_2021}.
+
+This metric is important to our data because a false positive
+outcome(higher benefit) would mean that someone is predicted to having
+access to emergency funds when they don't. If there is a high general
+entropy error, there are many individuals whose need for emergency funds
+are being overlooked.
+
+\hypertarget{group-fairness-metrics}{%
+\paragraph{Group Fairness Metrics}\label{group-fairness-metrics}}
+
+Group fairness metrics ensure parity between privileged and unprivileged
+groups of a protected class. For example, for the protected class sex,
+the privileged group is men and the unprivileged group is women. The
+model should work similarly for both of these groups and not favor the
+privileged group. Group fairness metrics measures how discriminatory the
+model classifies the unprivileged
+group\citep{binns2020apparent, mehrabi2021survey, caton2020fairness}.
+The group metrics we explore include statistical parity difference,
+equal opportunity difference, disparate impact,precision score
+difference, general entropy difference,and conditional demographic
+parity.Not all group fairness metrics can be satisfied at the same time.
+For example equal opportunity difference and statistical parity
+difference cannot be simultaneously accounted
+for\citep{kypraiou_what_2021}.
+
 \hypertarget{statistical-parity-difference.}{%
-\subsubsection{Statistical Parity
+\subparagraph{Statistical Parity
 Difference.}\label{statistical-parity-difference.}}
 
 This metric computes the difference in percentages between the
@@ -724,7 +785,7 @@ exploratory manner, so we will use techniques to account for this
 metric.
 
 \hypertarget{equal-opportunity-difference.}{%
-\subsubsection{Equal Opportunity
+\subparagraph{Equal Opportunity
 Difference.}\label{equal-opportunity-difference.}}
 
 This metric is similar to statistical parity in that it is also a group
@@ -744,16 +805,16 @@ accuracy for men than women. Are men more accurately predicted to have
 access to emergency funds than women?
 
 \hypertarget{disparate-impact.}{%
-\subsubsection{Disparate Impact.}\label{disparate-impact.}}
+\subparagraph{Disparate Impact.}\label{disparate-impact.}}
 
 The disparate impact metric measures the proportion of positive outcomes
 between an unprivileged group and a privileged group. It is usually
 assessed when predicting an outcome that disproportionately affects a
 sub population. For example, hiring more men than women as construction
-workers on the basis of height and strength.For this case we want to
+workers on the basis of height and strength. For this case we want to
 know the proportion of females that are categorized as having access to
-emergency funds VS males who are categorized as having access to
-emergency funds.The standard for satisfying this metric is that the
+emergency funds versus males who are categorized as having access to
+emergency funds. The standard for satisfying this metric is that the
 unprivileged group must receive a positive outcome at a ratio of 4:5 to
 the privileged group. As long as females are classified as having access
 to emergency funds no less than around 80\% of the time males are
@@ -770,7 +831,7 @@ that women have access to emergency funds when they don't. This could be
 more harmful than not satisfying this metric.
 
 \hypertarget{conditional-demographic-disparity.}{%
-\subsubsection{Conditional Demographic
+\subparagraph{Conditional Demographic
 Disparity.}\label{conditional-demographic-disparity.}}
 
 Statistical parity difference and equal opportunity difference both
@@ -781,9 +842,10 @@ negative outcomes from the model.This metric checks if a subpopulation
 is classified with a negative outcome more than a positive outcome. Are
 females classified as not having access to emergency funds more often
 than men? Looking at the entire data set, women have less access than
-men to emergency funds. Predicting more negative outcomes for women than
-men is not necessarily a bad thing. We want to know if someone doesn't
-have access to emergency funds so that they can potentially be helped.
+men to emergency funds in reality, and thus predicting more negative
+outcomes for women than men is not necessarily a bad thing. We want to
+know if someone does not have access to emergency funds so that they can
+potentially be helped.
 
 Sometimes when we split data into categories we can find patterns that
 don't exist when the data is combined. This is called Simpsons paradox
@@ -807,38 +869,8 @@ greater disadvantage if a relief program were to be put in place.
 However, if assessing financial stability between men and women we would
 be more concerned with satisfying this metric.
 
-\hypertarget{general-entropy-error.}{%
-\subsubsection{General Entropy Error.}\label{general-entropy-error.}}
-
-This metric is an individual metric rather than a group metric, and it
-computes fairness by computing the level of unfair benefit being
-assigned by the model. The metric defines ``benefit'' as follows: for
-any individual in the testing data set, that individual has received a
-benefit if the model predicted the favorable outcome when the truth was
-that the individual did not have the favorable outcome (i.e.~a false
-positive). Each individual in the data receives either a 2 (benefit,
-false positive), a 1 (no benefit, correct prediction), or 0 (no benefit,
-false negative). The metric then compares the benefit of each individual
-to the average accuracy and false positive level of the model. The
-``ideal'' value is 0, and a higher number indicates a higher level of
-inequity in benefit among individuals. In other words, if many
-individuals have a benefit score that is far off from the average, that
-indicates that the model is unfairly benefiting some individuals and not
-others. This metric does not consider privileged versus unprivileged
-groups, and thus is not able to indicate whether or not the inequality
-in benefit is systematic in any particular way (i.e., it cannot tell
-whether males receive more benefit than females; it can only tell that
-some individuals receive higher benefits than
-others)\citep{caton2020fairness, kypraiou_what_2021}.
-
-This metric is important to our data because a false positive
-outcome(higher benefit) would mean that someone is predicted to having
-access to emergency funds when they don't. If there is a high general
-entropy error, there are many individuals who's need for emergency funds
-are being overlooked.
-
 \hypertarget{general-entropy-error-difference.}{%
-\subsubsection{General Entropy Error
+\subparagraph{General Entropy Error
 Difference.}\label{general-entropy-error-difference.}}
 
 The general entropy error cannot tell whether males receive more benefit
@@ -852,7 +884,7 @@ don't. It is not necessarily a good thing for any group to ``benefit''
 from our model. A value of 0 represents no difference.
 
 \hypertarget{between-group-generalized-entropy-error.}{%
-\subsubsection{Between Group Generalized Entropy
+\subparagraph{Between Group Generalized Entropy
 Error.}\label{between-group-generalized-entropy-error.}}
 
 We explored generalized entropy error and how it differs for males and
@@ -995,9 +1027,9 @@ The decision tree then splits according to participants' responses all
 the way down the tree, until finally it can predict whether or not based
 on the responses the participant has access to emergency funds.
 
-\hypertarget{confusion-matrices-by-gender-figure-2}{%
+\hypertarget{confusion-matrices-by-gender-figure-5}{%
 \subsubsection{Confusion Matrices by Gender (Figure
-2)}\label{confusion-matrices-by-gender-figure-2}}
+5)}\label{confusion-matrices-by-gender-figure-5}}
 
 \begin{figure}
 \centering
@@ -1052,9 +1084,9 @@ highlights the importance of trying out various methods and metrics for
 assessing fairness because two different metrics can tell two completely
 different stories about the degree of fairness present in the model.
 
-\hypertarget{fairness-metrics-summary-table-figure-3}{%
+\hypertarget{fairness-metrics-summary-table-figure-6}{%
 \subsubsection{Fairness Metrics Summary Table (Figure
-3)}\label{fairness-metrics-summary-table-figure-3}}
+6)}\label{fairness-metrics-summary-table-figure-6}}
 
 \begin{figure}
 \centering
@@ -1062,17 +1094,12 @@ different stories about the degree of fairness present in the model.
 \caption{Fairness Metrics Summary}
 \end{figure}
 
-Based off the summary metrics table, by looking at the baseline model
-and processing techniques, we can see that we would have to sacrifice
-the accuracy of our model in order to maximize fairness between our two
-groups (male and female respondents).
-
 Our Fairness Metrics Table compiles our Fairness Metrics and (Pre, In,
 \& Post) Processing Methods that we have applied to our model. Our
 metrics are seen in the columns of our table while our Processing
 Techniques are in the rows. Our objective row demonstrates the ideal
 ratios we would like to achieve with our Processing Techniques, while
-the baseline row shows the ratios for our baseline model without any
+the baseline row shows the values for our baseline model without any
 processing techniques applied.
 
 \hypertarget{baseline}{%
@@ -1234,18 +1261,17 @@ unfair to women, so it is okay that we lose some individual fairness.
 Our study builds from numerous other studies that developed fairness
 metrics\citep{speicher2018unified, wachter2021fairness}, developed
 processing
-techniques{[}\citet{agarwal2018reductions};\citet{kamiran2012data};
-\citet{agarwal2019fair}; @ pleiss2017fairness{]}, and analyzed the
-trade-offs for different fairness metrics\citep{speicher2018unified}.
-Where our study differs is that we intend this this study to serve as an
-example of how these fairness metrics should be implemented. There must
-be considerations about the data, the model, and the metrics to decide
-how to process the model in the ``fairest'' way. Just knowing how the
-different fairness metrics are calculated is not enough. To ensure
-fairness one must understand how adjusting for different fairness
-metrics will impact the people that the model will be used on. If the
-wrong fairness metric is accounted for, the model might reinforce social
-injustices.
+techniques\citep{agarwal2018reductions, kamiran2012data, agarwal2019fair, pleiss2017fairness},
+and analyzed the trade-offs for different fairness
+metrics\citep{speicher2018unified}. Where our study differs is that we
+intend this this study to serve as an example of how these fairness
+metrics should be implemented. There must be considerations about the
+data, the model, and the metrics to decide how to process the model in
+the ``fairest'' way. Just knowing how the different fairness metrics are
+calculated is not enough. To ensure fairness one must understand how
+adjusting for different fairness metrics will impact the people that the
+model will be used on. If the wrong fairness metric is accounted for,
+the model might reinforce social injustices.
 
 In our study, we only looked at a decision tree classifier. For future
 studies, implementing fairness metrics and processors in a specific
@@ -1285,6 +1311,15 @@ acknowledge Megan Lyster, Assistant Director of the Smith College
 Wurtele Center, for offering guidance on effective team collaboration
 and helping us to continually reflect on and adapt our process as a
 group throughout the course of the project.
+
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
+
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/educ_count_gender.png}
+
+\includegraphics{term_paper_files/figure-latex/unnamed-chunk-16-6.pdf}
+
+\includegraphics[width=\textwidth,height=0.5\textheight]{images/reasons_no_fin_acc.png}
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% optional
