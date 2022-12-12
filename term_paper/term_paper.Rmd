@@ -165,7 +165,7 @@ df2.head()
 
 ### *gender*
 
-The variable *gender* distinguishes gender. There are 17,130 males in this dataset and 17,870 females.
+The variable *gender* distinguishes gender. There are 17,870 females and 17,130 males in the dataset.
 
 ### *Education*
 
@@ -359,7 +359,7 @@ Before fitting the model, we performed several pre-processing steps on the data 
 
 First, we removed the arbitrary variables *economycode* (country code) and *regionwb* (region); *economycode* is essentially a duplicate of *economy* (country name), and *regionwb* is the same for all rows (value is Sub-Saharan) since this is the variable that we initially filtered by. Next, we checked for variables with a high percentage of missing values. Several variables have many missing values because they are follow-up questions to a previous question that are only asked if the respondent gives a specific response for a previous question. We chose to drop all variables with more than 30% missing values (58 variables total) because we observed by running the model multiple times that variables with NA percentages above this threshold had no impact on the model accuracy or fairness. Thus, it made sense to remove them if their presence is negligible when included in the model. Next, we checked for variables with high levels of redundancy (i.e. little variation), defining a high level of redundancy as 95% or more of the values being the same. The only variable with a high level of redundancy was *pay_online* (a binary variable indicating whether or not an individual has paid online for something), and we chose to remove it because removing it had no impact on the model accuracy and fairness.
 
-Many of the questions in the survey were structured such that the potential responses were "yes", "no", "don't know", and "refuse". Based on our exploratory data analysis, it seems that for most questions, the numbers of "don't know" and "refuse" responses are very low. Furthermore, these responses would not give us much useful information when implementing a predictive model. Thus, we chose to replace all "don't know" and "refuse" values with *NA* values. We then replaced all remaining missing values (including missing values not removed previously and "don't know" and "refuse" values) with the column mean rounded to the nearest whole number (i.e. the most frequent value if the variable is categorical).
+The most common answer format of the survey was multiple choice with answer options "yes", "no", "don't know", and "refuse". Based on our exploratory data analysis, it seems that for most questions, the numbers of "don't know" and "refuse" responses are very low. Furthermore, these responses would not give us much useful information when implementing a predictive model. Thus, we chose to replace all "don't know" and "refuse" values with *NA* values. We then replaced all remaining missing values (including missing values not removed previously and "don't know" and "refuse" values) with the column mean rounded to the nearest whole number (i.e. the most frequent value if the variable is categorical).
 
 Next, we re-coded the country variable into a variable with five categories based on the percentage of sampled individuals in the country who have access to emergency funds (1 = < 20% have access, 2 = between 20% and 40% have access, etc.). All other variables in our data set were coded such that the model could appropriately interpret them, so we did not have to do any additional re-coding. The majority of the variables are binary with 0 = no, 1 = yes, and the rest are either categorical variables with hierarchical categories such as income quantile and education level or continuous numerical variables such as age.
 
@@ -372,36 +372,49 @@ After this pre-processing, we have 42 predictor variables and 35,000 observation
 Given that we are aiming to predict a binary outcome (possible or not possible to come up with emergency funds), our model needs to be a classification model. We tried two of the most common model types used for classification-- logistic regression and decision tree classifier. We ultimately chose the decision tree classifier model over the logistic regression model because the baseline accuracy was higher (61% versus 55%). Furthermore, the decision tree model makes more intuitive sense given our data since most of our predictors are binary variables, and binary predictors fit well into the tree structure. We were able to further improve the accuracy of the decision tree model to 68% by using cross-validation to specify the max depth as 6. The decision tree model uses machine learning to predict outcomes by organizing the variables into a tree that branches off at each decision point based on the value of the variable at that point. The most influential variables are at the top, and the outcome variable is at the end of each branch. We split our data into 70% training, 30% testing because this is the standard train-test split used for machine learning algorithms.
 
 ## Metrics
-Fairness metrics are a way to assess machine learning algorithms for unwanted bias. Algorithms can classify people unfairly using data collected in a biased environment. When classifying people, it's important to understand how these classifications can contribute to and reinforce discriminatory social systems. Accuracy shouldn't always be prioritized. It is useful to sacrifice accuracy in favor of fairness when using machine learning algorithms to make decisions impacting people.To assess fairness and accuracy in our model we explore 12 different metrics, 10 of which are fairness metrics. Fairness metrics can be split into group and individual metrics.
 
-Group fairness metrics ensure parity between privileged and unprivileged groups of a protected class. For example, for the protected class sex, the privileged group is men and the unprivileged group is women. The model should work similarly for both of these groups and not favor the privileged group. Group fairness metrics measures how discriminatory the model classifies the unprivileged group[@binns2020apparent; @mehrabi2021survey; @caton2020fairness]. The group metrics we explore include statistical parity difference, equal opportunity difference, disparate impact,precision score difference, general entropy difference,and conditional demographic parity.Not all group fairness metrics can be satisfied at the same time. For example equal opportunity difference and statistical parity difference cannot be simultaneously accounted for[@kypraiou_what_2021].
+To assess fairness and accuracy in our model we explore 12 different metrics, 10 of which are fairness metrics. Fairness metrics can be split into group and individual metrics.
 
-Individual fairness metrics measure how similarly the model predicts for similar observations. Will two very similar people receive the same classification? Individual fairness metrics contradict group fairness metrics. When accounting for imbalanced predictions between groups, the within group fairness can suffer[@kypraiou_what_2021]. In the process of satisfying group metrics, two similar subjects only differing by sex, may be classified differently [@binns2020apparent; @mehrabi2021survey; @caton2020fairness; @zhou2022bias]. The individual metrics we explore are general entropy error and consistency score. We can measure both individual and group fairness with the between group general entropy error metric. 
+### Basic Metrics
 
-One approach to fairness in machine learning is "fairness by unawareness" meaning a model is blind to the sensitive attributs. Although it may seem an intuitive approach to simply remove the protected attribute from the data in order to make the algorithm unbiased, this is often not an effective approach to reduce bias.
-There are often variables that remain in the data that act as pseudo substitutes for the protected attribute [@zhou2022bias]. For example, if race was excluded from the model but the variable zip code remained. Zip code can act as a stand in for race in regions where people are segregated by race. 
-
-In our case we are focusing on the protected attribute gender. The other variables in this data set are education, age, and all the financial variables. If any of these variables are segregated by gender, by inherit gender bias in society, then simply removing the gender variable will not solve anything.
-
-
-### Accuracy.
+#### Accuracy.
 Accuracy is a measure of how many classifications our model predicts correctly compared to all the predictions. The ratio of correctly predicted classifications to all the predictions. Accuracy cannot tell us if the predictions are equally correct across positives and negatives [@juba2019precision; @gupta2021recall]. 55% of the people in our data set don't have access to emergency funds. As long as our model predicts negatives more than half the time, we can get a good accuracy. However, our model will lose the ability to accurately predict positives. It is important to consider accuracy along with precision and recall so we can more fully understand how our model is classifying people.
 
 $Accuracy = (True Positives + True Negatives) / (True Positives + True Negatives + False Positives + False Negatives)$
 
-
-### Precision.
+#### Precision.
 Precision is a measure of how accurately a model predicts positive outcomes.The ratio of correctly predicted positives to all predicted positives. With high precision rates, we have low false positive rates [@juba2019precision; @gupta2021recall]. 
 
 $Precision = true positives / (true positives + false positives)$
 
-### Recall.
+#### Recall.
 Recall is a measure of how accurately a model predicts negative outcomes.The ratio of correctly predicted negatives to all predicted negatives[@gupta2021recall]
 
 $Recall = true negatives / all negatives)$
- 
 
-### Statistical Parity Difference.
+### Fairness Metrics
+
+Fairness metrics are a way to assess machine learning algorithms for unwanted bias. Algorithms can classify people unfairly using data collected in a biased environment. When classifying people, it is important to take into account how these classifications can contribute to and reinforce discriminatory social systems. Thus, it is sometimes necessary to sacrifice accuracy in favor of fairness when using machine learning algorithms to make decisions impacting people [@zliobaite2015relation, @kamiran2012data, @menon2018cost]. It is often not possible to maximize fairness and accuracy at the same time because due to discriminatory systems built into society, protected attributes such as gender are often associated with the outcome variable. With regard to our dataset, the proportion females with access to emergency funds is substantially lower that that for men in the sample. Because of this, the model will be less likely to predict positive values for females. If the model were to hypothetically be used to determine which individuals to offer loans to, it would reinforce existing patriarchal systems to offer fewer loans to females. Thus, it would be beneficial to prioritize equitable access to loans by gender over accuracy. In other words, reality is often not fair, so if we only prioritize accuracy, we will continue to replicate the discriminatory systems that exist.
+
+One approach to fairness in machine learning is "fairness by unawareness" meaning a model is blind to the sensitive attributs. Although it may seem an intuitive approach to simply remove the protected attribute from the data in order to make the algorithm unbiased, this is often not an effective approach to reduce bias.
+There are often variables that remain in the data that act as pseudo substitutes for the protected attribute [@zhou2022bias]. For example, if race was excluded from the model but the variable zip code remained. Zip code can act as a stand in for race in regions where people are segregated by race. Another concrete example of this is the amazon recruiter tool removed gender from their algorithm but it was still biased against women [@goodman_2022]. 
+
+In our case we are focusing on the protected attribute gender. If we were to remove the gender variable from our data, it is possible that our model could still have gender bias given that there are other variables in the dataset that have a strong association with gender including education and several of the finanical variables (as shown in our exploratory data analysis).
+
+#### Individual Fairness Metrics
+
+Individual fairness metrics measure how similarly the model predicts for similar observations. Will two very similar people receive the same classification? Individual fairness metrics contradict group fairness metrics. When accounting for imbalanced predictions between groups, the within group fairness can suffer[@kypraiou_what_2021]. In the process of satisfying group metrics, two similar subjects only differing by sex, may be classified differently [@binns2020apparent; @mehrabi2021survey; @caton2020fairness; @zhou2022bias]. The individual metrics we explore are general entropy error and consistency score. We can measure both individual and group fairness with the between group general entropy error metric. 
+
+##### General Entropy Error.
+This metric is an individual metric, and it computes fairness by computing the level of unfair benefit being assigned by the model. The metric defines "benefit" as follows: for any individual in the testing data set, that individual has received a benefit if the model predicted the favorable outcome when the truth was that the individual did not have the favorable outcome (i.e. a false positive). Each individual in the data receives either a 2 (benefit, false positive), a 1 (no benefit, correct prediction), or 0 (no benefit, false negative). The metric then compares the benefit of each individual to the average accuracy and false positive level of the model. The "ideal" value is 0, and a higher number indicates a higher level of inequity in benefit among individuals. In other words, if many individuals have a benefit score that is far off from the average, that indicates that the model is unfairly benefiting some individuals and not others. This metric does not consider privileged versus unprivileged groups, and thus is not able to indicate whether or not the inequality in benefit is systematic in any particular way (i.e., it cannot tell whether males receive more benefit than females; it can only tell that some individuals receive higher benefits than others) [@caton2020fairness;@kypraiou_what_2021].
+
+This metric is important to our data because a false positive outcome(higher benefit) would mean that someone is predicted to having access to emergency funds when they don't. If there is a high general entropy error, there are many individuals whose need for emergency funds are being overlooked.
+
+#### Group Fairness Metrics
+
+Group fairness metrics ensure parity between privileged and unprivileged groups of a protected class. For example, for the protected class sex, the privileged group is men and the unprivileged group is women. The model should work similarly for both of these groups and not favor the privileged group. Group fairness metrics measures how discriminatory the model classifies the unprivileged group[@binns2020apparent; @mehrabi2021survey; @caton2020fairness]. The group metrics we explore include statistical parity difference, equal opportunity difference, disparate impact,precision score difference, general entropy difference,and conditional demographic parity.Not all group fairness metrics can be satisfied at the same time. For example equal opportunity difference and statistical parity difference cannot be simultaneously accounted for[@kypraiou_what_2021].
+
+##### Statistical Parity Difference.
 This metric computes the difference in percentages between the "privileged" and "non-privileged" group of individuals who were predicted to have the desired outcome. In this case, it is essentially 
 
 (% of females who were predicted to have access to emergency funds) - (% of males who were predicted to have access to emergency funds)
@@ -411,40 +424,30 @@ The "ideal" value is 0 because if we define fairness as statistical parity, the 
 Relating to our data, this metric will tell us if our model predicts that men have more access to emergency funds than women. In our data, men in fact do have more access to emergency funds than women. 51% of men have access to emergency funds while only 38.2% of women have access to emergency funds. When using this metric to asses our model the interpretation depends on the context. If this model is being used to decide how to allocate emergency funds, we might not want to prioritize satisfying this metric. We are using this model in an educational and exploratory manner, so we will use techniques to account for this metric. 
 
 
-
-
-### Equal Opportunity Difference.
+##### Equal Opportunity Difference.
 This metric is similar to statistical parity in that it is also a group fairness metric, but it is different in that it takes into account accuracy of the model in addition to equalizing outcomes across groups. Instead of measuring the simple differences in percentages between groups of individuals with the (predicted)positive outcome, it measures the difference in percentages of *accurately identified* individuals with positive outcomes (i.e. true positives). Essentially, the calculation is the same as for statistical parity, but only taking into account true positives for each group. Again, the "ideal" value is 0 with negative values indicating bias in favor of the privileged group, and the fairness range is -0.1 to -0.1 [@caton2020fairness].
 
 This metric helps us answer if our model predicts positives with more accuracy for men than women. Are men more accurately predicted to have access to emergency funds than women? 
 
-
-### Disparate Impact.
-The disparate impact metric measures the proportion of positive outcomes between an unprivileged group and a privileged group. It is usually assessed when predicting an outcome that disproportionately affects a sub population. For example, hiring more men than women as construction workers on the basis of height and strength.For this case we want to know the proportion of females that are categorized as having access to emergency funds VS males who are categorized as having access to emergency funds.The standard for satisfying this metric is that the unprivileged group must receive a positive outcome at a ratio of 4:5 to the privileged group. As long as females are classified as having access to emergency funds no less than around 80% of the time males are categorized as having access to emergency funds, then our model satisfies this metric.[@caton2020fairness] This metric is similar to statistical parity except it measures a ratio which can be useful for legal purposes. 
+##### Disparate Impact.
+The disparate impact metric measures the proportion of positive outcomes between an unprivileged group and a privileged group. It is usually assessed when predicting an outcome that disproportionately affects a sub population. For example, hiring more men than women as construction workers on the basis of height and strength. For this case we want to know the proportion of females that are categorized as having access to emergency funds versus males who are categorized as having access to emergency funds. The standard for satisfying this metric is that the unprivileged group must receive a positive outcome at a ratio of 4:5 to the privileged group. As long as females are classified as having access to emergency funds no less than around 80% of the time males are categorized as having access to emergency funds, then our model satisfies this metric.[@caton2020fairness] This metric is similar to statistical parity except it measures a ratio which can be useful for legal purposes. 
 $P(\hat{Y}=unprivilegedPositivePredicted) /P(\hat{Y}=privilegedPositivePredicted)$
 
 A similar problem arises when assessing this metric as statistical parity.In reality women have less access to emergency funds than men. If we manipulate our model to satisfy this metric, we will falsely predict that women have access to emergency funds when they don't. This could be more harmful than not satisfying this metric.
 
 
-### Conditional Demographic Disparity.
+##### Conditional Demographic Disparity.
 
-Statistical parity difference and equal opportunity difference both measure positive outcomes. The conditional demographic disparity measures negative outcomes. Demographic Disparity is a metric that examines how disadvantaged groups compare to advantaged groups for negative outcomes from the model.This metric checks if a subpopulation is classified with a negative outcome more than a positive outcome. Are females classified as not having access to emergency funds more often than men? Looking at the entire data set, women have less access than men to emergency funds. Predicting more negative outcomes for women than men is not necessarily a bad thing. We want to know if someone doesn't have access to emergency funds so that they can potentially be helped. 
+Statistical parity difference and equal opportunity difference both measure positive outcomes. The conditional demographic disparity measures negative outcomes. Demographic Disparity is a metric that examines how disadvantaged groups compare to advantaged groups for negative outcomes from the model.This metric checks if a subpopulation is classified with a negative outcome more than a positive outcome. Are females classified as not having access to emergency funds more often than men? Looking at the entire data set, women have less access than men to emergency funds in reality, and thus predicting more negative outcomes for women than men is not necessarily a bad thing. We want to know if someone does not have access to emergency funds so that they can potentially be helped. 
 
 Sometimes when we split data into categories we can find patterns that don't exist when the data is combined. This is called Simpsons paradox [@mehrabi2021survey]. We can see this in our confusion matrices. When our data is split by gender there are different prediction rates than the entire model. The true negative rates are heavily weighted by females, and the true positive rates are weighted towards males. Is this the Simpsons paradox or does gender split the data into different distributions? The Conditional Demographic Disparity metric accounts for the Simpsons paradox to confirm true differences or no differences in negative outcomes in the model.
 
 The range of scores for this metric is from -1 to 1. In general a positive value means that the model is more unfair towards the unprivileged group. A value of zero is ideal. In our case, if our model were to predict an equal proportion of negative and positive outcomes for men and women, our model would realistically be unfair to women. Women do have less access to emergency funds and predicting that men and women equally don't have access to emergency funds might put women at a greater disadvantage if a relief program were to be put in place. However, if assessing financial stability between men and women we would be more concerned with satisfying this metric. 
 
-
-### General Entropy Error.
-This metric is an individual metric rather than a group metric, and it computes fairness by computing the level of unfair benefit being assigned by the model. The metric defines "benefit" as follows: for any individual in the testing data set, that individual has received a benefit if the model predicted the favorable outcome when the truth was that the individual did not have the favorable outcome (i.e. a false positive). Each individual in the data receives either a 2 (benefit, false positive), a 1 (no benefit, correct prediction), or 0 (no benefit, false negative). The metric then compares the benefit of each individual to the average accuracy and false positive level of the model. The "ideal" value is 0, and a higher number indicates a higher level of inequity in benefit among individuals. In other words, if many individuals have a benefit score that is far off from the average, that indicates that the model is unfairly benefiting some individuals and not others. This metric does not consider privileged versus unprivileged groups, and thus is not able to indicate whether or not the inequality in benefit is systematic in any particular way (i.e., it cannot tell whether males receive more benefit than females; it can only tell that some individuals receive higher benefits than others)[@caton2020fairness;@kypraiou_what_2021].
-
-This metric is important to our data because a false positive outcome(higher benefit) would mean that someone is predicted to having access to emergency funds when they don't. If there is a high general entropy error, there are many individuals who's need for emergency funds are being overlooked.
-
-### General Entropy Error Difference.
+##### General Entropy Error Difference.
 The general entropy error cannot tell whether males receive more benefit than females so we calculate the general entropy error difference between males and females. Do men "benefit" from our model more i.e does our model predict more accurate and false positives for men than women? Again the interpretation of this metric will depend on the context. A higher score is given for false positives, but this means a group of people are being predicted to have emergency funds when they don't. It is not necessarily a good thing for any group to "benefit" from our model. A value of 0 represents no difference.
 
-
-### Between Group Generalized Entropy Error.
+##### Between Group Generalized Entropy Error.
 We explored generalized entropy error and how it differs for males and females. Using the between group generalized error metric we will be able to see if the between group unfairness or the individual unfairness dominates. Is there truly a difference in generalized entropy error between men and women or is the general entropy error not due to gender inequality. Is our model unfairly benefiting individuals based on sub populations or is the inequity equal between groups and differs at the individual level?
 
 We don't want generalized entropy error in our model, but it would be better to have it at the individual level than the group level. We don't want either men or women to have more generalized entropy error than the other. If the error is equally within the groups, then both men and women are at a similar "benefit" to each other. 
@@ -507,9 +510,7 @@ This comparison of confusion matrices also demonstrates the importance of consid
 
 ![Fairness Metrics Summary](images/FairnessMetricsSummary.png){height=40%}
 
-Based off the summary metrics table, by looking at the baseline model and processing techniques, we can see that we would have to sacrifice the accuracy of our model in order to maximize fairness between our two groups (male and female respondents). 
-
-Our Fairness Metrics Table compiles our Fairness Metrics and (Pre, In, & Post) Processing Methods that we have applied to our model. Our metrics are seen in the columns of our table while our Processing Techniques are in the rows. Our objective row demonstrates the ideal ratios we would like to achieve with our Processing Techniques, while the baseline row shows the ratios for our baseline model without any processing techniques applied.
+Our Fairness Metrics Table compiles our Fairness Metrics and (Pre, In, & Post) Processing Methods that we have applied to our model. Our metrics are seen in the columns of our table while our Processing Techniques are in the rows. Our objective row demonstrates the ideal ratios we would like to achieve with our Processing Techniques, while the baseline row shows the values for our baseline model without any processing techniques applied.
 
 #### Baseline 
 Our baseline model provided us with the second best model accuracy and precision at .684 and .682. It also provided us with the closest general entropy error difference ratio to 0, at .0007, meaning that there is almost no difference in our Baseline model between the benefits men and women have when it comes to having access to emergency funds.
