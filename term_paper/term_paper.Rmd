@@ -555,3 +555,44 @@ Overall, the reweighting technique is the most helpful processor for our decisio
 # Acknowledgements
 
 We would like to thank our sponsor organization [Women at the Table](https://www.womenatthetable.net/), and especially our supervisors/mentors Sofia Kypraiou and Caitlin Kraft-Buchman for creating the opportunity for us to do this project as well as for offering us guidance and feedback throughout the entire process. We would also like to thank our technical advisor, Dr. Shiya Cao, for providing extremely helpful Python resources and helping us work through challenges that we were having with our code. We would like to thank our Capstone professor, Dr. Albert Y. Kim, for providing conceptual and logistical guidance, especially in relation to machine learning knowledge, as well as for providing thorough feedback on our progress at various stages in the process. Lastly, we want to acknowledge Megan Lyster, Assistant Director of the Smith College Wurtele Center, for offering guidance on effective team collaboration and helping us to continually reflect on and adapt our process as a group throughout the course of the project. 
+
+# Appendix
+
+```{python, echo=FALSE}
+ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
+for p in ebg.patches:
+   ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
+
+ebg.set(title= "Education Count by Gender") 
+```
+
+
+```{python, include=FALSE}
+# reasons for no financial account
+# pivot data to long format
+df_long = df[['fin11a', "fin11b", "fin11c", "fin11d", "fin11e", "fin11f", "fin11g", "fin11h"]]\
+.stack()\
+.reset_index()
+df_long.rename(columns = {'level_1':'reason', 0:'value'}, inplace = True)
+df3 = df_long.query('value == 1.0') # filter to only "yes" answers for each reason
+# recode reason values
+df3.loc[df3['reason'] == 'fin11a', "reason"] = 'distance'
+df3.loc[df3['reason'] == 'fin11b', "reason"] = 'expense'
+df3.loc[df3['reason'] == 'fin11c', "reason"] = 'no_documentation'
+df3.loc[df3['reason'] == 'fin11d', "reason"] = 'lack_trust'
+df3.loc[df3['reason'] == 'fin11e', "reason"] = 'religious'
+df3.loc[df3['reason'] == 'fin11f', "reason"] = 'lack_money'
+df3.loc[df3['reason'] == 'fin11g', "reason"] = 'family_member_has' 
+df3.loc[df3['reason'] == 'fin11h', "reason"] = 'no_need'
+df3.head()
+
+# aggregate counts by reason
+reason_counts = df3.groupby('reason').agg('count').reset_index() 
+```
+
+```{python, echo=FALSE}
+# barplot of count by reason-- seaborn
+reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
+reasons_plot 
+```
+
