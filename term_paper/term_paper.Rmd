@@ -267,7 +267,7 @@ df_gender = df_gender.sort_values('Male')
  
 # Counting by Access to Emergency Funds by gender
 f_access = df2[['has_access', 'economy', 'gender']].query("has_access == 'Yes' & gender == 'female'").groupby('economy').count()
-m_access = df2[['has_access', 'economy', 'gender']].query("has_access == 'Yes'& gender != 'female'").groupby('economy').count()
+m_access = df2[['has_access', 'economy', 'gender']].query("has_access == 'Yes' & gender != 'female'").groupby('economy').count()
 
 # Defining acccess vs no access by country columms
 f_count = f_access['has_access']
