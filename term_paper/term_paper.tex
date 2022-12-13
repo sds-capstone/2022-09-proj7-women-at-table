@@ -173,12 +173,6 @@ tree; Sub-Saharan Africa; fairness metrics}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{options}\NormalTok{(}\AttributeTok{tinytex.verbose =} \ConstantTok{TRUE}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
@@ -294,12 +288,12 @@ females and 17,130 males in the dataset.
 The \emph{Education} variable corresponds to the highest level of
 education attained with `Primary', `Secondary' and `Tertiary' being the
 three options. The distribution of education by gender plot (seen in
-Appendix Education Count By Gender) shows us that there are more women
-with primary education, but more men with secondary or tertiary
-education. Overall, we can see that there are more men with higher
-education than women. About 1,000 more men have received a secondary
-education and there is about double the amount of men with tertiary
-education compared to women showing a clear disparity.
+Appendix Figure 8) shows us that there are more women with primary
+education, but more men with secondary or tertiary education. Overall,
+we can see that there are more men with higher education than women.
+About 1,000 more men have received a secondary education and there is
+about double the amount of men with tertiary education compared to women
+showing a clear disparity.
 
 \hypertarget{economy}{%
 \subsubsection{\texorpdfstring{\emph{economy}}{economy}}\label{economy}}
@@ -338,8 +332,7 @@ emergency funds are generally stored in an account.
 
 Those who do not have a financial account were asked why in the
 \emph{reason} variable, that provides a list of possible reasons for not
-having a financial account (seen in Appendix Reasons for No Financial
-Account).
+having a financial account (seen in Appendix Figure 9).
 
 \hypertarget{emp_in}{%
 \subsubsection{\texorpdfstring{\emph{emp\_in}}{emp\_in}}\label{emp_in}}
@@ -393,11 +386,7 @@ for where participants receive their main source of emergency funds:
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/MainSourceFunds.png}
-<<<<<<< HEAD
-\caption{Distribution of the Main Source of Emergency Funds}
-=======
 \caption{Distribution of Main Source of Emergency Funds}
->>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
 Figure 1 displays the overall distribution of the main source of
@@ -405,9 +394,9 @@ emergency funds. Most of the individuals with access to emergency funds
 receive their funding from work, their family and friends, or their
 savings.
 
-\hypertarget{recieve-wage-payments}{%
-\subsubsection{\texorpdfstring{\emph{Recieve Wage
-Payments}}{Recieve Wage Payments}}\label{recieve-wage-payments}}
+\hypertarget{receive-wage-payments}{%
+\subsubsection{\texorpdfstring{\emph{Receive Wage
+Payments}}{Receive Wage Payments}}\label{receive-wage-payments}}
 
 If respondents answered that their main source of emergency funds was
 from `Money From Working', they were asked to further clarify the form
@@ -428,22 +417,14 @@ emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_participants_by_country_gender.png}
-<<<<<<< HEAD
 \caption{Percent of Participants by Country \& Gender}
-=======
-\caption{Gender Distribution of Participants by Country}
->>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_access_funds_by_country_gender.png}
-<<<<<<< HEAD
 \caption{Percent of Participants with Access to Emergency Funds by
 Country \& Gender}
-=======
-\caption{Gender Distribution of Participants with Access by Country}
->>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
 In the side-by-side barplots shown in figures 2 and 3, we can see that
@@ -962,9 +943,9 @@ satisfy as many fairness metrics as possible
 \hypertarget{results}{%
 \subsection{Results}\label{results}}
 
-\hypertarget{decision-tree-model-figure-1}{%
+\hypertarget{decision-tree-model-figure-5}{%
 \subsubsection{Decision Tree Model (Figure
-1)}\label{decision-tree-model-figure-1}}
+5)}\label{decision-tree-model-figure-5}}
 
 \begin{figure}
 \centering
@@ -1006,9 +987,9 @@ The decision tree then splits according to participants' responses all
 the way down the tree, until finally it can predict whether or not based
 on the responses the participant has access to emergency funds.
 
-\hypertarget{confusion-matrices-by-gender-figure-5}{%
+\hypertarget{confusion-matrices-by-gender-figure-6}{%
 \subsubsection{Confusion Matrices by Gender (Figure
-5)}\label{confusion-matrices-by-gender-figure-5}}
+6)}\label{confusion-matrices-by-gender-figure-6}}
 
 \begin{figure}
 \centering
@@ -1063,9 +1044,9 @@ highlights the importance of trying out various methods and metrics for
 assessing fairness because two different metrics can tell two completely
 different stories about the degree of fairness present in the model.
 
-\hypertarget{fairness-metrics-summary-table-figure-6}{%
+\hypertarget{fairness-metrics-summary-table-figure-7}{%
 \subsubsection{Fairness Metrics Summary Table (Figure
-6)}\label{fairness-metrics-summary-table-figure-6}}
+7)}\label{fairness-metrics-summary-table-figure-7}}
 
 \begin{figure}
 \centering

@@ -170,7 +170,7 @@ The variable *gender* distinguishes gender. There are 17,870 females and 17,130 
 
 ### *Education*
 
-The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. The distribution of education by gender plot (seen in Appendix Education Count By Gender) shows us that there are more women with primary education, but more men with secondary or tertiary education. Overall, we can see that there are more men with higher education than women. About 1,000 more men have received a secondary education and there is about double the amount of men with tertiary education compared to women showing a clear disparity.
+The *Education* variable corresponds to the highest level of education attained with 'Primary', 'Secondary' and 'Tertiary' being the three options. The distribution of education by gender plot (seen in Appendix Figure 8) shows us that there are more women with primary education, but more men with secondary or tertiary education. Overall, we can see that there are more men with higher education than women. About 1,000 more men have received a secondary education and there is about double the amount of men with tertiary education compared to women showing a clear disparity.
 
 ### *economy*
 
@@ -191,7 +191,7 @@ The first variable being *account_fin* which distinguishes those who have a fina
  
 ### *reason*
 
-Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account (seen in Appendix Reasons for No Financial Account).
+Those who do not have a financial account were asked why in the *reason* variable, that provides a list of possible reasons for not having a financial account (seen in Appendix Figure 9).
 
 ### *emp_in*
 
@@ -494,7 +494,7 @@ The meta fair classifier creates a new estimator but includes a reweighing pre-p
 
 ## Results 
 
-### Decision Tree Model (Figure 1)
+### Decision Tree Model (Figure 5)
 
 ![Decision Tree Classifier Model](images/decision_tree_annotated.png){width=90%, height=50%}
 
@@ -504,7 +504,7 @@ Depending on the response to sent_remittances the tree branches into two, consid
 
 The decision tree then splits according to participants’ responses all the way down the tree, until finally it can predict whether or not based on the responses the participant has access to emergency funds.
 
-### Confusion Matrices by Gender (Figure 5)
+### Confusion Matrices by Gender (Figure 6)
 
 ![Confusion Matrices by Gender](images/confusionMatrices.png){width=70%, height=50%}
 
@@ -516,7 +516,7 @@ On the flip side, if the results of the model are (hypothetically) being used to
 
 This comparison of confusion matrices also demonstrates the importance of considering the balance of true negatives to true positives in addition to just the error rates. When looking at just the error rates, they seem almost equal between the two groups, yet when we consider the balance of true negatives to true positives, we can see that the model is much worse at predicting true positives for females. This furthermore highlights the importance of trying out various methods and metrics for assessing fairness because two different metrics can tell two completely different stories about the degree of fairness present in the model.
 
-### Fairness Metrics Summary Table (Figure 6)
+### Fairness Metrics Summary Table (Figure 7)
 
 ![Fairness Metrics Summary](images/FairnessMetricsSummary.png){height=40%}
 
