@@ -598,7 +598,7 @@ df3.head()
 reason_counts = df3.groupby('reason').agg('count').reset_index() 
 ```
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, include= FALSE}
 # barplot of count by reason-- seaborn
 reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
 reasons_plot 
