@@ -160,47 +160,6 @@ tree; Sub-Saharan Africa; fairness metrics}
 %\setcounter{secnumdepth}{4}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Pandoc syntax highlighting
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\NormalTok}[1]{#1}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 
 % tightlist command for lists without linebreak
 \providecommand{\tightlist}{%
@@ -348,24 +307,12 @@ education compared to women showing a clear disparity.
 The final demographic variable of interest is the \emph{economy}
 variable that separates respondents by which country they live in. There
 are 35 different countries from Sub-Saharan Africa with exactly 1000
-respondents from each.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df2[}\StringTok{\textquotesingle{}economy\textquotesingle{}}\NormalTok{].unique()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## array(['Benin', 'Botswana', 'Burkina Faso', 'Cameroon',
-##        'Central African Republic', 'Chad', 'Congo, Dem. Rep.',
-##        'Congo, Rep.', "Cote d'Ivoire", 'Ethiopia', 'Gabon', 'Ghana',
-##        'Guinea', 'Kenya', 'Lesotho', 'Liberia', 'Madagascar', 'Malawi',
-##        'Mali', 'Mauritania', 'Mauritius', 'Mozambique', 'Namibia',
-##        'Niger', 'Nigeria', 'Rwanda', 'Senegal', 'Sierra Leone',
-##        'South Africa', 'South Sudan', 'Tanzania', 'Togo', 'Uganda',
-##        'Zambia', 'Zimbabwe'], dtype=object)
-\end{verbatim}
+respondents from each. The countries included are Benin, Botswana,
+Burkina Faso, Cameroon, Central African Republic, Chad, Congo, Dem.
+Rep., Congo, Rep., Cote d'Ivoire, Ethiopia, Gabon, Ghana, Guinea, Kenya,
+Lesotho, Liberia, Madagascar, Malawi, Mali, Mauritania, Mauritius,
+Mozambique, Namibia, Niger, Nigeria, Rwanda, Senegal, Sierra Leone,
+South Africa, South Sudan, Tanzania, Togo, Uganda, Zambia, and Zimbabwe.
 
 \hypertarget{financial}{%
 \subsection{Financial}\label{financial}}
@@ -450,10 +397,14 @@ for where participants receive their main source of emergency funds:
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/MainSourceFunds.png}
+<<<<<<< HEAD
 \caption{Distribution of the Main Source of Emergency Funds}
+=======
+\caption{Distribution of Main Source of Emergency Funds}
+>>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
-Figure 1 (above) displays the overall distribution of the main source of
+Figure 1 displays the overall distribution of the main source of
 emergency funds. Most of the individuals with access to emergency funds
 receive their funding from work, their family and friends, or their
 savings.
@@ -481,17 +432,25 @@ emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_participants_by_country_gender.png}
+<<<<<<< HEAD
 \caption{Percent of Participants by Country \& Gender}
+=======
+\caption{Gender Distribution of Participants by Country}
+>>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/percent_access_funds_by_country_gender.png}
+<<<<<<< HEAD
 \caption{Percent of Participants with Access to Emergency Funds by
 Country \& Gender}
+=======
+\caption{Gender Distribution of Participants with Access by Country}
+>>>>>>> a0e7387d2433a7f1681408dcc5751f8c6b29cf75
 \end{figure}
 
-In the side-by-side barplots above (figures 2 and 3), we can see that
+In the side-by-side barplots shown in figures 2 and 3, we can see that
 although only about 50\% of the countries have a higher percentage of
 men represented in the questionnaire (left bar plot), in 75\% of the
 countries more men have access to emergency funds than women (right bar
@@ -503,17 +462,17 @@ plot).
 \caption{Access to Emergency Funds by Education Level}
 \end{figure}
 
-Additionally, in the barplot above (figure 4) we can see the
-distribution of funds based on an individual's highest education level.
-63\% of people with only a primary education do not have access to
-emergency funds compared to 37\% of people who do. These numbers are
-more evenly distributed for those with secondary education, with about
-49\% of people not having access to emergency funds, while 51\% of
-people do have access. Finally, for those with a tertiary level of
-education we can see that about 72\% of people have access to emergency
-funds while only 28\% of that group does not have access. Overall, we
-can make the assumption that people with a higher level of education are
-more likely to have access to emergency funds.
+Additionally, in figure 4, we can see the distribution of funds based on
+an individual's highest education level. 63\% of people with only a
+primary education do not have access to emergency funds compared to 37\%
+of people who do. These numbers are more evenly distributed for those
+with secondary education, with about 49\% of people not having access to
+emergency funds, while 51\% of people do have access. Finally, for those
+with a tertiary level of education we can see that about 72\% of people
+have access to emergency funds while only 28\% of that group does not
+have access. Overall, we can make the assumption that people with a
+higher level of education are more likely to have access to emergency
+funds.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -926,11 +885,11 @@ want either men or women to have more generalized entropy error than the
 other. If the error is equally within the groups, then both men and
 women are at a similar ``benefit'' to each other.
 
-\hypertarget{in-and-post-processors}{%
-\subsection{In and Post Processors}\label{in-and-post-processors}}
+\hypertarget{de-biasing-techniques}{%
+\subsection{De-biasing Techniques}\label{de-biasing-techniques}}
 
-To account for any unfairness we find in the model we can use in and
-post processing techniques.These techniques restructure the data and
+To account for any unfairness we find in the model we can use pre, in,
+and post processing techniques.These techniques restructure the data and
 reclassify observations in order to satisfy these metrics.
 
 \hypertarget{reweighing.}{%
