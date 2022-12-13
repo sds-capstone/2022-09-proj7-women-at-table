@@ -201,7 +201,7 @@ Employment status was another financial variable of interest represented by *emp
 
 And lastly, we evaluated *inc_q*, which represents income quantile. Income quantile is separated into 5 quantiles with 1 being the poorest and 5 being the richest. The mean for all of the countries in the dataset is 3.241. This means that all the countries average out to be about middle class.
 
-```{python, echo=FALSE}
+```{python, echo=FALSE, include = FALSE}
 df_inq = df['inc_q']
 df["inc_q"].mean()
 # fig = plt.figure()
