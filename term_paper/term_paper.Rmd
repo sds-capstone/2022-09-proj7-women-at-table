@@ -38,11 +38,16 @@ conflictsofinterest: |
 
 output: rticles::mdpi_article
 ---
+
+```{r}
+options(tinytex.verbose = TRUE)
+```
+
 ```{python, include=FALSE}
-# !pip install seaborn
-# !pip install numpy
-# !pip install pandas
-# !pip install matplotlib
+ #!pip install seaborn
+ #!pip install numpy
+ #!pip install pandas
+ #!pip install matplotlib
 ```
 
 ```{python, include=FALSE}
