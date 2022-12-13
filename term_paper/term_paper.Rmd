@@ -242,7 +242,7 @@ chart
 
 ![Distribution of Main Source of Emergency Funds](images/MainSourceFunds.png){width=100%, height=50%}
 
-Figure 1 (above) displays the overall distribution of the main source of emergency funds. Most of the individuals with access to emergency funds receive their funding from work, their family and friends, or their savings.
+Figure 1 displays the overall distribution of the main source of emergency funds. Most of the individuals with access to emergency funds receive their funding from work, their family and friends, or their savings.
 
 ### *Recieve Wage Payments*
 
@@ -316,7 +316,7 @@ df3.set_index('economy').plot(kind='barh', stacked=True, color=['steelblue', 'pi
 ![Gender Distribution of Participants with Access by Country](images/percent_access_funds_by_country_gender.png){width=75%, height=50%}
 
 
-In the side-by-side barplots above (figures 2 and 3), we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
+In the side-by-side barplots shown in figures 2 and 3, we can see that although only about 50% of the countries have a higher percentage of men represented in the questionnaire (left bar plot), in 75% of the countries more men have access to emergency funds than women (right bar plot).
 
 ```{python, echo=FALSE, include = FALSE}
 # Counting by Access to Emergency Funds by country
@@ -355,7 +355,7 @@ educ_access.axhline(y = 44, color = "red", linestyle = "dashed")
 
 ![Access to Emergency Funds by Education Level](images/access_by_educ_level.png){width=75%, height=50%}
 
-Additionally, in the barplot above (figure 4) we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
+Additionally, in figure 4, we can see the distribution of funds based on an individual’s highest education level. 63% of people with only a primary education do not have access to emergency funds compared to 37% of people who do. These numbers are more evenly distributed for those with secondary education, with about 49% of people not having access to emergency funds, while 51% of people do have access. Finally, for those with a tertiary level of education we can see that about 72% of people have access to emergency funds while only 28% of that group does not have access. Overall, we can make the assumption that people with a higher level of education are more likely to have access to emergency funds.
 
 # Methods
 
