@@ -178,45 +178,65 @@ tree; Sub-Saharan Africa; fairness metrics}
 
 Science is often viewed as a way to offer trustworthy research backed
 solutions and answers. A lot of that research involves statistical
-methods performed on data however, what happens when the data and
+methods performed on data. However, what happens when the data and
 statistical methods are not objective and trustworthy as is so often
 assumed? The conclusions drawn from the data are biased and unfair, most
-often towards minorities and protected classes of people. To contribute
-to a human rights based approach to data analysis, we evaluate fairness
-metrics on a machine learning algorithm to measure bias. We use a World
-Bank Global Findex data set which contains financial information about
-35 Sub Saharan countries. Specifically, we create models to predict
-access to emergency funds, defined as 1/20th of the GNI (gross national
-income) per capita for the country, then analyze the fairness of those
-models. We focus on group and individual fairness metrics for the
-protected attribute sex. In addition we investigate the data set itself
-to understand where potential biases might have been implanted.
+often towards minorities and protected classes of people. In order
+ensure that the outcomes of our analysis are equitable and positively
+impactful, our goal is to establish a human rights-based approach to
+machine learning analysis. A human right-based approach is characterized
+by awareness of context and consideration of the impacts the outcomes
+will have on humans through each stage of the data analysis process.
+More concretely, this process looks like (1) researching the context of
+the dataset before beginning any analysis; (2) performing exploratory
+data analysis to bring awareness to imbalances and relationships that
+exist in the data; (3) thoughtfully choosing an appropriate model based
+on the context of the data; (4) implementing fairness metrics to assess
+bias in the model; and (5) implementing de-biasing techniques to improve
+fairness.
+
+We use a World Bank Global Findex data set which contains financial
+information about 35 Sub Saharan countries. Specifically, we create a
+model to predict access to emergency funds, defined as 1/20th of the GNI
+(gross national income) per capita for the country, then analyze the
+fairness of the model. We focus on group and individual fairness metrics
+for the protected attribute sex. In addition we investigate the data set
+itself to understand where potential biases might have been implanted.
 
 Data sets and algorithms have real world impacts on real people. The
 inherent bias in data sets can carry over into machine learning
 algorithms that are used to profile and categorize people
-\citep{navarro2021risk, hellstrom2020bias}. Since data set's are not
+\citep{navarro2021risk, hellstrom2020bias}. Since data sets are not
 collected in a vacuum and often represent the discriminatory
 environments in which they are collected
 \citep{barocas_fairness_nodate}, we must find ways to make data sets and
 statistical methods more equitable. In this study we explore fairness
 methods that can be used to evaluate machine learning models. The
 ``impossibility theorem'' is the idea that not all fairness metrics can
-be satisfied at the same time\citep{kleinberg2016inherent}. Although
+be satisfied at the same time \citep{kleinberg2016inherent}. Although
 fairness is complex and there are multiple approaches to make a model
-fair \citep{kypraiou_what_2021, green2018myth}, it's important to
+fair \citep{kypraiou_what_2021, green2018myth}, it is important to
 continue to question how data and algorithms can be biased and how to
 mitigate that bias.
 
 While there have been previous studies implementing fairness techniques
-in different contexts\citep{deho2022existing, kim2022information}, we
+in different contexts \citep{deho2022existing, kim2022information}, we
 implement them in an exploratory context meant to teach how and when to
 use these techniques thus giving us more freedom to branch beyond a
 specific question while supporting previous work about the importance of
-these fairness metrics\citep{anahideh2022fair, barocas_fairness_nodate}.
-We analyse the data, data collection methods, prediction models, and the
-fairness metrics to assess how biased our data is and understand how we
-can de-bias when possible.
+these fairness metrics
+\citep{anahideh2022fair, barocas_fairness_nodate}. We analyse the data,
+data collection methods, prediction models, and the fairness metrics to
+assess how biased our data is and understand how we can de-bias when
+possible.
+
+This approach will be used as the basis of a workshop meant to educate
+data science and computer science students on how to integrate ethics
+and fairness into their machine learning workflows. The analysis
+outlined in this paper is meant to serve as an example of an
+implementation of a human rights-based approach to machine learning.
+Thus, we focus more on explaining the process as it applies to this
+analysis more than the results of the analysis itself.
 
 \hypertarget{data}{%
 \section{Data}\label{data}}
@@ -1088,9 +1108,9 @@ The meta fair classifier provides us with an acceptable statistical
 parity difference and equal opportunity difference ratio of .004 for
 both, meaning that there is nearly no difference between the percentage
 of females who have access to emergency funds compared to the percentage
-of males who have access to emergency funds or . However, because the
-ratio is positive, it indicates that the model is slightly biased in
-favor of women.
+of males who have access to emergency funds. However, because the ratio
+is positive, it indicates that the model is slightly biased in favor of
+women.
 
 Both the statistical parity difference and equal opportunity difference
 ratios for the meta fair classifier were at .004, which is within the
@@ -1109,7 +1129,7 @@ Reduction}\label{exponential-gradient-reduction-grid-search-reduction}}
 
 The exponential gradient reduction and grid search reduction techniques
 output the same ratios for our fairness metrics. For the disparate
-impact metric, we had a ratio of .847, which is above the acceptable
+impact metric, we had a ratio of .847, which satisfies the acceptable
 range of .80. This means that women are classified to have access to
 emergency funds about 84.7\% of the time that men are categorized ro
 have access to emergency funds. For our between group generalized
@@ -1154,10 +1174,10 @@ model does not discriminate based on gender. This means we care most
 about the group fairness metrics and the processors that decrease gender
 discrimination in our model.
 
-Most of the metrics increased fairness for most of the fairness metrics.
-The Calibrated equalized odds however, decreased fairness for all the
-metrics except the generalized entropy error. This would be a good
-processor to use if individual fairness was a major concern in the
+Most of the processors increased fairness for most of the fairness
+metrics. The calibrated equalized odds however, decreased fairness for
+all the metrics except the generalized entropy error. This would be a
+good processor to use if individual fairness was a major concern in the
 model. For group fairness, in our model, this processor is not ideal.
 
 All processors besides calibrated equalized odds decreased the
@@ -1173,7 +1193,7 @@ women, we must look at the processors that increase precision and equal
 opportunity. Satisfying these fairness metrics would allow our model to
 predict more positives for women in an accurate way.
 
-The reweighting technique both increases precision and decreases equal
+The reweighing technique both increases precision and decreases equal
 opportunity difference however, this processor only increases precision
 by .1\%. None of the other processors increase precision at all. The
 meta fair classifier improves the equal opportunity difference the most
@@ -1187,18 +1207,25 @@ of true positives to all positives, this means we have increased our
 false positives. This makes sense because if our model increases the
 number of positives for women, there will be more true positives which
 will satisfy our equal opportunity difference fairness metric, but there
-will also be more false positives decreasing our precision. This is a
-good example of how fairness can be complicated. We cannot just look at
-the processor that increases fairness across the board, but rather we
-must find a processor that prioritizes whatever the situation deems as
-fair. In our case fairness means something different than it would for
-an algorithm used in hiring practices. In a hiring scenario it would be
-a good idea to predict more women as being qualified for a job even if
-the false positive rate increases, because the model would be fighting
-existing prejudices and give women more opportunities. In our case
-fairness means something different. We want a model that classifies
-women just as accurately as it does men. The processors that account for
-the fairness we care about are the reweighting, exponential gradient
+will also be more false positives decreasing our precision.
+
+This is a good example of how fairness can be complicated. We cannot
+just look at the processor that increases fairness across the board, but
+rather we must find a processor that prioritizes whatever the situation
+deems as fair. In our case fairness means something different than it
+would for an algorithm used in hiring practices. In a hiring scenario it
+would be a good idea to predict more women as being qualified for a job
+even if the false positive rate increases, because the model would be
+fighting existing prejudices and give women more opportunities. In our
+case fairness means something different. We want a model that classifies
+women just as accurately as it does men. We focused on positive outcomes
+because we decided it would be more harmful to classify someone as
+having access to emergency funds when in reality they don't. This
+interpretation might change depending on the context.
+
+The equal opportunity difference is the most helpful metric in assessing
+accurately predicted positives. The processors that account for the
+fairness we care about are the reweighing, exponential gradient
 reduction, grid search reduction, and the reject option classifier.
 These these processors maintain precision while increasing positive
 classifications for women.
@@ -1212,7 +1239,7 @@ This means that individual fairness decreases overall. The generalized
 entropy error difference becomes negative meaning that men have more
 generalized entropy error than women. The between group generalized
 entropy error increased slightly meaning that there is more within group
-unfairness than within. These results are to be expected because group
+unfairness than between. These results are to be expected because group
 fairness and individual fairness metrics are contradictory. As we
 account for group fairness, we lose individual fairness. For access to
 emergency funds, we care more if our model is systematically being
@@ -1224,10 +1251,10 @@ processing
 techniques\citep{agarwal2018reductions, kamiran2012data, agarwal2019fair, pleiss2017fairness},
 and analyzed the trade-offs for different fairness
 metrics\citep{speicher2018unified}. Where our study differs is that we
-intend this this study to serve as an example of how these fairness
-metrics should be implemented. There must be considerations about the
-data, the model, and the metrics to decide how to process the model in
-the ``fairest'' way. Just knowing how the different fairness metrics are
+intend this study to serve as an example of how these fairness metrics
+should be implemented. There must be considerations about the data, the
+model, and the metrics to decide how to process the model in the
+``fairest'' way. Just knowing how the different fairness metrics are
 calculated is not enough. To ensure fairness one must understand how
 adjusting for different fairness metrics will impact the people that the
 model will be used on. If the wrong fairness metric is accounted for,
@@ -1245,12 +1272,14 @@ built was not necessarily going to be used for anything other than
 educational purposes. Knowing the purpose of a model will aid in
 selecting the most relevant fairness metrics and processors.
 
-Overall, the reweighting technique is the most helpful processor for our
-decision tree classifier for emergency funds in Sub-Saharan Africa. For
-other models and other contexts, this may not be true. All of these
-processors account for fairness however, it is important to find the
-processors that account for the specific type of fairness most relevant
-to the context and use of the model.
+Overall, the reweighing and exponential gradient reduction techniques
+are the most helpful processors for our decision tree classifier for
+emergency funds in Sub-Saharan Africa. The equal opportunity difference
+is the most informative fairness metric. For other models and other
+contexts, this may not be true. All of these processors account for
+fairness however, it is important to find the processors that account
+for the specific type of fairness most relevant to the context and use
+of the model.
 
 \hypertarget{acknowledgements}{%
 \section{Acknowledgements}\label{acknowledgements}}
