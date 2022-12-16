@@ -241,22 +241,23 @@ analysis more than the results of the analysis itself.
 \hypertarget{data}{%
 \section{Data}\label{data}}
 
-Our data is derived from The World Bank in The Global Findex Database,
-comprising the most comprehensive data sets on how adults save, borrow,
-make payments, and manage risk in different economies around the world.
-The data set was created to record various measures of financial equity
-and inclusion, with the intention that such information could reveal
-opportunities to expand access to financial services and to promote
-greater use of digital financial services for individuals who do not
-have a bank account.
+Our data is derived from The World Bank in
+\href{https://microdata.worldbank.org/index.php/catalog/3324}{The Global
+Findex Database}, comprising the most comprehensive data sets on how
+adults save, borrow, make payments, and manage risk in different
+economies around the world. The data set was created to record various
+measures of financial equity and inclusion, with the intention that such
+information could reveal opportunities to expand access to financial
+services and to promote greater use of digital financial services for
+individuals who do not have a bank account.
 
 The survey was carried out over the 2017 calendar year by Gallup, Inc.,
 as part of its Gallup World Poll, which since 2005 has annually
 conducted surveys of approximately 1,000 people in each of more than 160
 economies and in over 150 languages, using randomly selected, nationally
 representative samples. The target population was the entire civilian,
-noninstitutionalized population age 15 and above. Interview procedure
-Surveys were conducted face to face in economies where telephone
+non-institutionalized population age 15 and above. Interview procedure
+surveys were conducted face to face in economies where telephone
 coverage represents less than 80 percent of the population or where this
 was the customary methodology.
 
@@ -290,7 +291,7 @@ There were several variables of interest in this dataset when creating
 models to predict access to emergency funds, including demographic and
 financial information. For this analysis, we are using only a subset of
 the data including countries in the Sub-Saharan region (35 countries
-total). Our data set includes 35000 observations and 105 variables in
+total). Our data set includes 35,000 observations and 105 variables in
 total.
 
 \hypertarget{demographics}{%
@@ -305,15 +306,15 @@ females and 17,130 males in the dataset.
 \hypertarget{education}{%
 \subsubsection{\texorpdfstring{\emph{Education}}{Education}}\label{education}}
 
-The \emph{Education} variable corresponds to the highest level of
+The \emph{education} variable corresponds to the highest level of
 education attained with `Primary', `Secondary' and `Tertiary' being the
 three options. The distribution of education by gender plot (seen in
 Appendix Figure 8) shows us that there are more women with primary
 education, but more men with secondary or tertiary education. Overall,
 we can see that there are more men with higher education than women.
 About 1,000 more men have received a secondary education and there is
-about double the amount of men with tertiary education compared to women
-showing a clear disparity.
+about double the amount of men with tertiary education compared to
+women, showing a clear disparity.
 
 \hypertarget{economy}{%
 \subsubsection{\texorpdfstring{\emph{economy}}{economy}}\label{economy}}
@@ -338,14 +339,14 @@ funds.
 \hypertarget{account_fin}{%
 \subsubsection{\texorpdfstring{\emph{account\_fin}}{account\_fin}}\label{account_fin}}
 
-The first variable being \emph{account\_fin} which distinguishes those
-who have a financial account from those who don't. We found 11,970
-respondents have a financial account while 23,030 respondents do not.
-This means about two thirds of individuals do not have an account. This
-is likely connected to the lack of access to emergency funds displayed
-above. If an individual does not have a financial account, we would
-expect they are less likely to have a source of emergency funds, as
-emergency funds are generally stored in an account.
+The \emph{account\_fin} variable distinguishes those who have a
+financial account from those who do not. We found 11,970 respondents
+have a financial account while 23,030 respondents do not. This means
+about two thirds of individuals do not have an account. This is likely
+connected to the lack of access to emergency funds displayed above. If
+an individual does not have a financial account, we would expect they
+are less likely to have a source of emergency funds, as emergency funds
+are generally stored in an account.
 
 \hypertarget{reason}{%
 \subsubsection{\texorpdfstring{\emph{reason}}{reason}}\label{reason}}
@@ -366,11 +367,12 @@ workforce.
 \hypertarget{inc_q}{%
 \subsubsection{\texorpdfstring{\emph{inc\_q}}{inc\_q}}\label{inc_q}}
 
-And lastly, we evaluated \emph{inc\_q}, which represents income
-quantile. Income quantile is separated into 5 quantiles with 1 being the
-poorest and 5 being the richest. The mean for all of the countries in
-the dataset is 3.241. This means that all the countries average out to
-be about middle class.
+And lastly, we evaluated \emph{inc\_q}, which represents the relative
+socio-economic status of each respondent. Income quanitles divide a
+population into five income groups with 1 being the poorest and 5 being
+the richest such that about 20\% of the population is in each group. The
+mean for all of the countries in the dataset is 3.241. This means that
+all the countries average out to be about middle class.
 
 The majority of the data set has individuals within the richest
 quantile, Quantile 5.
@@ -378,8 +380,8 @@ quantile, Quantile 5.
 \hypertarget{emergency-funds}{%
 \subsection{Emergency Funds}\label{emergency-funds}}
 
-To explore access to emergency funds in our dataset, we were interested
-3 variables we thought could be related:
+To explore access to emergency funds in our dataset, which is our
+outcome variable of focus, we were interested three relevant variables:
 
 \hypertarget{has_access}{%
 \subsubsection{\texorpdfstring{\emph{has\_access}}{has\_access}}\label{has_access}}
@@ -389,7 +391,14 @@ access to emergency funds, with ``emergency funds'' defined as 1/20th of
 the GNI (gross national income) per capita for the country. GNI per
 capita is the country's total income in a year/ the country's population
 size. For context, in the United States, ``emergency funds'' would be
-defined as about \$3,000.
+defined as about \$3,500 (U.S. GNI per capita as of 2021 = \$69,288
+according to the
+\href{https://data.worldbank.org/country/united-states?view=chart}{World
+Bank}, and 1/20th of that is roughly \$3,500). In the Sub-Saharan region
+on average, the GNI per capita as of 2021 translated to U.S. dollars is
+\$1,578, and emergency funds (1/20th of that) would be defined as
+roughly \$80
+(\href{https://data.worldbank.org/indicator/NY.GNP.PCAP.CD?locations=ZG}{source}).
 
 The overall distribution of access to emergency funds showed 15,237
 individuals had access to emergency funds while 18,867 did not. This
@@ -418,21 +427,19 @@ savings.
 \subsubsection{\texorpdfstring{\emph{Receive Wage
 Payments}}{Receive Wage Payments}}\label{receive-wage-payments}}
 
-If respondents answered that their main source of emergency funds was
-from `Money From Working', they were asked to further clarify the form
-in which that money was received. From that ``Money from Working''
-category, we can see that only 8,348 individuals receive wage payments
-from the \emph{Receive Wage Payments} variable while 26,241 do not. This
-analysis suggests that receiving wage payments may be a key factor in
-determining access to emergency funds.
+The ``Receive Wage Payments'' variable is related in that receiving
+wages is necessary in order to have money from work. Only 8,348
+individuals receive wage payments while 26,241 do not. This suggests
+that receiving wage payments may be a key factor in determining access
+to emergency funds, yet relatively few individuals receive wages.
 
 \hypertarget{gender-economy-and-education-in-relation-to-emergency-funds}{%
 \subsubsection{\texorpdfstring{\emph{gender}, \emph{economy} and
-\emph{Education} in relation to Emergency
-Funds}{gender, economy and Education in relation to Emergency Funds}}\label{gender-economy-and-education-in-relation-to-emergency-funds}}
+\emph{education} in relation to Emergency
+Funds}{gender, economy and education in relation to Emergency Funds}}\label{gender-economy-and-education-in-relation-to-emergency-funds}}
 
-Finally, we sought to find if there were disparities in access to
-emergency funds by \emph{gender}, \emph{economy}, and \emph{Education}.
+Finally, we sought to identify disparities in access to emergency funds
+by \emph{gender}, \emph{economy}, and \emph{education}.
 
 \begin{figure}
 \centering
@@ -471,14 +478,29 @@ have access. Overall, we can make the assumption that people with a
 higher level of education are more likely to have access to emergency
 funds.
 
+Overall, our exploratory data analysis reveals that there are
+disparities in access to emergency funds based on gender and education
+level. Thus, it will be essential to take these imbalances into account
+when fitting our model. In this analysis, we choose to focus on
+maximizing equity in model predictions with respect to gender. However,
+if these predictions were being used to make real-world decisions that
+would impact people's lives, it would be necessary to ensure that bias
+based on education level is also minimized.
+
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
+
+In this section, we describe the processes used for fitting and
+modifying our model. We detail our processes of data cleaning, selecting
+an appropriate model, choosing and implementing metrics to assess the
+model, and choosing and implementing de-biasing techniques to improve
+fairness.
 
 \hypertarget{software}{%
 \subsection{Software}\label{software}}
 
 We conducted our analysis in a Google Colab Notebook primarily employing
-the python libraries \href{https://pandas.pydata.org/}{pandas} and
+the Python libraries \href{https://pandas.pydata.org/}{pandas} and
 \href{https://numpy.org/}{numpy} for data cleaning and exploratory
 analysis, as well as \href{https://scikit-learn.org/stable/}{sklearn}
 and \href{https://aif360.readthedocs.io/en/latest/}{aif360} for
@@ -504,15 +526,18 @@ First, we removed the arbitrary variables \emph{economycode} (country
 code) and \emph{regionwb} (region); \emph{economycode} is essentially a
 duplicate of \emph{economy} (country name), and \emph{regionwb} is the
 same for all rows (value is Sub-Saharan) since this is the variable that
-we initially filtered by. Next, we checked for variables with a high
-percentage of missing values. Several variables have many missing values
-because they are follow-up questions to a previous question that are
-only asked if the respondent gives a specific response for a previous
-question. We chose to drop all variables with more than 30\% missing
-values (58 variables total) because we observed by running the model
-multiple times that variables with NA percentages above this threshold
-had no impact on the model accuracy or fairness. Thus, it made sense to
-remove them if their presence is negligible when included in the model.
+we initially filtered by.
+
+Next, we checked for variables with a high percentage of missing values.
+Several variables have many missing values because they are follow-up
+questions to a previous question that are only asked if the respondent
+gives a specific response for a previous question. We chose to drop all
+variables with more than 30\% missing values (58 variables total)
+because we observed by running the model multiple times that variables
+with NA percentages above this threshold had no impact on the model
+accuracy or fairness. Thus, it made sense to remove them if their
+presence is negligible when included in the model.
+
 Next, we checked for variables with high levels of redundancy
 (i.e.~little variation), defining a high level of redundancy as 95\% or
 more of the values being the same. The only variable with a high level
@@ -551,7 +576,8 @@ past 12 months-- in order to increase the accuracy of the model after
 fitting the initial model.
 
 After this pre-processing, we have 42 predictor variables and 35,000
-observations.
+observations. A full list of the predictor variables included in our
+model can be found in the appendix.
 
 \hypertarget{model-selection}{%
 \subsection{Model Selection}\label{model-selection}}
@@ -1310,11 +1336,21 @@ group throughout the course of the project.
 \caption{Education Count by Gender}
 \end{figure}
 
-\begin{figure}
-\centering
 \includegraphics[width=\textwidth,height=0.5\textheight]{images/reasons_no_fin_acc.png}
-\caption{Reasons for No Financial Account}
-\end{figure}
+\textbf{List of predictors included in model}
+
+The 43 variables included in the model are listed below. See the
+\href{https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/data-documentation/ddi-documentation-english_microdata-3324.pdf}{data
+documentation} for complete definitions of each variable.
+
+List of Predictors: `wpid\_random', `gender', `emp\_in', `fin2', `fin7',
+`fin14a', `fin14b', `fin15', `fin16', `fin17a', `fin17b', `fin19',
+`fin20', `fin21', `fin22a', `fin22b', `fin24', `sent\_remittances',
+`fin28', `fin30', `fin32', `fin37', `fin38', `fin42', `mobileowner',
+`fin48', `account\_fin', `account\_mob', `borrowed', `receive\_wages',
+`receive\_transfers', `receive\_pension', `receive\_agriculture',
+`pay\_utilities', `pay\_cash', `pop\_adult', `wgt', `age', `educ',
+`inc\_q', `remittances', `access\_cat', `account\_saved'
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %% optional
