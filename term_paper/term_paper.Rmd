@@ -77,15 +77,7 @@ This approach will be used as the basis of a workshop meant to educate data scie
 
 # Data
 
-Our data is derived from The World Bank in [The Global Findex Database](https://microdata.worldbank.org/index.php/catalog/3324), comprising the most comprehensive data sets on how adults save, borrow, make payments, and manage risk in different economies around the world. The data set was created to record various measures of financial equity and inclusion, with the intention that such information could reveal opportunities to expand access to financial services and to promote greater use of digital financial services for individuals who do not have a bank account. 
-
-The survey was carried out over the 2017 calendar year by Gallup, Inc., as part of its Gallup World Poll, which since 2005 has annually conducted surveys of approximately 1,000 people in each of more than 160 economies and in over 150 languages, using randomly selected, nationally representative samples. The target population was the entire civilian, non-institutionalized population age 15 and above. Interview procedure surveys were conducted face to face in economies where telephone coverage represents less than 80 percent of the population or where this was the customary methodology.
-
-In economies where face-to-face surveys were conducted, the first stage of sampling was the identification of primary sampling units. These units were stratified by population size, geography, or both, and clustering was achieved through one or more stages of sampling. Where population information was available, sample selection was based on probabilities proportional to population size; otherwise, simple random sampling was used. Random route procedures were used to select sampled households. Unless an outright refusal occurs, interviewers make up to three attempts to survey the sampled household. If an interview cannot be obtained at the initial sampled household, a simple substitution method was used.
-
-Respondents were randomly selected within the selected households. Each eligible household member was listed and the handheld survey device randomly selects the household member to be interviewed. For paper surveys, the Kish grid method was used to select the respondent. In economies where cultural restrictions dictate gender matching, respondents were randomly selected from among all eligible adults of the interviewer's gender.
-
-In economies where telephone interviewing was employed, random digit dialing or a nationally representative list of phone numbers was used. In most economies where cell phone penetration was high, a dual sampling frame was used. Random selection of respondents was achieved by using either the latest birthday or household enumeration method.
+Our data is derived from The World Bank in [The Global Findex Database](https://microdata.worldbank.org/index.php/catalog/3324), comprising the most comprehensive data sets on how adults save, borrow, make payments, and manage risk in different economies around the world. The data set was created to record various measures of financial equity and inclusion, with the intention that such information could reveal opportunities to expand access to financial services and to promote greater use of digital financial services for individuals who do not have a bank account. The data includes a sample of 1,000 randomly selected individuals from each of about 140 countries who completed interviews either over the phone or in-person depending on which made most sense in the given country. Each sample was drawn from the non-institutionalized population of adults aged 15 and over within the country. Intensive measures were taken to ensure that the samples were truly representative of the entire population in each country. For full details on the random sampling methodology, see the [data documentation](https://github.com/sds-capstone/2022-09-proj7-women-at-table/blob/main/data-documentation/ddi-documentation-english_microdata-3324.pdf).
 
 There were several variables of interest in this dataset when creating models to predict access to emergency funds, including demographic and financial information. For this analysis, we are using only a subset of the data including countries in the Sub-Saharan region (35 countries total). Our data set includes 35,000 observations and 105 variables in total.
 
@@ -588,49 +580,11 @@ We plan to use this analysis as the basis of a workshop designed to teach underg
 
 We would like to thank our sponsor organization [Women at the Table](https://www.womenatthetable.net/), and especially our supervisors/mentors Sofia Kypraiou and Caitlin Kraft-Buchman for creating the opportunity for us to do this project as well as for offering us guidance and feedback throughout the entire process. We would also like to thank our technical advisor, Dr. Shiya Cao, for providing extremely helpful Python resources and helping us work through challenges that we were having with our code. We would like to thank our Capstone professor, Dr. Albert Y. Kim, for providing conceptual and logistical guidance, especially in relation to machine learning knowledge, as well as for providing thorough feedback on our progress at various stages in the process. Lastly, we want to acknowledge Megan Lyster, Assistant Director of the Smith College Wurtele Center, for offering guidance on effective team collaboration and helping us to continually reflect on and adapt our process as a group throughout the course of the project. 
 
+
+
+
+
 # Appendix
-
-```{python, echo=FALSE, include = FALSE}
-ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
-for p in ebg.patches:
-   ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
-
-ebg.set(title= "Education Count by Gender") 
-```
-![Education Count by Gender](images/educ_count_gender.png){width=75%, height=50%}
-
-```{python, include=FALSE}
-# reasons for no financial account
-# pivot data to long format
-df_long = df[['fin11a', "fin11b", "fin11c", "fin11d", "fin11e", "fin11f", "fin11g", "fin11h"]]\
-.stack()\
-.reset_index()
-df_long.rename(columns = {'level_1':'reason', 0:'value'}, inplace = True)
-df3 = df_long.query('value == 1.0') # filter to only "yes" answers for each reason
-# recode reason values
-df3.loc[df3['reason'] == 'fin11a', "reason"] = 'distance'
-df3.loc[df3['reason'] == 'fin11b', "reason"] = 'expense'
-df3.loc[df3['reason'] == 'fin11c', "reason"] = 'no_documentation'
-df3.loc[df3['reason'] == 'fin11d', "reason"] = 'lack_trust'
-df3.loc[df3['reason'] == 'fin11e', "reason"] = 'religious'
-df3.loc[df3['reason'] == 'fin11f', "reason"] = 'lack_money'
-df3.loc[df3['reason'] == 'fin11g', "reason"] = 'family_member_has' 
-df3.loc[df3['reason'] == 'fin11h', "reason"] = 'no_need'
-df3.head()
-
-# aggregate counts by reason
-reason_counts = df3.groupby('reason').agg('count').reset_index() 
-```
-
-```{python, echo=FALSE, include= FALSE}
-# barplot of count by reason-- seaborn
-reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
-reasons_plot 
-```
-
-
-![Reasons for No Financial Account](images/reasons_no_fin_acc.png){width=75%, height=50%}
-
 
 **List of predictors included in model**
 
@@ -680,3 +634,47 @@ List of Predictors:
  'remittances',
  'access_cat',
  'account_saved'
+
+```{python, echo=FALSE, include = FALSE}
+ebg = sns.countplot(x="Education", hue= "gender", palette= gender_palette, order= ['Primary', 'Secondary', 'Tertiary'], data= df2)
+for p in ebg.patches:
+   ebg.annotate('{:.1f}'.format(p.get_height()), (p.get_x()+.05, p.get_height()+100))
+
+ebg.set(title= "Education Count by Gender") 
+```
+![Education Count by Gender](images/educ_count_gender.png){width=75%, height=50%}
+
+```{python, include=FALSE}
+# reasons for no financial account
+# pivot data to long format
+df_long = df[['fin11a', "fin11b", "fin11c", "fin11d", "fin11e", "fin11f", "fin11g", "fin11h"]]\
+.stack()\
+.reset_index()
+df_long.rename(columns = {'level_1':'reason', 0:'value'}, inplace = True)
+df3 = df_long.query('value == 1.0') # filter to only "yes" answers for each reason
+# recode reason values
+df3.loc[df3['reason'] == 'fin11a', "reason"] = 'distance'
+df3.loc[df3['reason'] == 'fin11b', "reason"] = 'expense'
+df3.loc[df3['reason'] == 'fin11c', "reason"] = 'no_documentation'
+df3.loc[df3['reason'] == 'fin11d', "reason"] = 'lack_trust'
+df3.loc[df3['reason'] == 'fin11e', "reason"] = 'religious'
+df3.loc[df3['reason'] == 'fin11f', "reason"] = 'lack_money'
+df3.loc[df3['reason'] == 'fin11g', "reason"] = 'family_member_has' 
+df3.loc[df3['reason'] == 'fin11h', "reason"] = 'no_need'
+df3.head()
+
+# aggregate counts by reason
+reason_counts = df3.groupby('reason').agg('count').reset_index() 
+```
+
+```{python, echo=FALSE, include= FALSE}
+# barplot of count by reason-- seaborn
+reasons_plot = sns.barplot(y = 'reason', x = 'value', data = reason_counts, palette = [pink, pink, pink, pink, pink, pink, pink, pink], order = ["lack_money","expense",  "no_documentation", "distance", "lack_trust", "no_need", "family_member_has", "religious"]).set(title = "Reasons for No Financial Account", xlabel = "count")
+reasons_plot 
+```
+
+
+![Reasons for No Financial Account](images/reasons_no_fin_acc.png){width=75%, height=50%}
+
+
+
