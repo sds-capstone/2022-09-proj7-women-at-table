@@ -31,8 +31,6 @@ abstract: |
   Most people require access to emergency funds at least once in their life. These funds act as an important safety net in emergency cases. The purpose of our project is to predict access to emergency funds for adults in Sub-Saharan countries using a human rights-based approach to machine learning which centers equity, fairness, and impacts on humans over accuracy. Our analysis is based on the 2017 Global Findex Database which includes demographic as well as financial information for a sample of individuals within each country. We used a Decision Tree Classifier machine learning model implemented using Python to predict access to emergency funds with 68% accuracy. We assessed the fairness of our model with respect to gender using a variety of group and individual fairness metrics and evaluated the implications of each fairness metric with regard to our data and the goals of the analysis. We then implemented a variety of pre-proccessing, in-processing, and post-processing techniques in an attempt to minimize bias and maximize fairness. We have documented our analysis in a Jupyter notebook where this information can be made accessible to a broader undergraduate audience.
 keywords: |
   Fairness; machine learning; access; emergency funds; financial; ethics; processing techniques; gender; economy; debiasing; decision tree; Sub-Saharan Africa; fairness metrics
-acknowledgement: |
-  Project Sponsored by Women at the Table.
 conflictsofinterest: |
  The authors declare no conflict of interest.
 
@@ -576,14 +574,6 @@ Overall, the reweighing and exponential gradient reduction techniques are the mo
 
 We plan to use this analysis as the basis of a workshop designed to teach undergraduate data science and computer science students how to effectively implement fairness and human rights into the machine learning workflow. We hope this work will serve as a useful comprehensive example for these students to see a human rights-based approach to machine learning in practice as well as a guide for students to integrate this approach into their own work. We seek to spread these ideas broadly with the long-term vision that all data scientists become aware of and embody the importance of centering ethics in machine learning and that this human rights-based approach becomes standard practice across the industry.
 
-# Acknowledgements
-
-We would like to thank our sponsor organization [Women at the Table](https://www.womenatthetable.net/), and especially our supervisors/mentors Sofia Kypraiou and Caitlin Kraft-Buchman for creating the opportunity for us to do this project as well as for offering us guidance and feedback throughout the entire process. We would also like to thank our technical advisor, Dr. Shiya Cao, for providing extremely helpful Python resources and helping us work through challenges that we were having with our code. We would like to thank our Capstone professor, Dr. Albert Y. Kim, for providing conceptual and logistical guidance, especially in relation to machine learning knowledge, as well as for providing thorough feedback on our progress at various stages in the process. Lastly, we want to acknowledge Megan Lyster, Assistant Director of the Smith College Wurtele Center, for offering guidance on effective team collaboration and helping us to continually reflect on and adapt our process as a group throughout the course of the project. 
-
-
-
-
-
 # Appendix
 
 **List of predictors included in model**
@@ -676,5 +666,7 @@ reasons_plot
 
 ![Reasons for No Financial Account](images/reasons_no_fin_acc.png){width=75%, height=50%}
 
+# Acknowledgements
 
+We would like to thank our sponsor organization [Women at the Table](https://www.womenatthetable.net/), and especially our supervisors/mentors Sofia Kypraiou and Caitlin Kraft-Buchman for creating the opportunity for us to do this project as well as for offering us guidance and feedback throughout the entire process. We would also like to thank our technical advisor, Dr. Shiya Cao, for providing extremely helpful Python resources and helping us work through challenges that we were having with our code. We would like to thank our Capstone professor, Dr. Albert Y. Kim, for providing conceptual and logistical guidance, especially in relation to machine learning knowledge, as well as for providing thorough feedback on our progress at various stages in the process. Lastly, we want to acknowledge Megan Lyster, Assistant Director of the Smith College Wurtele Center, for offering guidance on effective team collaboration and helping us to continually reflect on and adapt our process as a group throughout the course of the project. 
 
